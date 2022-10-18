@@ -7,25 +7,23 @@ export function useFetch(url) {
   useEffect(() => {
     const abortController = new AbortController();
 
-    setTimeout(() => {
-      fetch(url, { signal: abortController.signal })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
+    fetch(url, { signal: abortController.signal })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
 
-          throw new Error(`${res.status}: ${res.statusText}`);
-        })
-        .then((data) => {
-          setData(data);
-          setError(null);
-        })
-        .catch((err) => {
-          if (err.name !== "AbortError") {
-            setError(err.message);
-          }
-        });
-    }, 1000);
+        throw new Error(`${res.status}: ${res.statusText}`);
+      })
+      .then((data) => {
+        setData(data);
+        setError(null);
+      })
+      .catch((err) => {
+        if (err.name !== "AbortError") {
+          setError(err.message);
+        }
+      });
 
     return () => abortController.abort();
   }, []);

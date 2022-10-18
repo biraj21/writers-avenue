@@ -6,19 +6,27 @@
       "author": "Biraj",
       "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, nulla placeat. Laudantium?"
     },
-
     {
       "id": 2,
       "title": "Goodbye World",
       "author": "Amal",
       "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, nulla placeat. Laudantium?"
     },
-
     {
       "id": 3,
       "title": "Hey there",
       "author": "Jay",
       "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, nulla placeat. Laudantium?"
+    },
+    {
+      "title": "adasdasd",
+      "body": "asdsa",
+      "id": 4
+    },
+    {
+      "title": "New Blog Added From Site",
+      "body": "Hello!\nNew Line.\nAgain A new line.",
+      "id": 5
     }
   ]
 }

@@ -6,6 +6,7 @@
 
 :root {
   --primary-color: #c48aff;
+  --grey: #808080;
   --font: "Nunito", sans-serif;
 
   font-family: var(--font);
@@ -23,23 +24,10 @@ a {
   color: #fff;
 }
 
-.btn {
-  display: inline-block;
-  padding: 4px 8px;
-  background-color: var(--primary-color);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
+button,
+input,
+textarea {
   font-family: var(--font);
-  font-size: 1rem;
-  line-height: 1;
-  text-decoration: none;
-  cursor: pointer;
-
-  &--small {
-    padding: 3px 6px;
-    font-size: 0.65rem;
-  }
 }
 
 .loading-msg {
@@ -53,4 +41,54 @@ a {
 .page {
   max-width: 600px;
   margin: 0 auto;
+}
+
+// CSS components
+.btn {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &--small {
+    padding: 3px 6px;
+    font-size: 0.65rem;
+  }
+}
+
+.form {
+  &__field > * {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input,
+  textarea {
+    border-radius: 5px;
+    border: 1px solid #000;
+    padding: 5px;
+    font-size: 0.9rem;
+
+    &:focus {
+      outline: 2px solid var(--primary-color);
+      border-color: transparent;
+    }
+  }
 }
