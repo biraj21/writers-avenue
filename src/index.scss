@@ -5,8 +5,9 @@
 }
 
 :root {
-  --primary-color: #c48aff;
+  --primary-color: #bf80ff;
   --grey: #808080;
+  --red: #ff4848;
   --font: "Nunito", sans-serif;
 
   font-family: var(--font);
@@ -65,6 +66,10 @@ textarea {
   &--small {
     padding: 3px 6px;
     font-size: 0.65rem;
+  }
+
+  &--red {
+    background-color: var(--red);
   }
 }
 

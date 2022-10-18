@@ -19,14 +19,10 @@
       "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, nulla placeat. Laudantium?"
     },
     {
-      "title": "adasdasd",
-      "body": "asdsa",
+      "title": "Introduction to NumPy",
+      "author": "Biraj",
+      "body": "NumPy is a Python library that is mainly used to work with arrays. An array is a collection of items that are stored next to each other in memory. For now, just think of them like Python lists.\n\nNumPy is written in Python and C. The calculations in NumPy are done by the parts that are written in C, which makes them extremely fast compared to normal Python code.",
       "id": 4
-    },
-    {
-      "title": "New Blog Added From Site",
-      "body": "Hello!\nNew Line.\nAgain A new line.",
-      "id": 5
     }
   ]
 }

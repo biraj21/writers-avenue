@@ -13,7 +13,7 @@ export default function NewBlog() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const blog = { title: title.trim(), body: body.trim() };
+    const blog = { title: title.trim(), author: "Biraj", body: body.trim() };
 
     fetch(`${serverBaseUrl}/blogs`, {
       method: "POST",
