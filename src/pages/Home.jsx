@@ -2,7 +2,7 @@ import { useFetch } from "../hooks/useFetch";
 import "./Home.scss";
 import BlogList from "../components/BlogList";
 
-export default function Home() {
+export default function Home({ deletedBlogs = new Set() }) {
   const { data: blogs, setData: setBlogs, error, setError } = useFetch(`${serverBaseUrl}/blogs`);
 
   function handleDelete(e, id) {
@@ -12,7 +12,8 @@ export default function Home() {
 
     fetch(`${serverBaseUrl}/blogs/${id}`, { method: "DELETE" })
       .then((_res) => {
-        const newBlogs = blogs.filter((blog) => blog.id !== id);
+        deletedBlogs.add(id);
+        const newBlogs = blogs.filter((blog) => !deletedBlogs.has(blog.id));
         setBlogs(newBlogs);
       })
       .catch((err) => setError(err.message));
