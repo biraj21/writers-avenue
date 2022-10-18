@@ -1,14 +1,14 @@
-import { useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 import "./Home.scss";
 import BlogList from "../components/BlogList";
 
 export default function Home() {
   const { data: blogs, setData: setBlogs, error, setError } = useFetch(`${serverBaseUrl}/blogs`);
-  const [deleteId, setDeleteId] = useState(null);
 
-  function handleDelete(id) {
-    setDeleteId(id);
+  function handleDelete(e, id) {
+    const $btn = e.target;
+    $btn.disabled = true;
+    $btn.innerText = "Deleting...";
 
     fetch(`${serverBaseUrl}/blogs/${id}`, { method: "DELETE" })
       .then((_res) => {
@@ -22,9 +22,7 @@ export default function Home() {
   if (error) {
     content = <p className="error-msg">{error}</p>;
   } else if (blogs) {
-    content = (
-      <BlogList title="All Blogs" blogs={blogs} handleDelete={handleDelete} deleteId={deleteId} />
-    );
+    content = <BlogList title="All Blogs" blogs={blogs} handleDelete={handleDelete} />;
   } else {
     content = <h3 className="loading-msg">Loading...</h3>;
   }

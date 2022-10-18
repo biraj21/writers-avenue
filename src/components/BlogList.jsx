@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./BlogList.scss";
 
-export default function BlogList({ title, blogs, handleDelete, deleteId }) {
+export default function BlogList({ title, blogs, handleDelete }) {
   return (
     <div className="blog-list">
       <h2>{title}</h2>
@@ -16,12 +16,8 @@ export default function BlogList({ title, blogs, handleDelete, deleteId }) {
             <Link to={`/blogs/${blog.id}`} className="btn btn--small">
               View
             </Link>
-            <button
-              onClick={() => handleDelete(blog.id)}
-              className="btn btn--small btn--red"
-              disabled={blog.id === deleteId}
-            >
-              {blog.id === deleteId ? "Deleting..." : "Delete"}{" "}
+            <button onClick={(e) => handleDelete(e, blog.id)} className="btn btn--small btn--red">
+              Delete
             </button>
           </div>
         </div>
