@@ -5,9 +5,9 @@
 }
 
 :root {
-  --primary-color: #bf80ff;
+  --primary-color: #c391f4;
   --grey: #808080;
-  --red: #ff4848;
+  --red: #e44848;
   --font: "Nunito", sans-serif;
 
   font-family: var(--font);
@@ -37,7 +37,7 @@ textarea {
   color: #fff;
 
   &::placeholder {
-    color: #888;
+    color: #999;
   }
 }
 
@@ -59,7 +59,7 @@ textarea {
   display: inline-block;
   padding: 4px 8px;
   background-color: var(--primary-color);
-  color: #fff;
+  color: #000;
   border: none;
   border-radius: 4px;
   font-family: var(--font);
