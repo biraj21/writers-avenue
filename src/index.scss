@@ -31,6 +31,16 @@ textarea {
   font-family: var(--font);
 }
 
+input,
+textarea {
+  background-color: #2f2f2f;
+  color: #fff;
+
+  &::placeholder {
+    color: #888;
+  }
+}
+
 .loading-msg {
   text-align: center;
 }
