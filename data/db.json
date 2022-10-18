@@ -1,0 +1,24 @@
+{
+  "blogs": [
+    {
+      "id": 1,
+      "title": "Hello World",
+      "author": "Biraj",
+      "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, nulla placeat. Laudantium?"
+    },
+
+    {
+      "id": 2,
+      "title": "Goodbye World",
+      "author": "Amal",
+      "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, nulla placeat. Laudantium?"
+    },
+
+    {
+      "id": 3,
+      "title": "Hey there",
+      "author": "Jay",
+      "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, nulla placeat. Laudantium?"
+    }
+  ]
+}

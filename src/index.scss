@@ -1,0 +1,56 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #c48aff;
+  --font: "Nunito", sans-serif;
+
+  font-family: var(--font);
+}
+
+body {
+  width: 100%;
+  min-width: 360px;
+  background-color: #111;
+  color: #fff;
+  padding: 0 20px;
+}
+
+a {
+  color: #fff;
+}
+
+.btn {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+
+  &--small {
+    padding: 3px 6px;
+    font-size: 0.65rem;
+  }
+}
+
+.loading-msg {
+  text-align: center;
+}
+
+.error-msg {
+  color: #ff6060;
+}
+
+.page {
+  max-width: 600px;
+  margin: 0 auto;
+}
