@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "component": "bash scripts/component.sh",
-    "json-server": "json-server --watch data/db.json --port 3000"
+    "json-server": "json-server --watch data/db.json --port 3000",
+    "start-dev": "yarn json-server & yarn vite"
   },
   "dependencies": {
     "express": "^4.18.2",
