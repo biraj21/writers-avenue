@@ -5,6 +5,7 @@
 }
 
 :root {
+  --bg-color: #111;
   --primary-color: #c391f4;
   --grey: #808080;
   --red: #e44848;
@@ -16,7 +17,7 @@
 body {
   width: 100%;
   min-width: 360px;
-  background-color: #111;
+  background-color: var(--bg-color);
   color: #fff;
   padding: 0 20px;
 }

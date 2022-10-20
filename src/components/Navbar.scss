@@ -1,9 +1,18 @@
 .navbar {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px 0;
-  display: flex;
-  align-items: center;
+  background-color: var(--bg-color);
+  box-shadow: 0px 1px 2px #000;
+  margin-bottom: 1rem;
+  position: sticky;
+  top: 0;
+  left: 0;
+
+  .wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+  }
 
   h1 {
     color: var(--primary-color);
