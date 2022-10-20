@@ -1,6 +1,6 @@
-import { useFetch } from "../hooks/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 import "./Home.scss";
-import BlogList from "../components/BlogList";
+import BlogList from "../../components/BlogList";
 
 export default function Home({ deletedBlogs = new Set() }) {
   const { data: blogs, setData: setBlogs, error, setError } = useFetch(`${serverBaseUrl}/blogs`);
@@ -23,7 +23,7 @@ export default function Home({ deletedBlogs = new Set() }) {
   if (error) {
     content = <p className="error-msg">{error}</p>;
   } else if (blogs) {
-    content = <BlogList title="All Blogs" blogs={blogs} />;
+    content = <BlogList title="All Blogs" blogs={blogs} handleDelete={handleDelete} />;
   } else {
     content = <h3 className="loading-msg">Loading...</h3>;
   }

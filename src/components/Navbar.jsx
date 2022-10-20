@@ -1,14 +1,9 @@
 import { NavLink } from "react-router-dom";
 import "./Navbar.scss";
 
-const links = [
-  { path: "/", text: "Home", end: true },
-  { path: "/create", text: "New Blog" },
-];
-
 const activeClassName = "active";
 
-export default function Navbar() {
+export default function Navbar({ links }) {
   return (
     <nav className="navbar">
       <h1>Blogs</h1>

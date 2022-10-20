@@ -16,11 +16,14 @@ export default function BlogList({ title, blogs, handleDelete }) {
 
           <div className="blog-preview__actions">
             <Link to={`/blogs/${blog.id}`} className="btn btn--small">
-              View
+              Read More
             </Link>
-            <button onClick={(e) => handleDelete(e, blog.id)} className="btn btn--small btn--red">
-              Delete
-            </button>
+
+            {handleDelete && (
+              <button onClick={(e) => handleDelete(e, blog.id)} className="btn btn--small btn--red">
+                Delete
+              </button>
+            )}
           </div>
         </div>
       ))}
