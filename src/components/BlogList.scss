@@ -25,6 +25,9 @@
     &__body {
       margin: 5px 0;
       font-size: 0.9rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     &__actions .btn {

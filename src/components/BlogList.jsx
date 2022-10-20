@@ -12,7 +12,7 @@ export default function BlogList({ title, blogs, handleDelete }) {
         <div className="blog-preview" key={blog.id}>
           <h2 className="blog-preview__title">{blog.title}</h2>
           <small>Written by {blog.author}</small>
-          <p className="blog-preview__body">{blog.body.slice(0, 80) + "..."}</p>
+          <p className="blog-preview__body">{blog.body}</p>
 
           <div className="blog-preview__actions">
             <Link to={`/blogs/${blog.id}`} className="btn btn--small">
