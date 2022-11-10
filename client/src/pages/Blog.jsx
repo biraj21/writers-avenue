@@ -14,6 +14,7 @@ export default function Blog() {
       <>
         <h1>{blog.title}</h1>
         <small>Written by {blog.author}</small>
+        <img src={blog.imageUrl} alt="Thumbnail" />
         <div className="blog__body">{blog.body}</div>
       </>
     );

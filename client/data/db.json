@@ -4,23 +4,27 @@
       "id": 1,
       "title": "Hello World",
       "author": "Biraj",
+      "imageUrl": "https://picsum.photos/748/300",
       "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, nulla placeat. Laudantium?"
     },
     {
       "id": 2,
       "title": "Goodbye World",
       "author": "Amal",
+      "imageUrl": "https://picsum.photos/748/300",
       "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, nulla placeat. Laudantium?"
     },
     {
       "id": 3,
       "title": "Hey there",
       "author": "Jay",
+      "imageUrl": "https://picsum.photos/748/300",
       "body": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, nulla placeat. Laudantium?"
     },
     {
       "title": "Introduction to NumPy",
       "author": "Biraj",
+      "imageUrl": "https://picsum.photos/748/300",
       "body": "NumPy is a Python library that is mainly used to work with arrays. An array is a collection of items that are stored next to each other in memory. For now, just think of them like Python lists.\n\nNumPy is written in Python and C. The calculations in NumPy are done by the parts that are written in C, which makes them extremely fast compared to normal Python code.",
       "id": 4
     }

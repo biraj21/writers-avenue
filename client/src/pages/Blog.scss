@@ -1,4 +1,9 @@
 .blog {
+  > img {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
   &__body {
     margin-top: 1rem;
     white-space: pre-wrap;

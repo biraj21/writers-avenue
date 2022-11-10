@@ -34,6 +34,11 @@ export default function Register() {
         </div>
 
         <div className="form__field">
+          <label>Picture:</label>
+          <input name="avatar" type="file" required accept="image/png, image/gif, image/jpeg" />
+        </div>
+
+        <div className="form__field">
           <label>Email:</label>
           <input
             name="email"
