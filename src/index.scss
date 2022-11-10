@@ -108,3 +108,25 @@ textarea {
     }
   }
 }
+
+// login & register page
+.login,
+.register {
+  max-width: 400px;
+
+  h2 {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .btn {
+    display: block;
+    margin: 0 auto;
+  }
+
+  span {
+    display: block;
+    margin-top: 1rem;
+    text-align: center;
+  }
+}

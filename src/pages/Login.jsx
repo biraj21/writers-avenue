@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Login.scss";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -8,16 +8,15 @@ export default function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(e.target);
     setIsSubmitting(true);
 
-    const user = { email: email.trim(), password: password.trim() };
+    const user = { email, password };
     console.log(user);
   }
 
   return (
     <div className="page login">
-      <h2>Admin Login</h2>
+      <h2>Login</h2>
 
       <form action="POST" className="form" onSubmit={handleSubmit}>
         <div className="form__field">
@@ -25,7 +24,7 @@ export default function Login() {
           <input
             name="email"
             type="text"
-            placeholder="Your email address"
+            placeholder="Email address"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -37,7 +36,7 @@ export default function Login() {
           <input
             name="password"
             type="password"
-            placeholder="Your password"
+            placeholder="Password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -47,9 +46,11 @@ export default function Login() {
         <button type="submit" className="btn" disabled={isSubmitting}>
           {isSubmitting ? "Logging in..." : "Login"}
         </button>
-      </form>
 
-      <p className="stay-away-msg">Leave this page if you are not an admin!</p>
+        <span>
+          Don't have an account? <Link to="/register">Create one</Link>.
+        </span>
+      </form>
     </div>
   );
 }

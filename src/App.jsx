@@ -1,18 +1,17 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.scss";
 import Navbar from "./components/Navbar";
-import AdminHome from "./pages/admin/Home";
-import Login from "./pages/admin/Login";
-import NewBlog from "./pages/admin/NewBlog";
 import Blog from "./pages/Blog";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
+import Register from "./pages/Register";
+import Write from "./pages/Write";
 
 const links = [
   { path: "/", text: "Home", end: true },
-  { path: "/admin/login", text: "Login" },
-  { path: "/admin", text: "Admin Home", end: true },
-  { path: "/admin/create", text: "New Blog" },
+  { path: "/write", text: "Write" },
+  { path: "/login", text: "Login" },
 ];
 
 export default function App() {
@@ -23,9 +22,9 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/blogs/:id" element={<Blog />} />
-          <Route path="/admin" element={<AdminHome />} />
-          <Route path="/admin/create" element={<NewBlog />} />
-          <Route path="/admin/login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/write" element={<Write />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>

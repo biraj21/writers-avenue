@@ -10,7 +10,7 @@ for arg in "$@"; do
 import "./$arg.scss"
 
 export default function $arg() {
-  return ();
+  return <></>;
 }
 EOF
 )

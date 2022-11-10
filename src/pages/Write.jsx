@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./NewBlog.scss";
+import "./Write.scss";
 
-export default function NewBlog() {
+export default function Write() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,8 +26,8 @@ export default function NewBlog() {
   }
 
   return (
-    <div className="page new-blog">
-      <h1>Create New Blog</h1>
+    <div className="page write-page">
+      <h1>New Blog</h1>
 
       <form action="POST" className="form" onSubmit={handleSubmit}>
         <div className="form__field">
