@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import "./Write.scss";
 
 export default function Write() {
@@ -43,16 +45,13 @@ export default function Write() {
         </div>
 
         <div className="form__field">
+          <label>Thumbnail:</label>
+          <input name="thumbnail" type="file" accept="image/png, image/gif, image/jpeg" required />
+        </div>
+
+        <div>
           <label>Body:</label>
-          <textarea
-            name="body"
-            cols="30"
-            rows="10"
-            placeholder="Start typing here..."
-            required
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-          ></textarea>
+          <ReactQuill theme="snow" value={body} onChange={setBody}></ReactQuill>
         </div>
 
         <button type="submit" className="btn" disabled={isSubmitting}>

@@ -6,6 +6,123 @@
 
   .btn {
     display: block;
-    margin: 0 auto;
+    margin: 1rem auto 0;
+  }
+
+  // react quill's customizations
+  .ql-toolbar {
+    border: 1px solid #000;
+    border-radius: 5px 5px 0 0;
+  }
+
+  .ql-snow.ql-toolbar button:not(.ql-active),
+  .ql-snow .ql-toolbar button:not(.ql-active) {
+    color: #dedede;
+  }
+
+  .ql-snow.ql-toolbar button:not(.ql-active) .ql-fill,
+  .ql-snow .ql-toolbar button:not(.ql-active) .ql-fill,
+  .ql-snow.ql-toolbar button:not(.ql-active) .ql-stroke.ql-fill,
+  .ql-snow .ql-toolbar button:not(.ql-active) .ql-stroke.ql-fill {
+    fill: #dedede;
+  }
+
+  .ql-snow.ql-toolbar button:not(.ql-active) .ql-stroke,
+  .ql-snow .ql-toolbar button:not(.ql-active) .ql-stroke,
+  .ql-snow.ql-toolbar button:not(.ql-active) .ql-stroke-miter,
+  .ql-snow .ql-toolbar button:not(.ql-active) .ql-stroke-miter {
+    stroke: #dedede;
+  }
+
+  .ql-snow.ql-toolbar button:hover:not(.ql-active),
+  .ql-snow .ql-toolbar button:hover:not(.ql-active),
+  .ql-snow.ql-toolbar button.ql-active,
+  .ql-snow .ql-toolbar button.ql-active {
+    stroke: var(--primary-color);
+  }
+
+  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-fill,
+  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-fill,
+  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill,
+  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill,
+  .ql-snow.ql-toolbar button.ql-active .ql-fill,
+  .ql-snow .ql-toolbar button.ql-active .ql-fill,
+  .ql-snow.ql-toolbar button.ql-active .ql-stroke.ql-fill,
+  .ql-snow .ql-toolbar button.ql-active .ql-stroke.ql-fill {
+    fill: var(--primary-color);
+  }
+
+  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke,
+  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke,
+  .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter,
+  .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter,
+  .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+  .ql-snow .ql-toolbar button.ql-active .ql-stroke,
+  .ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,
+  .ql-snow .ql-toolbar button.ql-active .ql-stroke-miter {
+    stroke: var(--primary-color);
+  }
+
+  .ql-snow .ql-picker {
+    color: #dedede;
+
+    &-label.ql-active {
+      color: var(--primary-color);
+
+      .ql-stroke {
+        stroke: var(--primary-color);
+      }
+    }
+
+    .ql-stroke {
+      stroke: #dedede;
+    }
+
+    &:hover {
+      .ql-picker-label {
+        color: var(--primary-color);
+      }
+
+      .ql-stroke {
+        stroke: var(--primary-color);
+      }
+    }
+  }
+
+  .ql-picker-options {
+    background-color: var(--bg-color);
+    border-radius: 5px;
+    border: none !important;
+    color: #fff;
+
+    .ql-picker-item.ql-selected,
+    .ql-picker-item:hover {
+      color: var(--primary-color);
+    }
+  }
+
+  .ql-snow .ql-tooltip {
+    background-color: var(--bg-color);
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 5px 12px;
+    white-space: nowrap;
+
+    input[type="text"] {
+      border: none;
+    }
+  }
+
+  .ql-container {
+    border-radius: 0 0 5px 5px;
+    background-color: #2f2f2f;
+    border: 1px solid #000;
+    font-size: 1rem;
+
+    a {
+      color: var(--primary-color);
+    }
   }
 }

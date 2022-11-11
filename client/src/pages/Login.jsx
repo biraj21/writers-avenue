@@ -10,7 +10,7 @@ export default function Login() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const user = { email, password };
+    const user = { email: email.trim(), password: password.trim() };
     console.log(user);
   }
 

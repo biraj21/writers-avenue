@@ -12,7 +12,12 @@ export default function Register() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const user = { name, email, password, confirmPassword };
+    const user = {
+      name: name.trim(),
+      email: email.trim(),
+      password: password.trim(),
+      confirmPassword: confirmPassword.trim(),
+    };
     console.log(user);
   }
 
