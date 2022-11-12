@@ -119,6 +119,12 @@ textarea {
     text-align: center;
   }
 
+  .error {
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--red);
+  }
+
   .btn {
     display: block;
     margin: 0 auto;

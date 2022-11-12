@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -7,18 +8,40 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    setIsSubmitting(true);
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
+      setIsSubmitting(true);
 
-    const user = {
-      name: name.trim(),
-      email: email.trim(),
-      password: password.trim(),
-      confirmPassword: confirmPassword.trim(),
-    };
-    console.log(user);
+      if (password.includes(" ") || confirmPassword.includes(" ")) {
+        throw new Error("Passwords shouldn't have spaces.");
+      } else if (password !== confirmPassword) {
+        throw new Error("Both passwords shold match.");
+      }
+
+      const user = {
+        name: name.trim(),
+        email: email.trim(),
+        password: password,
+        confirmPassword: confirmPassword,
+      };
+
+      const res = await axios.post(`/auth/register`, user);
+      console.log(res);
+      setError(null);
+    } catch (err) {
+      console.error(err);
+
+      if (err.response) {
+        setError(err.response.data.error);
+      } else {
+        setError(err.message);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -78,6 +101,8 @@ export default function Register() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
+
+        {error && <div className="error">{error}</div>}
 
         <button type="submit" className="btn" disabled={isSubmitting}>
           {isSubmitting ? "Creating..." : "Create Account"}
