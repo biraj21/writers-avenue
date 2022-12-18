@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { CurrentUserContext } from "../contexts/currentUserContext";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -9,31 +10,34 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const { setCurrentUser } = useContext(CurrentUserContext);
 
   async function handleSubmit(e) {
     try {
       e.preventDefault();
+      setError(null);
       setIsSubmitting(true);
 
       if (password.includes(" ") || confirmPassword.includes(" ")) {
-        throw new Error("Passwords shouldn't have spaces.");
+        throw new Error("Passwords cannot have spaces!");
+      } else if (password.length < 8) {
+        throw new Error("Password should be at least 8 characters long!");
       } else if (password !== confirmPassword) {
-        throw new Error("Both passwords shold match.");
+        throw new Error("Passwords do not match!");
       }
 
       const user = {
         name: name.trim(),
         email: email.trim(),
-        password: password,
-        confirmPassword: confirmPassword,
+        password,
+        confirmPassword,
       };
 
-      const res = await axios.post(`/auth/register`, user);
-      console.log(res);
-      setError(null);
+      const res = await axios.post("/auth/register", user);
+      setCurrentUser(res.data.data);
+      navigate("/");
     } catch (err) {
       console.error(err);
-
       if (err.response) {
         setError(err.response.data.error);
       } else {
@@ -63,7 +67,7 @@ export default function Register() {
 
         <div className="form__field">
           <label>Picture:</label>
-          <input name="avatar" type="file" required accept="image/png, image/gif, image/jpeg" />
+          <input name="avatar" type="file" accept="image/png, image/gif, image/jpeg" />
         </div>
 
         <div className="form__field">
@@ -74,6 +78,7 @@ export default function Register() {
             placeholder="Email address"
             required
             value={email}
+            autoComplete="username"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -86,6 +91,7 @@ export default function Register() {
             placeholder="Password"
             required
             value={password}
+            autoComplete="new-password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
@@ -98,6 +104,7 @@ export default function Register() {
             placeholder="Confirm password"
             required
             value={confirmPassword}
+            autoComplete="new-password"
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>

@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.scss";
 import Navbar from "./components/Navbar";
-import Blog from "./pages/Blog";
+import Post from "./pages/Post";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
@@ -21,7 +21,7 @@ export default function App() {
       <div className="content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/blogs/:id" element={<Blog />} />
+          <Route path="/posts/:id" element={<Post />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/write" element={<Write />} />

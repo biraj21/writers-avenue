@@ -1,14 +1,14 @@
-.blog-list {
+.post-list {
   > h2 {
     margin-bottom: 1rem;
     text-align: center;
   }
 
-  .blog-link {
+  .post-link {
     text-decoration: none;
   }
 
-  .blog-preview {
+  .post-preview {
     margin-bottom: 1rem;
     padding: 10px;
     border: 1px solid #333;
@@ -63,7 +63,7 @@
   }
 
   @media screen and (max-width: 620px) {
-    .blog-preview__image {
+    .post-preview__image {
       height: 150px;
     }
   }

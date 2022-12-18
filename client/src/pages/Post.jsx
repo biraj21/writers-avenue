@@ -1,10 +1,10 @@
 import { Link, useParams } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
-import "./Blog.scss";
+import "./Post.scss";
 
-export default function Blog() {
+export default function Post() {
   const { id } = useParams();
-  const { data: blog, error } = useFetch(`${serverBaseUrl}/blogs/${id}`);
+  const { data: post, error } = useFetch(`${serverBaseUrl}/posts/${id}`);
 
   function handleDelete(e) {
     if (!confirm("This post will be permanently deleted. Are you sure?")) {
@@ -17,10 +17,10 @@ export default function Blog() {
   let content;
   if (error) {
     content = <p className="error-msg">{error}</p>;
-  } else if (blog) {
+  } else if (post) {
     content = (
       <>
-        <div className="blog__actions">
+        <div className="post__actions">
           <Link to="/write?edit=2" className="btn">
             Edit
           </Link>
@@ -30,24 +30,24 @@ export default function Blog() {
           </button>
         </div>
 
-        <h1>{blog.title}</h1>
-        <img src={blog.imageUrl} alt="Thumbnail" />
+        <h1>{post.title}</h1>
+        <img src={post.imageUrl} alt="Thumbnail" />
 
-        <div className="blog__author">
-          <img src={blog.author.imageUrl} alt="Avatar" />
+        <div className="post__author">
+          <img src={post.author.imageUrl} alt="Avatar" />
           <div>
-            <span>Written by {blog.author.name}</span>
+            <span>Written by {post.author.name}</span>
             <br />
             <small>Posted 2 days ago</small>
           </div>
         </div>
 
-        <div className="blog__body">{blog.body}</div>
+        <div className="post__body">{post.body}</div>
       </>
     );
   } else {
     content = <h3 className="loading-msg">Loading...</h3>;
   }
 
-  return <div className="page blog">{content}</div>;
+  return <div className="page post">{content}</div>;
 }

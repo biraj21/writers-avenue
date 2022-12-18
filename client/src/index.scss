@@ -8,7 +8,8 @@
   --bg-color: #111;
   --primary-color: #c391f4;
   --grey: #808080;
-  --red: #e44848;
+  // --red: #e44848;
+  --red: #ff7272;
   --font: "Nunito", sans-serif;
 
   font-family: var(--font);
@@ -46,7 +47,7 @@ textarea {
 }
 
 .error-msg {
-  color: #ff6060;
+  color: var(--red);
 }
 
 .page {
@@ -110,8 +111,8 @@ textarea {
 }
 
 // login & register page
-.login,
-.register {
+.login.page,
+.register.page {
   max-width: 400px;
 
   h2 {

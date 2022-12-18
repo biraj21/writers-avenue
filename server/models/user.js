@@ -28,7 +28,7 @@ export default class User {
     let conn;
     try {
       conn = await dbPool.getConnection();
-      return (await conn.query("SELECT `id`, `name`, `email`, `imageUrl` FROM `User` WHERE `email` = ?", [email]))[0];
+      return (await conn.query("SELECT * FROM `User` WHERE `email` = ?", [email]))[0];
     } catch (err) {
       throw err;
     } finally {

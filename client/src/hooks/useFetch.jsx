@@ -8,12 +8,12 @@ export function useFetch(url) {
     const abortController = new AbortController();
 
     fetch(url, { signal: abortController.signal })
-      .then((res) => {
+      .then(async (res) => {
         if (res.ok) {
           return res.json();
         }
 
-        throw new Error(`${res.status}: ${res.statusText}`);
+        throw new Error((await res.json()).error);
       })
       .then((data) => {
         setData(data);

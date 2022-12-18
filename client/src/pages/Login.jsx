@@ -1,17 +1,42 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { CurrentUserContext } from "../contexts/currentUserContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+  const { setCurrentUser } = useContext(CurrentUserContext);
+  const navigate = useNavigate();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    setIsSubmitting(true);
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
+      setError(null);
+      setIsSubmitting(true);
 
-    const user = { email: email.trim(), password: password.trim() };
-    console.log(user);
+      if (password.includes(" ")) {
+        throw new Error("Passwords cannot have spaces!");
+      } else if (password.length < 8) {
+        throw new Error("Password should be at least 8 characters long!");
+      }
+
+      const user = { email: email.trim(), password };
+      const res = await axios.post("/auth/login", user);
+      setCurrentUser(res.data.data);
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        setError(err.response.data.error);
+      } else {
+        setError(err.message);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -27,6 +52,7 @@ export default function Login() {
             placeholder="Email address"
             required
             value={email}
+            autoComplete="username"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -39,9 +65,12 @@ export default function Login() {
             placeholder="Password"
             required
             value={password}
+            autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+
+        {error && <div className="error">{error}</div>}
 
         <button type="submit" className="btn" disabled={isSubmitting}>
           {isSubmitting ? "Logging in..." : "Login"}
