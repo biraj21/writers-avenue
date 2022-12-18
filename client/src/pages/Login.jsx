@@ -40,7 +40,7 @@ export default function Login() {
   }
 
   return (
-    <div className="page login">
+    <div className="page login-page">
       <h2>Login</h2>
 
       <form action="POST" className="form" onSubmit={handleSubmit}>

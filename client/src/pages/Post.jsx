@@ -19,7 +19,7 @@ export default function Post() {
     content = <p className="error-msg">{error}</p>;
   } else if (post) {
     content = (
-      <>
+      <div className="post">
         <div className="post__actions">
           <Link to="/write?edit=2" className="btn">
             Edit
@@ -43,11 +43,11 @@ export default function Post() {
         </div>
 
         <div className="post__body">{post.body}</div>
-      </>
+      </div>
     );
   } else {
     content = <h3 className="loading-msg">Loading...</h3>;
   }
 
-  return <div className="page post">{content}</div>;
+  return <div className="page post-page">{content}</div>;
 }

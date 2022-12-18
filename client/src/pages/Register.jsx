@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/currentUserContext";
 
@@ -49,7 +49,7 @@ export default function Register() {
   }
 
   return (
-    <div className="page register">
+    <div className="page register-page">
       <h2>Create New Account</h2>
 
       <form action="POST" className="form" onSubmit={handleSubmit}>
@@ -67,7 +67,7 @@ export default function Register() {
 
         <div className="form__field">
           <label>Picture:</label>
-          <input name="avatar" type="file" accept="image/png, image/gif, image/jpeg" />
+          <input name="avatar" type="file" accept="image/png, image/gif, image/jpeg" required />
         </div>
 
         <div className="form__field">

@@ -27,7 +27,7 @@ export default function Home() {
   }
 
   return (
-    <div className="page home">
+    <div className="page home-page">
       <div className="categories">
         <Link to="/" className={activeCategory === null ? "active" : ""}>
           ALL
