@@ -1,7 +1,7 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
 import "./Home.scss";
-import PostList from "../components/PostList";
+import PostPreview from "../components/PostPreview";
 
 const categories = ["art", "business", "cinema", "food", "science", "technology"];
 
@@ -15,7 +15,13 @@ export default function Home() {
   if (error) {
     content = <p className="error-msg">{error}</p>;
   } else if (posts) {
-    content = <PostList posts={posts} />;
+    content = (
+      <div className="posts">
+        {posts.map((post) => (
+          <PostPreview post={post} key={post.id} />
+        ))}
+      </div>
+    );
   } else {
     content = <h3 className="loading-msg">Loading...</h3>;
   }

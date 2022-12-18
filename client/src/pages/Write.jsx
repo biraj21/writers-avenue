@@ -28,7 +28,7 @@ export default function Write() {
   }
 
   return (
-    <div className="page write-page">
+    <div className="page write">
       <h1>New Blog</h1>
 
       <form action="POST" className="form" onSubmit={handleSubmit}>
