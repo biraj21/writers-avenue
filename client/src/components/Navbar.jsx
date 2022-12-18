@@ -1,17 +1,30 @@
+import axios from "axios";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { authContext } from "../contexts/authContext";
 import "./Navbar.scss";
 
-export default function Navbar({ links }) {
+export default function Navbar() {
+  const { currentUser, logout } = useContext(authContext);
+
   return (
     <nav className="navbar">
       <div className="wrapper">
         <h1>Blogs</h1>
         <div className="navbar__links">
-          {links.map((link) => (
-            <NavLink to={link.path} key={link.path} end={link.end}>
-              {link.text}
-            </NavLink>
-          ))}
+          <NavLink to="/" end={true}>
+            Home
+          </NavLink>
+
+          <NavLink to="/write">Write</NavLink>
+
+          {currentUser ? (
+            <button className="btn" onClick={logout}>
+              Logout
+            </button>
+          ) : (
+            <NavLink to="/login">Login</NavLink>
+          )}
         </div>
       </div>
     </nav>

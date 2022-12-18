@@ -8,16 +8,10 @@ import PageNotFound from "./pages/PageNotFound";
 import Register from "./pages/Register";
 import Write from "./pages/Write";
 
-const links = [
-  { path: "/", text: "Home", end: true },
-  { path: "/write", text: "Write" },
-  { path: "/login", text: "Login" },
-];
-
 export default function App() {
   return (
     <div className="app">
-      <Navbar links={links} />
+      <Navbar />
       <div className="content">
         <Routes>
           <Route path="/" element={<Home />} />

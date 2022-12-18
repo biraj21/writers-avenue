@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import express from "express";
+import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import { ValidationError } from "../util/error.js";
 
@@ -23,20 +24,14 @@ router.post("/login", async (req, res, next) => {
       throw new ValidationError("Incorrect email or password!");
     }
 
-    res.json({ data: { name: user.name, imageUrl: user.imageUrl } });
+    const token = jwt.sign(user.id, process.env.JWT_SECRET);
+    res.json({ data: { name: user.name, imageUrl: user.imageUrl }, token });
   } catch (err) {
     if (err instanceof ValidationError) {
       res.status(422).json({ error: err.message });
       return;
     }
 
-    next(err);
-  }
-});
-
-router.post("/logout", async (req, res, next) => {
-  try {
-  } catch (err) {
     next(err);
   }
 });
@@ -57,8 +52,12 @@ router.post("/register", async (req, res, next) => {
       throw new ValidationError("Passwords do not match!");
     }
 
-    await User.create({ name, email, imageUrl: "none", password });
-    res.json({ data: "User successfully created." });
+    const imageUrl = "none";
+
+    const { insertId } = await User.create({ name, email, imageUrl, password });
+    console.log(insertId);
+    const token = jwt.sign(Number(insertId), process.env.JWT_SECRET);
+    res.json({ data: { name, imageUrl }, token });
   } catch (err) {
     if (err instanceof ValidationError) {
       res.status(422).json({ error: err.message });

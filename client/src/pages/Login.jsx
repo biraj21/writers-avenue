@@ -1,15 +1,13 @@
-import axios from "axios";
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { CurrentUserContext } from "../contexts/currentUserContext";
+import { Link } from "react-router-dom";
+import { authContext } from "../contexts/authContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
-  const { setCurrentUser } = useContext(CurrentUserContext);
-  const navigate = useNavigate();
+  const { login } = useContext(authContext);
 
   async function handleSubmit(e) {
     try {
@@ -24,9 +22,7 @@ export default function Login() {
       }
 
       const user = { email: email.trim(), password };
-      const res = await axios.post("/auth/login", user);
-      setCurrentUser(res.data.data);
-      navigate("/");
+      await login(user);
     } catch (err) {
       console.error(err);
       if (err.response) {

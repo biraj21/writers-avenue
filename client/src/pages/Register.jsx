@@ -1,7 +1,6 @@
-import axios from "axios";
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { CurrentUserContext } from "../contexts/currentUserContext";
+import { authContext } from "../contexts/authContext";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -10,7 +9,7 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
-  const { setCurrentUser } = useContext(CurrentUserContext);
+  const { register } = useContext(authContext);
 
   async function handleSubmit(e) {
     try {
@@ -33,9 +32,7 @@ export default function Register() {
         confirmPassword,
       };
 
-      const res = await axios.post("/auth/register", user);
-      setCurrentUser(res.data.data);
-      navigate("/");
+      await register(user);
     } catch (err) {
       console.error(err);
       if (err.response) {

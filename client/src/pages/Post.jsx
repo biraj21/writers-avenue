@@ -1,10 +1,10 @@
 import { Link, useParams } from "react-router-dom";
-import { useFetch } from "../hooks/useFetch";
+import { useAxiosGet } from "../hooks/useAxiosGet";
 import "./Post.scss";
 
 export default function Post() {
   const { id } = useParams();
-  const { data: post, error } = useFetch(`${serverBaseUrl}/posts/${id}`);
+  const { data: post, error } = useAxiosGet(`/posts/${id}`);
 
   function handleDelete(e) {
     if (!confirm("This post will be permanently deleted. Are you sure?")) {

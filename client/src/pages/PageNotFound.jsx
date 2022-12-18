@@ -4,7 +4,7 @@ import "./PageNotFound.scss";
 export default function PageNotFound() {
   return (
     <div className="page not-found-page">
-      <h2>We didn't find the page that you are looking for.</h2>
+      <h2>We couldn't find the page that you are looking for.</h2>
       <Link to="/" className="btn">
         Homepage
       </Link>

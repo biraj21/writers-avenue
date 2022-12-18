@@ -1,7 +1,7 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { useFetch } from "../hooks/useFetch";
-import "./Home.scss";
+import { useAxiosGet } from "../hooks/useAxiosGet";
 import PostPreview from "../components/PostPreview";
+import "./Home.scss";
 
 const categories = ["art", "business", "cinema", "food", "science", "technology"];
 
@@ -9,7 +9,7 @@ export default function Home() {
   const [searchParams] = useSearchParams();
   const activeCategory = searchParams.get("cat");
 
-  const { data: posts, error } = useFetch(`${serverBaseUrl}/posts`);
+  const { data: posts, error } = useAxiosGet("/posts");
 
   let content;
   if (error) {
