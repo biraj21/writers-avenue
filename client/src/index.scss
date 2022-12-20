@@ -68,6 +68,7 @@ textarea {
   font-size: 1rem;
   line-height: 1;
   text-decoration: none;
+  transition: background-color 300ms, opacity 300ms;
   cursor: pointer;
 
   &:disabled {
@@ -75,9 +76,21 @@ textarea {
     cursor: not-allowed;
   }
 
+  &:hover {
+    background-color: var(--primary-color);
+    color: #000;
+    opacity: 0.8;
+  }
+
   &--small {
     padding: 3px 6px;
     font-size: 0.65rem;
+  }
+
+  &--stroked {
+    border: 1px solid var(--primary-color);
+    background: none;
+    color: #fff;
   }
 
   &--red {

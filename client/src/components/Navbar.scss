@@ -23,13 +23,11 @@
 
     a {
       margin-right: 5px;
-      padding: 5px 10px;
+      padding: 6px 10px;
       border-radius: 5px;
       text-decoration: none;
-
-      &:last-of-type {
-        margin-right: 0;
-      }
+      display: inline-block;
+      line-height: 1;
 
       &:hover {
         color: var(--primary-color);

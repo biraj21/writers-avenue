@@ -3,7 +3,7 @@ import { useAxiosGet } from "../hooks/useAxiosGet";
 import PostPreview from "../components/PostPreview";
 import "./Home.scss";
 
-const categories = ["art", "business", "cinema", "food", "science", "technology"];
+export const categories = ["art", "business", "cinema", "food", "science", "technology"];
 
 export default function Home() {
   const [searchParams] = useSearchParams();

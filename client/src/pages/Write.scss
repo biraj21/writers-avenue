@@ -1,12 +1,60 @@
 .write-page {
+  max-width: 916px;
+
   h1 {
     margin-bottom: 1rem;
     text-align: center;
   }
 
-  .btn {
-    display: block;
-    margin: 1rem auto 0;
+  form {
+    display: flex;
+
+    .left {
+      flex-grow: 1;
+    }
+
+    .right {
+      max-width: 300px;
+      margin-left: 16px;
+    }
+  }
+
+  .status-card,
+  .category-card {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #000;
+    border-radius: 5px;
+
+    h2 {
+      margin-bottom: 10px;
+    }
+  }
+
+  .status-card .actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+
+    .btn {
+      margin-right: 10px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .category-card .category {
+    display: inline-flex;
+    align-items: center;
+    text-transform: capitalize;
+    margin-right: 1rem;
+
+    label {
+      margin-bottom: 0;
+      line-height: 1;
+    }
   }
 
   // react quill's customizations
@@ -123,6 +171,19 @@
 
     a {
       color: var(--primary-color);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 600px;
+
+    .form {
+      display: block;
+
+      .right {
+        max-width: none;
+        margin-left: 0;
+      }
     }
   }
 }
