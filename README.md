@@ -1,4 +1,4 @@
 # React Blogs
-A React app (work in progress) for blogs website, currently using a dummy JSON server. Backend is work in progress.
+A blog website with frontend written in React & Sass, Node.js (Express) for backend and MariaDB for database. It uses JWT for authentication - getting the token form local storage & sending it to the server with every request header.
 
 ![Screenshot](ss.png "Screenshot")
