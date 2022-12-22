@@ -1,10 +1,15 @@
+import moment from "moment";
+import { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
+import { Edit, Trash2 } from "react-feather";
+import { authContext } from "../contexts/authContext";
 import { useAxiosGet } from "../hooks/useAxiosGet";
 import "./Post.scss";
 
 export default function Post() {
   const { id } = useParams();
   const { data: post, error } = useAxiosGet(`/posts/${id}`);
+  const { currentUser } = useContext(authContext);
 
   function handleDelete(e) {
     if (!confirm("This post will be permanently deleted. Are you sure?")) {
@@ -14,32 +19,36 @@ export default function Post() {
     console.log("deleted");
   }
 
+  const postActionsJSX = (
+    <div className="post__actions">
+      <Link to="/write?edit=2" title="Edit Post">
+        <Edit color="var(--primary-color)" />
+      </Link>
+
+      <button onClick={handleDelete} title="Delete Post">
+        <Trash2 color="var(--red)" />
+      </button>
+    </div>
+  );
+
   let content;
   if (error) {
     content = <p className="error-msg">{error}</p>;
   } else if (post) {
     content = (
       <div className="post">
-        <div className="post__actions">
-          <Link to="/write?edit=2" className="btn">
-            Edit
-          </Link>
-
-          <button className="btn btn--red" onClick={handleDelete}>
-            Delete
-          </button>
-        </div>
-
         <h1>{post.title}</h1>
         <img src={post.imageUrl} alt="Thumbnail" />
 
         <div className="post__author">
-          <img src={post.author.imageUrl} alt="Avatar" />
+          <img src={post.authorAvatarUrl} alt="Avatar" />
           <div>
-            <span>Written by {post.author.name}</span>
+            <span>Written by {post.authorName}</span>
             <br />
-            <small>Posted 2 days ago</small>
+            <small>{moment(post.uploadDate).fromNow()}</small>
           </div>
+
+          {currentUser?.id === post.authorId && postActionsJSX}
         </div>
 
         <div className="post__body">{post.body}</div>

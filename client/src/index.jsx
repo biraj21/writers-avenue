@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "./index.scss";
 import App from "./App";
-import { CurrentUserProvider } from "./contexts/authContext";
+import { AuthContextProvider } from "./contexts/authContext";
 
 axios.defaults.baseURL = "http://localhost:3000/api";
 axios.interceptors.request.use(
@@ -26,9 +26,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <CurrentUserProvider>
+      <AuthContextProvider>
         <App />
-      </CurrentUserProvider>
+      </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -10,7 +10,7 @@ export function useAxiosGet(url) {
     axios
       .get(url, { signal: abortController.signal })
       .then((res) => {
-        setData(res.data);
+        setData(res.data.data);
         setError(null);
       })
       .catch((err) => {

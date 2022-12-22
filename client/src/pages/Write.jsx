@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { authContext } from "../contexts/authContext";
 import { categories } from "./Home";
 import "./Write.scss";
 
@@ -9,6 +10,7 @@ export default function Write() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { currentUser } = useContext(authContext);
 
   const navigate = useNavigate();
 
@@ -16,16 +18,8 @@ export default function Write() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const blog = { title: title.trim(), author: "Biraj", body: body.trim() };
-
-    fetch(`${serverBaseUrl}/blogs`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(blog),
-    })
-      .then((res) => res.json())
-      .then(({ id }) => navigate(`/blogs/${id}`))
-      .catch((err) => console.error(err));
+    const post = { title: title.trim(), author: currentUser.name, body: body.trim() };
+    console.log(post);
   }
 
   return (
@@ -70,9 +64,11 @@ export default function Write() {
             </div>
 
             <div className="actions">
-              <button className="btn btn--stroked">Save As Draft</button>
-              <button type="submit" className="btn" disabled={isSubmitting}>
-                {isSubmitting ? "Publishing..." : "Publish"}
+              <button className="btn btn--stroked" disabled={isSubmitting} data-action="saveDraft">
+                {isSubmitting ? "Saving..." : "Save As Draft"}
+              </button>
+              <button type="submit" className="btn" disabled={isSubmitting} data-action="publish">
+                {isSubmitting ? "Saving..." : "Publish"}
               </button>
             </div>
           </div>
@@ -82,7 +78,7 @@ export default function Write() {
 
             {categories.map((category, i) => (
               <div className="category" key={i}>
-                <input type="radio" name="category" />
+                <input type="radio" name="category" required />
                 &nbsp;
                 <label>{category}</label>
               </div>

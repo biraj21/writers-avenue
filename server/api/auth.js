@@ -25,7 +25,7 @@ router.post("/login", async (req, res, next) => {
     }
 
     const token = jwt.sign(user.id, process.env.JWT_SECRET);
-    res.json({ data: { name: user.name, imageUrl: user.imageUrl }, token });
+    res.json({ data: { id: user.id, name: user.name, imageUrl: user.imageUrl }, token });
   } catch (err) {
     if (err instanceof ValidationError) {
       res.status(422).json({ error: err.message });
@@ -55,9 +55,9 @@ router.post("/register", async (req, res, next) => {
     const imageUrl = "none";
 
     const { insertId } = await User.create({ name, email, imageUrl, password });
-    console.log(insertId);
-    const token = jwt.sign(Number(insertId), process.env.JWT_SECRET);
-    res.json({ data: { name, imageUrl }, token });
+    const userId = Number(insertId);
+    const token = jwt.sign(userId, process.env.JWT_SECRET);
+    res.json({ data: { id: userId, name, imageUrl }, token });
   } catch (err) {
     if (err instanceof ValidationError) {
       res.status(422).json({ error: err.message });
