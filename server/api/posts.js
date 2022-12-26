@@ -26,7 +26,12 @@ router.get("/", async (req, res, next) => {
 router.get("/:postId", async (req, res, next) => {
   try {
     let { postId } = req.params;
-    console.log(postId);
+    postId = Number(postId);
+    if (!Number.isInteger(postId)) {
+      res.status(404).json({ error: "Post not found!" });
+      return;
+    }
+
     const post = await Post.findById(postId);
     if (!post) {
       res.status(404).json({ error: "Post not found!" });
