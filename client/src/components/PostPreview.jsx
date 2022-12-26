@@ -15,14 +15,11 @@ export default function PostPreview({ post }) {
       </div>
 
       <img src={post.imageUrl} alt="Thumbnail" className="post-preview__image" />
-      <h2 className="post-preview__title">{post.title}</h2>
+      <Link to={`/posts/${post.id}`} className="post-preview__read-more">
+        <h2 className="post-preview__title">{post.title}</h2>
+      </Link>
       <p className="post-preview__body">{post.body}</p>
-
-      <div className="post-preview__actions">
-        <Link to={`/posts/${post.id}`} className="btn btn--small">
-          Read More
-        </Link>
-      </div>
+      <div className="post-preview__actions"></div>
     </div>
   );
 }

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { authContext } from "../contexts/authContext";

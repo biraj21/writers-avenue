@@ -20,7 +20,7 @@ export function useAxiosGet(url) {
       });
 
     return () => abortController.abort();
-  }, []);
+  }, [url]);
 
   return { data, setData, error, setError };
 }

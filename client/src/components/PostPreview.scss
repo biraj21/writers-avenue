@@ -31,6 +31,14 @@
     object-fit: cover;
   }
 
+  &__read-more {
+    text-decoration: none;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+
   &__title {
     line-height: 1;
   }
@@ -41,14 +49,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-
-  &__actions .btn {
-    margin-right: 0.5rem;
-
-    &:last-child {
-      margin-right: 0;
-    }
   }
 
   @media screen and (max-width: 620px) {

@@ -9,7 +9,7 @@ export default function Home() {
   const [searchParams] = useSearchParams();
   const activeCategory = searchParams.get("cat");
 
-  const { data: posts, error } = useAxiosGet("/posts");
+  const { data: posts, error } = useAxiosGet(`/posts${activeCategory ? `?cat=${activeCategory}` : ""}`);
 
   let content;
   if (error) {
@@ -17,6 +17,7 @@ export default function Home() {
   } else if (posts) {
     content = (
       <div className="posts">
+        {posts.length === 0 && "No posts found in this category."}
         {posts.map((post) => (
           <PostPreview post={post} key={post.id} />
         ))}
