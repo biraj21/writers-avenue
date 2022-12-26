@@ -1,3 +1,4 @@
+import e from "express";
 import express from "express";
 import Post from "../models/post.js";
 
@@ -6,8 +7,16 @@ import Post from "../models/post.js";
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
+  const { cat } = req.query;
+
   try {
-    const posts = await Post.findAll();
+    let posts;
+    if (cat) {
+      posts = await Post.findSomeByCategory(cat);
+    } else {
+      posts = await Post.findAll();
+    }
+
     res.json({ data: posts });
   } catch (err) {
     next(err);
