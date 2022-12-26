@@ -15,12 +15,13 @@
 
     .right {
       max-width: 300px;
+      width: 100%;
       margin-left: 16px;
     }
   }
 
-  .status-card,
-  .category-card {
+  .category-card,
+  .status-card {
     margin-top: 1rem;
     padding: 1rem;
     border: 1px solid #000;
@@ -28,6 +29,18 @@
 
     h2 {
       margin-bottom: 10px;
+    }
+  }
+
+  .category-card .category {
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    margin-right: 1rem;
+
+    label {
+      margin-bottom: 0;
+      line-height: 1;
     }
   }
 
@@ -42,18 +55,6 @@
       &:last-child {
         margin-right: 0;
       }
-    }
-  }
-
-  .category-card .category {
-    display: inline-flex;
-    align-items: center;
-    text-transform: capitalize;
-    margin-right: 1rem;
-
-    label {
-      margin-bottom: 0;
-      line-height: 1;
     }
   }
 

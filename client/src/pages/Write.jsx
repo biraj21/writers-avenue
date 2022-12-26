@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { authContext } from "../contexts/authContext";
@@ -9,16 +8,15 @@ import "./Write.scss";
 export default function Write() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [category, setCategory] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { currentUser } = useContext(authContext);
-
-  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const post = { title: title.trim(), author: currentUser.name, body: body.trim() };
+    const post = { title: title.trim(), author: currentUser.name, body: body.trim(), category };
     console.log(post);
   }
 
@@ -52,6 +50,18 @@ export default function Write() {
         </div>
 
         <div className="right">
+          <div className="category-card">
+            <h2>Category</h2>
+
+            {categories.map((category, i) => (
+              <div className="category" key={i}>
+                <input type="radio" name="category" required onChange={(e) => setCategory(category)} />
+                &nbsp;
+                <label>{category}</label>
+              </div>
+            ))}
+          </div>
+
           <div className="status-card">
             <h2>Publish</h2>
 
@@ -71,18 +81,6 @@ export default function Write() {
                 {isSubmitting ? "Saving..." : "Publish"}
               </button>
             </div>
-          </div>
-
-          <div className="category-card">
-            <h2>Category</h2>
-
-            {categories.map((category, i) => (
-              <div className="category" key={i}>
-                <input type="radio" name="category" required />
-                &nbsp;
-                <label>{category}</label>
-              </div>
-            ))}
           </div>
         </div>
       </form>
