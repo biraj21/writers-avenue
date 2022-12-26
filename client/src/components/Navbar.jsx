@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { authContext } from "../contexts/authContext";
 import "./Navbar.scss";
 
@@ -9,7 +9,11 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="wrapper">
-        <h1>Blogs</h1>
+        <h1>
+          <Link to="/" end={true}>
+            Blogs
+          </Link>
+        </h1>
         <div className="navbar__links">
           <NavLink to="/" end={true}>
             Home

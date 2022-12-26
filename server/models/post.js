@@ -13,6 +13,20 @@ export default class Post {
     }
   }
 
+  static async deleteByIdAndUser(id, userId) {
+    let conn;
+    try {
+      conn = await dbPool.getConnection();
+      return await conn.query("DELETE FROM Post WHERE id = ? AND userId = ?", [id, userId]);
+    } catch (err) {
+      throw err;
+    } finally {
+      if (conn) {
+        conn.release();
+      }
+    }
+  }
+
   static async findAll() {
     let conn;
     try {
@@ -39,7 +53,7 @@ ON p.userId  = u.id`);
     }
   }
 
-  static async findById(postId) {
+  static async findById(id) {
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -56,7 +70,7 @@ SELECT
   u.imageUrl authorAvatarUrl
 FROM \`Post\` p JOIN \`User\` u
 ON p.userId = u.id AND p.id = ?`;
-      return (await conn.query(query, [postId]))[0];
+      return (await conn.query(query, [id]))[0];
     } catch (err) {
       throw err;
     } finally {

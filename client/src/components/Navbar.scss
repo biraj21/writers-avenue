@@ -14,8 +14,9 @@
     align-items: center;
   }
 
-  h1 {
+  h1 a {
     color: var(--primary-color);
+    text-decoration: none;
   }
 
   &__links {

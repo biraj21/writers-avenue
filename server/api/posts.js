@@ -44,4 +44,32 @@ router.get("/:postId", async (req, res, next) => {
   }
 });
 
+router.delete("/:postId", async (req, res, next) => {
+  console.log(req.params.postId, req.userId);
+
+  try {
+    if (!req.userId) {
+      res.status(403).json({ error: "You are not authorized to perform this action!" });
+      return;
+    }
+
+    let { postId } = req.params;
+    postId = Number(postId);
+    if (!Number.isInteger(postId)) {
+      res.status(404).json({ error: "Post not found!" });
+      return;
+    }
+
+    const { affectedRows } = await Post.deleteByIdAndUser(postId, req.userId);
+    if (affectedRows === 0) {
+      res.status(403).json({ error: "You are not authorized to perform this action!" });
+      return;
+    }
+
+    res.json({});
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;

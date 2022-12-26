@@ -1,6 +1,7 @@
+import axios from "axios";
 import moment from "moment";
 import { useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Edit, Trash2 } from "react-feather";
 import PostPreview from "../components/PostPreview";
 import { authContext } from "../contexts/authContext";
@@ -11,13 +12,24 @@ export default function Post() {
   const { id } = useParams();
   const { data: post, error } = useAxiosGet(`/posts/${id}`);
   const { currentUser } = useContext(authContext);
+  const navigate = useNavigate();
 
-  function handleDelete(e) {
+  async function handleDelete(e) {
     if (!confirm("This post will be permanently deleted. Are you sure?")) {
       return;
     }
 
-    console.log("deleted");
+    try {
+      await axios.delete(`/posts/${id}`);
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        alert(err.response.data.error);
+      } else {
+        alert(err.message);
+      }
+    }
   }
 
   const postActionsJSX = (
