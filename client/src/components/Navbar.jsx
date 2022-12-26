@@ -10,9 +10,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="wrapper">
         <h1>
-          <Link to="/" end={true}>
-            Blogs
-          </Link>
+          <Link to="/">Blogs</Link>
         </h1>
         <div className="navbar__links">
           <NavLink to="/" end={true}>

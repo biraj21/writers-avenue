@@ -1,5 +1,5 @@
 .post-page {
-  max-width: 916px;
+  max-width: 956px; // 916px width + 40px padding
   display: flex;
 
   .post {
@@ -53,6 +53,8 @@
 
   .other-posts {
     max-width: 300px;
+    width: 100%;
+    flex-shrink: 0;
     margin-left: 16px;
 
     > h2 {
