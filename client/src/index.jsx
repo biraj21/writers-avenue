@@ -9,9 +9,9 @@ import { AuthContextProvider } from "./contexts/authContext";
 axios.defaults.baseURL = "http://localhost:3000/api";
 axios.interceptors.request.use(
   (config) => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      config.headers["Authorization"] = jwt;
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers["Authorization"] = token;
     }
 
     return config;
