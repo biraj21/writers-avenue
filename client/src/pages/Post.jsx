@@ -55,7 +55,7 @@ export default function Post() {
           <img src={post.imageUrl} alt="Thumbnail" />
 
           <div className="post__author">
-            <img src={post.authorAvatarUrl} alt="Avatar" />
+            <img src={serverBaseUrl + post.authorAvatarUrl} alt="Avatar" />
             <div>
               <span>Written by {post.authorName}</span>
               <br />
@@ -90,9 +90,10 @@ function OtherPosts({ category, mainPostId }) {
         {posts.length === 1 && "No other posts found in this category."}
         {posts
           .filter((post) => post.id != mainPostId)
-          .map((post) => (
-            <PostPreview post={post} key={post.id} />
-          ))}
+          .map((post) => {
+            const rpost = { ...post, authorAvatarUrl: serverBaseUrl + post.authorAvatarUrl };
+            return <PostPreview post={rpost} key={post.id} />;
+          })}
       </>
     );
   } else {

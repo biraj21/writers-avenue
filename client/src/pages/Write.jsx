@@ -14,9 +14,14 @@ export default function Write() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setIsSubmitting(true);
 
-    const post = { title: title.trim(), author: currentUser.name, body: body.trim(), category };
+    if (currentUser === null) {
+      alert("You need to be logged in!");
+      return;
+    }
+
+    setIsSubmitting(true);
+    const post = { title: title.trim(), body: body.trim(), category };
     console.log(post);
   }
 

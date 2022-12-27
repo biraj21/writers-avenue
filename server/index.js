@@ -6,6 +6,8 @@ import "./util/database.js";
 
 const app = express();
 
+app.use("/uploads", express.static("./uploads"));
+app.use("/resources", express.static("./resources"));
 app.use(express.json());
 app.use(cors());
 

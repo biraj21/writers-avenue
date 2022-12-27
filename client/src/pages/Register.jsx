@@ -25,13 +25,7 @@ export default function Register() {
         throw new Error("Passwords do not match!");
       }
 
-      const user = {
-        name: name.trim(),
-        email: email.trim(),
-        password,
-        confirmPassword,
-      };
-
+      const user = new FormData(e.target);
       await register(user);
     } catch (err) {
       console.error(err);
@@ -64,7 +58,7 @@ export default function Register() {
 
         <div className="form__field">
           <label>Picture:</label>
-          <input name="avatar" type="file" accept="image/png, image/gif, image/jpeg" required />
+          <input name="avatar" type="file" accept="image/jpeg, image/jpg, image/png" />
         </div>
 
         <div className="form__field">

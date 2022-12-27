@@ -18,9 +18,10 @@ export default function Home() {
     content = (
       <div className="posts">
         {posts.length === 0 && "No posts found in this category."}
-        {posts.map((post) => (
-          <PostPreview post={post} key={post.id} />
-        ))}
+        {posts.map((post) => {
+          const rpost = { ...post, authorAvatarUrl: serverBaseUrl + post.authorAvatarUrl };
+          return <PostPreview post={rpost} key={post.id} />;
+        })}
       </div>
     );
   } else {

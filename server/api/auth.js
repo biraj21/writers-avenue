@@ -1,10 +1,28 @@
 import bcrypt from "bcrypt";
 import express from "express";
 import jwt from "jsonwebtoken";
+import multer from "multer";
 import User from "../models/user.js";
 import { ValidationError } from "../util/error.js";
 
 // URL: /api/auth/...
+
+const imageMimetypes = ["image/jpeg", "image/jpg", "image/png"];
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: "./uploads",
+    filename: (req, file, cb) => {
+      cb(null, `${Date.now()}-${file.originalname}`);
+    },
+  }),
+  fileFilter: (req, file, cb) => {
+    if (imageMimetypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+  },
+});
 
 const router = express.Router();
 
@@ -36,7 +54,7 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.post("/register", async (req, res, next) => {
+router.post("/register", upload.single("avatar"), async (req, res, next) => {
   try {
     let { name, email, password, confirmPassword } = req.body;
     name = name.trim();
@@ -52,9 +70,13 @@ router.post("/register", async (req, res, next) => {
       throw new ValidationError("Passwords do not match!");
     }
 
-    const imageUrl = "none";
-
-    const { insertId } = await User.create({ name, email, imageUrl, password });
+    const imageUrl = req.file ? `/${req.file.path}` : "/resources/blank-avatar.png";
+    const { insertId } = await User.create({
+      name,
+      email,
+      imageUrl,
+      password,
+    });
     const userId = Number(insertId);
     const token = jwt.sign(userId, process.env.JWT_SECRET);
     res.json({ data: { id: userId, name, imageUrl }, token });
