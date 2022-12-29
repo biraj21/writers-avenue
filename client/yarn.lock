@@ -570,6 +570,11 @@ destroy@1.2.0:
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.2.0.tgz#4803735509ad8be552934c67df614f94e66fa015"
   integrity sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==
 
+dompurify@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.4.1.tgz#f9cb1a275fde9af6f2d0a2644ef648dd6847b631"
+  integrity sha512-ewwFzHzrrneRjxzmK6oVz/rZn9VWspGFRDb4/rRtIsM1n36t9AKma/ye8syCpcw+XJ25kOK/hOG7t1j2I2yBqA==
+
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"

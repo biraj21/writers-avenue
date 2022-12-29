@@ -1,9 +1,14 @@
 import dbPool from "../util/database.js";
 
 export default class Post {
-  static async create(data) {
+  static async create({ title, body, imageUrl, category, userId }) {
     let conn;
     try {
+      conn = await dbPool.getConnection();
+      return await conn.query(
+        "INSERT INTO `Post` (`title`, `body`, `imageUrl`, `category`, `userId`) VALUES (?, ?, ?, ?, ?)",
+        [title, body, imageUrl, category, userId]
+      );
     } catch (err) {
       throw err;
     } finally {

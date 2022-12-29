@@ -100,7 +100,7 @@ export default function Register() {
           />
         </div>
 
-        {error && <div className="error">{error}</div>}
+        {error && <div className="error-msg">{error}</div>}
 
         <button type="submit" className="btn" disabled={isSubmitting}>
           {isSubmitting ? "Creating..." : "Create Account"}

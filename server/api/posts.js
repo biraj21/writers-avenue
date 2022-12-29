@@ -1,6 +1,7 @@
-import e from "express";
 import express from "express";
 import Post from "../models/post.js";
+import { ValidationError } from "../util/error.js";
+import upload from "../util/upload.js";
 
 // URL: /api/posts/...
 
@@ -40,6 +41,27 @@ router.get("/:postId", async (req, res, next) => {
 
     res.json({ data: post });
   } catch (err) {
+    next(err);
+  }
+});
+
+router.post("/", upload.single("thumbnail"), async (req, res, next) => {
+  try {
+    if (!req.file) {
+      throw new ValidationError("Thumbnail is required!");
+    }
+
+    const { title, body, category } = req.body;
+    const imageUrl = `/${req.file.path}`;
+    const { insertId } = await Post.create({ title, body, imageUrl, category, userId: req.userId });
+    res.status(201).json({ data: Number(insertId) });
+    console.log(res.end);
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      res.status(422).json({ error: err.message });
+      return;
+    }
+
     next(err);
   }
 });

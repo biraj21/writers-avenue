@@ -1,4 +1,5 @@
 import axios from "axios";
+import DOMPurify from "dompurify";
 import moment from "moment";
 import { useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -46,13 +47,13 @@ export default function Post() {
 
   let content;
   if (error) {
-    content = <p className="error-msg">{error}</p>;
+    content = <div className="error-msg">{error}</div>;
   } else if (post) {
     content = (
       <>
         <div className="post">
           <h1>{post.title}</h1>
-          <img src={post.imageUrl} alt="Thumbnail" />
+          <img src={serverBaseUrl + post.imageUrl} alt="Thumbnail" />
 
           <div className="post__author">
             <img src={serverBaseUrl + post.authorAvatarUrl} alt="Avatar" />
@@ -65,7 +66,12 @@ export default function Post() {
             {currentUser?.id === post.authorId && postActionsJSX}
           </div>
 
-          <div className="post__body">{post.body}</div>
+          <div
+            className="post__body"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(post.body),
+            }}
+          ></div>
         </div>
 
         <OtherPosts category={post.category} mainPostId={post.id} />
@@ -83,7 +89,7 @@ function OtherPosts({ category, mainPostId }) {
 
   let content;
   if (error) {
-    content = <p className="error-msg">{error}</p>;
+    content = <div className="error-msg">{error}</div>;
   } else if (posts) {
     content = (
       <>
@@ -91,7 +97,11 @@ function OtherPosts({ category, mainPostId }) {
         {posts
           .filter((post) => post.id != mainPostId)
           .map((post) => {
-            const rpost = { ...post, authorAvatarUrl: serverBaseUrl + post.authorAvatarUrl };
+            const rpost = {
+              ...post,
+              imageUrl: serverBaseUrl + post.imageUrl,
+              authorAvatarUrl: serverBaseUrl + post.authorAvatarUrl,
+            };
             return <PostPreview post={rpost} key={post.id} />;
           })}
       </>

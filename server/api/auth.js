@@ -1,28 +1,11 @@
 import bcrypt from "bcrypt";
 import express from "express";
 import jwt from "jsonwebtoken";
-import multer from "multer";
 import User from "../models/user.js";
 import { ValidationError } from "../util/error.js";
+import upload from "../util/upload.js";
 
 // URL: /api/auth/...
-
-const imageMimetypes = ["image/jpeg", "image/jpg", "image/png"];
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: "./uploads",
-    filename: (req, file, cb) => {
-      cb(null, `${Date.now()}-${file.originalname}`);
-    },
-  }),
-  fileFilter: (req, file, cb) => {
-    if (imageMimetypes.includes(file.mimetype)) {
-      cb(null, true);
-    } else {
-      cb(null, false);
-    }
-  },
-});
 
 const router = express.Router();
 

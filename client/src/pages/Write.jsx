@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { authContext } from "../contexts/authContext";
@@ -10,19 +12,54 @@ export default function Write() {
   const [body, setBody] = useState("");
   const [category, setCategory] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
   const { currentUser } = useContext(authContext);
+  const navigate = useNavigate();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    if (currentUser === null) {
-      alert("You need to be logged in!");
-      return;
+  async function handleClick(e) {
+    try {
+      setError(null);
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        setError(err.response.data.error);
+      } else {
+        setError(err.message);
+      }
     }
+  }
 
-    setIsSubmitting(true);
-    const post = { title: title.trim(), body: body.trim(), category };
-    console.log(post);
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
+      setError(null);
+
+      if (currentUser === null) {
+        throw new Error("You need to be logged in!");
+      }
+
+      if (body.trim() === "") {
+        throw new Error("Post body cannot be empty!");
+      } else if (category === null) {
+        throw new Error("Choose a category!");
+      }
+
+      setIsSubmitting(true);
+      const post = new FormData(e.target);
+      post.append("body", body);
+      const res = await axios.post("/posts", post);
+      const postId = res.data.data;
+      navigate(`/posts/${postId}`);
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        setError(err.response.data.error);
+      } else {
+        setError(err.message);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -79,13 +116,22 @@ export default function Write() {
             </div>
 
             <div className="actions">
-              <button className="btn btn--stroked" disabled={isSubmitting} data-action="saveDraft">
-                {isSubmitting ? "Saving..." : "Save As Draft"}
+              <button
+                type="button"
+                className="btn btn--stroked"
+                disabled={isSubmitting}
+                data-action="draft"
+                onClick={handleClick}
+              >
+                Save As Draft
               </button>
+
               <button type="submit" className="btn" disabled={isSubmitting} data-action="publish">
-                {isSubmitting ? "Saving..." : "Publish"}
+                Publish
               </button>
             </div>
+
+            {error && <div className="error-msg">{error}</div>}
           </div>
         </div>
       </form>

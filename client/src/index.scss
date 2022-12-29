@@ -48,6 +48,7 @@ textarea {
 
 .error-msg {
   color: var(--red);
+  text-align: center;
 }
 
 .page {
@@ -132,10 +133,8 @@ textarea {
     text-align: center;
   }
 
-  .error {
+  .error-msg {
     margin-bottom: 1rem;
-    text-align: center;
-    color: var(--red);
   }
 
   .btn {
