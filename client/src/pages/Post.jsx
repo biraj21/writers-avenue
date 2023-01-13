@@ -33,18 +33,6 @@ export default function Post() {
     }
   }
 
-  const postActionsJSX = (
-    <div className="post__actions">
-      <Link to="/write?edit=2" title="Edit Post">
-        <Edit color="var(--primary-color)" />
-      </Link>
-
-      <button onClick={handleDelete} title="Delete Post">
-        <Trash2 color="var(--red)" />
-      </button>
-    </div>
-  );
-
   let content;
   if (error) {
     content = <div className="error-msg">{error}</div>;
@@ -65,7 +53,17 @@ export default function Post() {
               <small>{moment(post.uploadDate).fromNow()}</small>
             </div>
 
-            {currentUser?.id === post.authorId && postActionsJSX}
+            {currentUser?.id === post.authorId && (
+              <div className="post__actions">
+                <Link to={`/edit/${post.id}`} title="Edit Post">
+                  <Edit color="var(--primary-color)" />
+                </Link>
+
+                <button onClick={handleDelete} title="Delete Post">
+                  <Trash2 color="var(--red)" />
+                </button>
+              </div>
+            )}
           </div>
 
           <div

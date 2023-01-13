@@ -1,9 +1,8 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useAxiosGet } from "../hooks/useAxiosGet";
 import PostPreview from "../components/PostPreview";
+import categories from "../categories";
 import "./Home.scss";
-
-export const categories = ["art", "business", "cinema", "food", "science", "technology"];
 
 export default function Home() {
   const [searchParams] = useSearchParams();

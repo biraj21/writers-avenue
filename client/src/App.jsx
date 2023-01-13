@@ -7,8 +7,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import Post from "./pages/Post";
+import PostEdit from "./pages/PostEdit";
+import PostWrite from "./pages/PostWrite";
 import Register from "./pages/Register";
-import Write from "./pages/Write";
 
 export default function App() {
   return (
@@ -27,7 +28,8 @@ export default function App() {
 
           {/* these routes should only be accessible when the user IS logged in */}
           <Route element={<AuthRoutes redirectTo="/login" />}>
-            <Route path="/write" element={<Write />} />
+            <Route path="/edit/:id" element={<PostEdit />} />
+            <Route path="/write" element={<PostWrite />} />
           </Route>
 
           <Route path="*" element={<PageNotFound />} />

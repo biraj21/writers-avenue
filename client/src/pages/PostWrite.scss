@@ -1,0 +1,12 @@
+#post-write-page {
+  max-width: 956px; // 916px width + 40px left & right padding
+
+  h1 {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 600px;
+  }
+}
