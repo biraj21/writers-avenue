@@ -1,10 +1,34 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { authContext } from "../contexts/authContext";
 import "./Navbar.scss";
 
 export default function Navbar() {
   const { currentUser, logout } = useContext(authContext);
+  const [showUserCard, setShowUserCard] = useState(false);
+
+  function closeUserCard(e) {
+    // console.log(e.target);
+    const $userCard = document.querySelector(".user");
+    if (e.target === $userCard) {
+      return;
+    }
+
+    setShowUserCard(false);
+  }
+
+  useEffect(() => {
+    document.addEventListener("click", closeUserCard);
+    return () => document.removeEventListener("click", closeUserCard);
+  });
+
+  function handleAvatarClick(e) {
+    if (!showUserCard) {
+      setShowUserCard(true);
+    }
+
+    e.stopPropagation();
+  }
 
   return (
     <nav className="navbar">
@@ -16,17 +40,28 @@ export default function Navbar() {
           <NavLink to="/" end={true}>
             Home
           </NavLink>
-
           <NavLink to="/write">Write</NavLink>
+          {!currentUser && <NavLink to="/login">Login</NavLink>}
+        </div>
 
-          {currentUser ? (
-            <button className="btn" onClick={logout}>
+        {currentUser && (
+          <img
+            src={serverBaseUrl + currentUser.imageUrl}
+            className="user-avatar"
+            alt="User's avatar"
+            onClick={handleAvatarClick}
+          />
+        )}
+
+        {currentUser && (
+          <div className={`user ${showUserCard ? "user--active" : ""}`}>
+            <img src={serverBaseUrl + currentUser.imageUrl} className="user__avatar" alt="User's avatar" />
+            <span className="user__name">{currentUser.name}</span>
+            <button className="btn user__logout-btn" onClick={logout}>
               Logout
             </button>
-          ) : (
-            <NavLink to="/login">Login</NavLink>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </nav>
   );

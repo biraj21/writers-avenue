@@ -2,9 +2,6 @@
   background-color: var(--bg-color);
   box-shadow: 0px 1px 2px #000;
   margin-bottom: 1rem;
-  position: sticky;
-  top: 0;
-  left: 0;
 
   .wrapper {
     max-width: 916px;
@@ -12,6 +9,7 @@
     padding: 12px 20px;
     display: flex;
     align-items: center;
+    position: relative; // will be used for user options card
   }
 
   h1 a {
@@ -37,6 +35,66 @@
       &.active {
         background-color: rgba(0, 0, 0, 0.7);
       }
+    }
+  }
+
+  .user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-left: 8px;
+    cursor: pointer;
+  }
+
+  .user {
+    $card-bg-color: #1b1b1b;
+    width: 200px;
+    padding: 16px;
+    background-color: $card-bg-color;
+    border-radius: 10px;
+    box-shadow: 0px 3px 4px 0px hsla(0, 0%, 0%, 0.14), 0px 3px 3px -2px hsla(0, 0%, 0%, 0.12),
+      0px 1px 8px 0px hsla(0, 0%, 0%, 0.2);
+    position: absolute; // relative to .wrapper
+    top: calc(100% - 6px);
+    right: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: none;
+
+    &--active {
+      display: flex;
+    }
+
+    &::before {
+      content: "";
+      width: 16px;
+      height: 16px;
+      background-color: $card-bg-color;
+      position: absolute; // relative to .user
+      top: -7px;
+      right: 17px;
+      transform: rotateZ(45deg);
+    }
+
+    > * {
+      pointer-events: none;
+    }
+
+    &__name {
+      margin: 12px 0;
+    }
+
+    &__avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+    }
+
+    &__logout-btn {
+      pointer-events: all;
     }
   }
 }
