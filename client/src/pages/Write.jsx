@@ -46,7 +46,8 @@ export default function Write() {
 
       setIsSubmitting(true);
       const post = new FormData(e.target);
-      post.append("body", body);
+      post.set("body", body);
+      post.set("category", category);
       const res = await axios.post("/posts", post);
       const postId = res.data.data;
       navigate(`/posts/${postId}`);

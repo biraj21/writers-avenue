@@ -1,0 +1,8 @@
+.app {
+  height: 100%;
+
+  .content {
+    height: calc(100% - 56px - 1rem); // 56px navbar's height & its margin-botton is 1rem
+    overflow: auto;
+  }
+}

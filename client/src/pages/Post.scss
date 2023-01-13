@@ -46,6 +46,15 @@
       }
     }
 
+    &__category {
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      font-size: 13px;
+      letter-spacing: 0.5pt;
+      text-align: center;
+      font-weight: bold;
+    }
+
     &__body {
       white-space: pre-wrap;
     }

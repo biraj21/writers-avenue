@@ -52,6 +52,8 @@ export default function Post() {
     content = (
       <>
         <div className="post">
+          <div className="post__category">{post.category.toUpperCase()}</div>
+
           <h1>{post.title}</h1>
           <img src={serverBaseUrl + post.imageUrl} alt="Thumbnail" />
 
