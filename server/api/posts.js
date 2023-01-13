@@ -1,5 +1,5 @@
 import express from "express";
-import checkAuth from "../middlewares/isAuthenticated.js";
+import checkAuth from "../middlewares/checkAuth.js";
 import Post from "../models/post.js";
 import { ValidationError } from "../util/error.js";
 import upload from "../util/upload.js";
