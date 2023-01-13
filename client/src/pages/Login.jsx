@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { authContext } from "../contexts/authContext";
+import { authContext } from "../contexts/auth";
 
+// styles for this page are in index.scss
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +37,7 @@ export default function Login() {
   }
 
   return (
-    <div className="page login-page">
+    <div className="page" id="login-page">
       <h2>Login</h2>
 
       <form action="POST" className="form" onSubmit={handleSubmit}>
@@ -73,7 +74,9 @@ export default function Login() {
         </button>
 
         <span>
-          Don't have an account? <Link to="/register">Create one</Link>.
+          Don't have an account?
+          <br />
+          <Link to="/register">Create Account</Link>
         </span>
       </form>
     </div>

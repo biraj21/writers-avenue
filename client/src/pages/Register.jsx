@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { authContext } from "../contexts/authContext";
+import { authContext } from "../contexts/auth";
 
+// styles for this page are in index.scss
 export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -40,7 +41,7 @@ export default function Register() {
   }
 
   return (
-    <div className="page register-page">
+    <div className="page" id="register-page">
       <h2>Create New Account</h2>
 
       <form action="POST" className="form" onSubmit={handleSubmit}>
@@ -107,7 +108,9 @@ export default function Register() {
         </button>
 
         <span>
-          Already have an account? <Link to="/login">Login</Link>.
+          Already have an account?
+          <br />
+          <Link to="/login">Login</Link>
         </span>
       </form>
     </div>

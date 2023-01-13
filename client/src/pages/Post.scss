@@ -1,4 +1,4 @@
-.post-page {
+#post-page {
   max-width: 956px; // 916px width + 40px padding
   display: flex;
 
@@ -21,7 +21,6 @@
       img {
         width: 40px;
         height: 40px;
-        border-radius: 50%;
         margin-right: 10px;
       }
 

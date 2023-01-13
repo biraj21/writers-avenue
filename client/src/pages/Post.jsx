@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Edit, Trash2 } from "react-feather";
 import PostPreview from "../components/PostPreview";
-import { authContext } from "../contexts/authContext";
+import { authContext } from "../contexts/auth";
 import { useAxiosGet } from "../hooks/useAxiosGet";
 import "./Post.scss";
 
@@ -58,7 +58,7 @@ export default function Post() {
           <img src={serverBaseUrl + post.imageUrl} alt="Thumbnail" />
 
           <div className="post__author">
-            <img src={serverBaseUrl + post.authorAvatarUrl} alt="Avatar" />
+            <img src={serverBaseUrl + post.authorAvatarUrl} alt="Avatar" className="avatar" />
             <div>
               <span>Written by {post.authorName}</span>
               <br />
@@ -83,7 +83,11 @@ export default function Post() {
     content = <h3 className="loading-msg">Loading...</h3>;
   }
 
-  return <div className="page post-page">{content}</div>;
+  return (
+    <div className="page" id="post-page">
+      {content}
+    </div>
+  );
 }
 
 function OtherPosts({ category, mainPostId }) {

@@ -2,9 +2,9 @@ import axios from "axios";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import "./index.scss";
 import App from "./App";
-import { AuthContextProvider } from "./contexts/authContext";
+import { AuthContextProvider } from "./contexts/auth";
+import "./index.scss";
 
 axios.defaults.baseURL = "http://localhost:3000/api";
 axios.interceptors.request.use(

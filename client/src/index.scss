@@ -108,6 +108,11 @@ textarea {
   }
 }
 
+.avatar {
+  border-radius: 50%;
+  border: 1px solid rgba(72, 72, 72, 0.5);
+}
+
 .form {
   &__field > * {
     width: 100%;
@@ -133,8 +138,8 @@ textarea {
   }
 }
 
-.login-page,
-.register-page {
+#login-page,
+#register-page {
   max-width: 400px;
 
   h2 {

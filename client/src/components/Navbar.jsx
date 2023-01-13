@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { authContext } from "../contexts/authContext";
+import { authContext } from "../contexts/auth";
 import "./Navbar.scss";
 
 export default function Navbar() {
@@ -47,7 +47,7 @@ export default function Navbar() {
         {currentUser && (
           <img
             src={serverBaseUrl + currentUser.imageUrl}
-            className="user-avatar"
+            className="user-avatar avatar"
             alt="User's avatar"
             onClick={handleAvatarClick}
           />

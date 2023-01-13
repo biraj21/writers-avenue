@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { authContext } from "../contexts/authContext";
+import { authContext } from "../contexts/auth";
 import { categories } from "./Home";
 import "./Write.scss";
 
@@ -64,7 +64,7 @@ export default function Write() {
   }
 
   return (
-    <div className="page write-page">
+    <div className="page" id="write-page">
       <h1>New Blog</h1>
 
       <form action="POST" className="form" onSubmit={handleSubmit}>

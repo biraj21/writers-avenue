@@ -7,7 +7,7 @@ export default function PostPreview({ post }) {
   return (
     <div className="post-preview">
       <div className="post-preview__author">
-        <img src={post.authorAvatarUrl} alt="Avatar" />
+        <img src={post.authorAvatarUrl} alt="Avatar" className="avatar" />
         <div>
           <span>{post.authorName}</span>
           <br />

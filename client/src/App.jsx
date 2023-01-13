@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import "./App.scss";
 import Navbar from "./components/Navbar";
-import { authContext } from "./contexts/authContext";
+import { authContext } from "./contexts/auth";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
