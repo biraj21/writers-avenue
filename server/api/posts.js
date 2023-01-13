@@ -1,4 +1,5 @@
 import express from "express";
+import checkAuth from "../middlewares/isAuthenticated.js";
 import Post from "../models/post.js";
 import { ValidationError } from "../util/error.js";
 import upload from "../util/upload.js";
@@ -66,15 +67,8 @@ router.post("/", upload.single("thumbnail"), async (req, res, next) => {
   }
 });
 
-router.delete("/:postId", async (req, res, next) => {
-  console.log(req.params.postId, req.userId);
-
+router.delete("/:postId", checkAuth, async (req, res, next) => {
   try {
-    if (!req.userId) {
-      res.status(403).json({ error: "You are not authorized to perform this action!" });
-      return;
-    }
-
     let { postId } = req.params;
     postId = Number(postId);
     if (!Number.isInteger(postId)) {
