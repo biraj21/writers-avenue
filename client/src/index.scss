@@ -46,10 +46,6 @@ textarea {
   }
 }
 
-.loading-msg {
-  text-align: center;
-}
-
 .error-msg {
   color: var(--red);
   text-align: center;
@@ -64,6 +60,11 @@ textarea {
   min-height: 100%;
   margin: 0 auto;
   padding: 0 20px 20px;
+
+  > .loader {
+    display: block;
+    margin: 0 auto;
+  }
 }
 
 // CSS components

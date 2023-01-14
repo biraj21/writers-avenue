@@ -24,6 +24,14 @@
         margin-right: 10px;
       }
 
+      a {
+        text-decoration: none;
+
+        &:hover {
+          color: var(--primary-color);
+        }
+      }
+
       small {
         color: #9f9f9f;
       }

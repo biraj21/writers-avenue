@@ -36,4 +36,18 @@ export default class User {
       }
     }
   }
+
+  static async getById(id) {
+    let conn;
+    try {
+      conn = await dbPool.getConnection();
+      return (await conn.query("SELECT * FROM `User` WHERE `id` = ?", [id]))[0];
+    } catch (err) {
+      throw err;
+    } finally {
+      if (conn) {
+        conn.release();
+      }
+    }
+  }
 }

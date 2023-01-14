@@ -85,6 +85,20 @@ ON p.userId = u.id AND p.id = ?`;
     }
   }
 
+  static async findByUserId(userId) {
+    let conn;
+    try {
+      conn = await dbPool.getConnection();
+      return await conn.query("SELECT `id`, `title`, `body`, `imageUrl` FROM Post WHERE `userId` = ?", [userId]);
+    } catch (err) {
+      throw err;
+    } finally {
+      if (conn) {
+        conn.release();
+      }
+    }
+  }
+
   static async findSomeByCategory(category) {
     let conn;
     try {

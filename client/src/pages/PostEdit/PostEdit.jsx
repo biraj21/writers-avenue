@@ -1,5 +1,5 @@
-import { useContext } from "react";
 import { useParams } from "react-router-dom";
+import Loader from "components/Loader/Loader";
 import PostForm from "components/PostForm/PostForm";
 import { useAxiosGet } from "hooks/useAxiosGet";
 import "./PostEdit.scss";
@@ -14,7 +14,7 @@ export default function PostEdit() {
   } else if (post) {
     content = <PostForm defaults={post} />;
   } else {
-    content = <h3 className="loading-msg">Loading...</h3>;
+    content = <Loader />;
   }
 
   return (

@@ -5,6 +5,7 @@ import { authContext } from "contexts/auth";
 import Home from "pages/Home/Home";
 import Login from "pages/Login/Login";
 import PageNotFound from "pages/PageNotFound/PageNotFound";
+import Profile from "pages/Profile/Profile";
 import Post from "pages/Post/Post";
 import PostEdit from "pages/PostEdit/PostEdit";
 import PostWrite from "pages/PostWrite/PostWrite";
@@ -20,6 +21,7 @@ export default function App() {
           {/* public routes */}
           <Route path="/" element={<Home />} />
           <Route path="/posts/:id" element={<Post />} />
+          <Route path="/users/:id" element={<Profile />} />
 
           {/* these routes should only be accessible when the user IS NOT logged in */}
           <Route element={<OnlyUnauthRoutes redirectTo="/" />}>

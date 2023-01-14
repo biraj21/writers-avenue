@@ -1,5 +1,6 @@
 import { Link, useSearchParams } from "react-router-dom";
 import categories from "../../categories";
+import Loader from "components/Loader/Loader";
 import PostPreview from "components/PostPreview/PostPreview";
 import { useAxiosGet } from "hooks/useAxiosGet";
 import "./Home.scss";
@@ -28,7 +29,7 @@ export default function Home() {
       </div>
     );
   } else {
-    content = <h3 className="loading-msg">Loading...</h3>;
+    content = <Loader />;
   }
 
   return (

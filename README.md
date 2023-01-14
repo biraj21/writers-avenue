@@ -7,3 +7,4 @@ As of now, the following things are implemented:
  - A user can register or login.
  - User can register with an avatar, and a default image will be there in case they don't.
  - User can create, read, update & delete posts.
+ - View profile of other users.

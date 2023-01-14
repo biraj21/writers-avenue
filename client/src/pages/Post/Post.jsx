@@ -4,6 +4,7 @@ import moment from "moment";
 import { useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Edit, Trash2 } from "react-feather";
+import Loader from "components/Loader/Loader";
 import PostPreview from "components/PostPreview/PostPreview";
 import { authContext } from "contexts/auth";
 import { useAxiosGet } from "hooks/useAxiosGet";
@@ -46,9 +47,13 @@ export default function Post() {
           <img src={serverBaseUrl + post.imageUrl} alt="Thumbnail" />
 
           <div className="post__author">
-            <img src={serverBaseUrl + post.authorAvatarUrl} alt="Avatar" className="avatar" />
+            <Link to={`/users/${post.authorId}`}>
+              <img src={serverBaseUrl + post.authorAvatarUrl} alt="Avatar" className="avatar" />
+            </Link>
             <div>
-              <span>Written by {post.authorName}</span>
+              <span>
+                Written by <Link to={`/users/${post.authorId}`}>{post.authorName}</Link>
+              </span>
               <br />
               <small>{moment(post.uploadDate).fromNow()}</small>
             </div>
@@ -78,7 +83,7 @@ export default function Post() {
       </>
     );
   } else {
-    content = <h3 className="loading-msg">Loading...</h3>;
+    content = <Loader />;
   }
 
   return (
@@ -111,7 +116,7 @@ function OtherPosts({ category, mainPostId }) {
       </>
     );
   } else {
-    content = <h3 className="loading-msg">Loading...</h3>;
+    content = <Loader />;
   }
 
   return (
