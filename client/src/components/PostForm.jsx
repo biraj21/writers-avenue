@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { Trash2 } from "react-feather";
 import ReactQuill from "react-quill";
 import { useNavigate } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
@@ -9,6 +10,7 @@ import "./PostForm.scss";
 // to be used to create & edit posts
 export default function PostForm({ defaults }) {
   const [title, setTitle] = useState(defaults?.title, "");
+  const [thumbnail, setThumbnail] = useState(null);
   const [body, setBody] = useState(defaults?.body, "");
   const [category, setCategory] = useState(defaults?.category, "");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -40,12 +42,20 @@ export default function PostForm({ defaults }) {
       }
 
       setIsSubmitting(true);
-      const post = new FormData(e.target);
+      const post = new FormData();
+      post.set("title", title);
+      post.set("thumbnail", thumbnail ? thumbnail : defaults.imageUrl);
       post.set("body", body);
       post.set("category", category);
-      const res = await axios.post("/posts", post);
-      const postId = res.data.data;
-      navigate(`/posts/${postId}`);
+
+      if (defaults) {
+        await axios.put(`/posts/${defaults.id}`, post);
+        navigate(`/posts/${defaults.id}`);
+      } else {
+        const res = await axios.post("/posts", post);
+        const postId = res.data.data;
+        navigate(`/posts/${postId}`);
+      }
     } catch (err) {
       console.error(err);
       if (err.response) {
@@ -75,8 +85,27 @@ export default function PostForm({ defaults }) {
 
         <div className="form__field">
           <label>Thumbnail:</label>
-          <input name="thumbnail" type="file" accept="image/png, image/gif, image/jpeg" required />
+          <input
+            name="thumbnail"
+            type="file"
+            accept="image/png, image/gif, image/jpeg"
+            required={!Boolean(defaults)}
+            onChange={(e) => setThumbnail(e.target.files[0])}
+          />
         </div>
+
+        {(thumbnail || defaults) && (
+          <div className="preview">
+            <span>Preview:</span>
+            {thumbnail ? <img src={URL.createObjectURL(thumbnail)} /> : <img src={serverBaseUrl + defaults.imageUrl} />}
+            {/* user can only remove the new thumbnail not the old one */}
+            {thumbnail && (
+              <button type="button" title="Remove Thumbnail" onClick={() => setThumbnail(null)}>
+                <Trash2 color="var(--red)" />
+              </button>
+            )}
+          </div>
+        )}
 
         <div>
           <label>Body:</label>

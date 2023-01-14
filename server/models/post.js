@@ -114,4 +114,27 @@ WHERE category = ?`,
       }
     }
   }
+
+  static async updateByIdAndUser({ id, title, body, imageUrl, category, userId }) {
+    let conn;
+    try {
+      conn = await dbPool.getConnection();
+      return await conn.query(
+        `
+UPDATE Post SET
+  title = ?,
+  body = ?,
+  imageUrl = ?,
+  category = ?
+WHERE id = ? AND userId = ?`,
+        [title, body, imageUrl, category, id, userId]
+      );
+    } catch (err) {
+      throw err;
+    } finally {
+      if (conn) {
+        conn.release();
+      }
+    }
+  }
 }

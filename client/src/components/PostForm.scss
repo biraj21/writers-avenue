@@ -12,6 +12,35 @@
     margin-left: 16px;
   }
 
+  .preview {
+    width: 100%;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    position: relative;
+
+    img {
+      border-radius: 5px;
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      display: block;
+      margin: 5px auto 0;
+    }
+
+    button {
+      all: unset;
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
   .error-msg {
     margin-top: 1rem;
   }
@@ -171,14 +200,16 @@
     }
   }
 
-  @media screen and (max-width: 768px) {
-    .form {
-      display: block;
+  .ql-editor {
+    font-family: var(--font);
+  }
 
-      .right {
-        max-width: none;
-        margin-left: 0;
-      }
+  @media screen and (max-width: 768px) {
+    display: block;
+
+    .right {
+      max-width: none;
+      margin-left: 0;
     }
   }
 }
