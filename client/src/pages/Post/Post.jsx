@@ -4,9 +4,9 @@ import moment from "moment";
 import { useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Edit, Trash2 } from "react-feather";
-import PostPreview from "../components/PostPreview";
-import { authContext } from "../contexts/auth";
-import { useAxiosGet } from "../hooks/useAxiosGet";
+import PostPreview from "components/PostPreview/PostPreview";
+import { authContext } from "contexts/auth";
+import { useAxiosGet } from "hooks/useAxiosGet";
 import "./Post.scss";
 
 export default function Post() {
@@ -15,7 +15,7 @@ export default function Post() {
   const { currentUser } = useContext(authContext);
   const navigate = useNavigate();
 
-  async function handleDelete(e) {
+  async function handleDelete() {
     if (!confirm("This post will be permanently deleted. Are you sure?")) {
       return;
     }

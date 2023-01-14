@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { authContext } from "../contexts/auth";
+import { authContext } from "contexts/auth";
 
 // styles for this page are in index.scss
 export default function Login() {

@@ -1,7 +1,7 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { useAxiosGet } from "../hooks/useAxiosGet";
-import PostPreview from "../components/PostPreview";
-import categories from "../categories";
+import categories from "../../categories";
+import PostPreview from "components/PostPreview/PostPreview";
+import { useAxiosGet } from "hooks/useAxiosGet";
 import "./Home.scss";
 
 export default function Home() {

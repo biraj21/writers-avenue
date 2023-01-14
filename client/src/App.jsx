@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
+import Navbar from "components/Navbar/Navbar";
+import { authContext } from "contexts/auth";
+import Home from "pages/Home/Home";
+import Login from "pages/Login/Login";
+import PageNotFound from "pages/PageNotFound/PageNotFound";
+import Post from "pages/Post/Post";
+import PostEdit from "pages/PostEdit/PostEdit";
+import PostWrite from "pages/PostWrite/PostWrite";
+import Register from "pages/Register/Register";
 import "./App.scss";
-import Navbar from "./components/Navbar";
-import { authContext } from "./contexts/auth";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import PageNotFound from "./pages/PageNotFound";
-import Post from "./pages/Post";
-import PostEdit from "./pages/PostEdit";
-import PostWrite from "./pages/PostWrite";
-import Register from "./pages/Register";
 
 export default function App() {
   return (
@@ -17,6 +17,7 @@ export default function App() {
       <Navbar />
       <div className="content">
         <Routes>
+          {/* public routes */}
           <Route path="/" element={<Home />} />
           <Route path="/posts/:id" element={<Post />} />
 
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="/write" element={<PostWrite />} />
           </Route>
 
+          {/* a catchall route for displaying 404 page */}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>

@@ -1,14 +1,12 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import PostForm from "../components/PostForm";
-import { authContext } from "../contexts/auth";
-import { useAxiosGet } from "../hooks/useAxiosGet";
+import PostForm from "components/PostForm/PostForm";
+import { useAxiosGet } from "hooks/useAxiosGet";
 import "./PostEdit.scss";
 
 export default function PostEdit() {
   const { id } = useParams();
   const { data: post, error } = useAxiosGet(`/posts/${id}`);
-  const { currentUser } = useContext(authContext);
 
   let content;
   if (error) {

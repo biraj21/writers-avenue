@@ -4,7 +4,7 @@ import { Trash2 } from "react-feather";
 import ReactQuill from "react-quill";
 import { useNavigate } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
-import categories from "../categories";
+import categories from "../../categories";
 import "./PostForm.scss";
 
 // to be used to create & edit posts

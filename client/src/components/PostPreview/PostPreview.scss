@@ -30,16 +30,16 @@
     object-fit: cover;
   }
 
-  &__read-more {
-    text-decoration: none;
-
-    &:hover {
-      color: var(--primary-color);
-    }
-  }
-
   &__title {
     line-height: 1;
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        color: var(--primary-color);
+      }
+    }
   }
 
   &__body {

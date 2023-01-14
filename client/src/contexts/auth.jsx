@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export const authContext = createContext(null);
 
-export function AuthContextProvider({ children }) {
+export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("user")));
   const navigate = useNavigate();
 

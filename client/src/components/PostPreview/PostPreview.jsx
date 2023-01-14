@@ -14,11 +14,10 @@ export default function PostPreview({ post }) {
           <small>Posted {moment(post.uploadDate).fromNow()}</small>
         </div>
       </div>
-
       <img src={post.imageUrl} alt="Thumbnail" className="post-preview__image" />
-      <Link to={`/posts/${post.id}`} className="post-preview__read-more">
-        <h2 className="post-preview__title">{post.title}</h2>
-      </Link>
+      <h2 className="post-preview__title">
+        <Link to={`/posts/${post.id}`}>{post.title}</Link>
+      </h2>
       <p className="post-preview__body">{doc.body.textContent}</p>
       <div className="post-preview__actions"></div>
     </div>
