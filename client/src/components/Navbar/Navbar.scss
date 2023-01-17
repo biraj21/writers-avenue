@@ -13,7 +13,6 @@
   }
 
   h1 a {
-    color: var(--primary-color);
     text-decoration: none;
   }
 
@@ -78,12 +77,9 @@
       transform: rotateZ(45deg);
     }
 
-    > * {
-      pointer-events: none;
-    }
-
     &__name {
       margin: 12px 0;
+      text-decoration: none;
     }
 
     &__avatar {

@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useAxiosGet } from "hooks/useAxiosGet";
 import Loader from "components/Loader/Loader";
+import PostPreview from "components/PostPreview/PostPreview";
 import "./Profile.scss";
-import PostPreview from "../../components/PostPreview/PostPreview";
 
 export default function Profile() {
   const { id } = useParams();
@@ -25,7 +25,7 @@ export default function Profile() {
 
           {user.posts.map((post) => {
             const rpost = { ...post, imageUrl: serverBaseUrl + post.imageUrl };
-            return <PostPreview post={rpost} />;
+            return <PostPreview post={rpost} key={post.id} />;
           })}
         </div>
       </div>

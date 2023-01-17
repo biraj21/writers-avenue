@@ -28,6 +28,10 @@ body {
 
 a {
   color: #fff;
+
+  &:hover {
+    color: var(--primary-color);
+  }
 }
 
 button,

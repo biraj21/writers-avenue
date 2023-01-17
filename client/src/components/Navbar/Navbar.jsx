@@ -55,8 +55,12 @@ export default function Navbar() {
 
         {currentUser && (
           <div className={`user ${showUserCard ? "user--active" : ""}`}>
-            <img src={serverBaseUrl + currentUser.imageUrl} className="user__avatar" alt="User's avatar" />
-            <span className="user__name">{currentUser.name}</span>
+            <Link to={`/users/${currentUser.id}`}>
+              <img src={serverBaseUrl + currentUser.imageUrl} className="user__avatar" alt="User's avatar" />
+            </Link>
+            <Link to={`/users/${currentUser.id}`} className="user__name">
+              {currentUser.name}
+            </Link>
             <button className="btn user__logout-btn" onClick={logout}>
               Logout
             </button>
