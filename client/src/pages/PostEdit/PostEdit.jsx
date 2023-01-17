@@ -1,18 +1,25 @@
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "components/Loader/Loader";
 import PostForm from "components/PostForm/PostForm";
+import { authContext } from "contexts/auth";
 import { useAxiosGet } from "hooks/useAxiosGet";
 import "./PostEdit.scss";
 
 export default function PostEdit() {
   const { id } = useParams();
-  const { data: post, error } = useAxiosGet(`/posts/${id}`);
+  const { currentUser } = useContext(authContext);
+  const { data: post, error, setError } = useAxiosGet(`/posts/${id}`);
 
   let content;
   if (error) {
     content = <div className="error-msg">{error}</div>;
   } else if (post) {
-    content = <PostForm defaults={post} />;
+    if (post.authorId !== currentUser.postId) {
+      setError("You can only edit your own posts!");
+    } else {
+      content = <PostForm defaults={post} />;
+    }
   } else {
     content = <Loader />;
   }
