@@ -26,7 +26,10 @@ router.post("/login", async (req, res, next) => {
     }
 
     const token = jwt.sign(user.id, process.env.JWT_SECRET);
-    res.json({ data: { id: user.id, name: user.name, imageUrl: user.imageUrl }, token });
+    res.json({
+      token,
+      data: { id: user.id, name: user.name, avatarUrl: process.env.SERVER_URL + user.avatarPath, email: user.email },
+    });
   } catch (err) {
     if (err instanceof ValidationError) {
       res.status(422).json({ error: err.message });
@@ -53,16 +56,16 @@ router.post("/register", upload.single("avatar"), async (req, res, next) => {
       throw new ValidationError("Passwords do not match!");
     }
 
-    const imageUrl = req.file ? `/${req.file.path}` : "/resources/blank-avatar.png";
+    const avatarPath = req.file ? `/${req.file.path}` : "/resources/blank-avatar.png";
     const { insertId } = await User.create({
       name,
       email,
-      imageUrl,
+      avatarPath,
       password,
     });
     const userId = Number(insertId);
     const token = jwt.sign(userId, process.env.JWT_SECRET);
-    res.json({ data: { id: userId, name, imageUrl }, token });
+    res.json({ token, data: { id: userId, name, avatarUrl: process.env.SERVER_URL + avatarPath, email } });
   } catch (err) {
     if (err instanceof ValidationError) {
       res.status(422).json({ error: err.message });

@@ -2,18 +2,13 @@ import bcrypt from "bcrypt";
 import dbPool from "../util/database.js";
 
 export default class User {
-  static async create({ name, email, imageUrl, password }) {
+  static async create({ name, email, password, avatarPath }) {
     let conn;
     try {
       conn = await dbPool.getConnection();
-
       const hashedPassword = await bcrypt.hash(password, 12);
-      return await conn.query("INSERT INTO `User` (`name`, `email`, `imageUrl`, `password`) VALUES (?, ?, ?, ?)", [
-        name,
-        email,
-        imageUrl,
-        hashedPassword,
-      ]);
+      const query = "INSERT INTO `User` (`name`, `email`, `password`, `avatarPath`) VALUES (?, ?, ?, ?)";
+      return await conn.query(query, [name, email, hashedPassword, avatarPath]);
     } catch (err) {
       throw err;
     } finally {
@@ -27,7 +22,8 @@ export default class User {
     let conn;
     try {
       conn = await dbPool.getConnection();
-      return (await conn.query("SELECT * FROM `User` WHERE `email` = ?", [email]))[0];
+      const query = "SELECT * FROM `User` WHERE `email` = ?";
+      return (await conn.query(query, [email]))[0];
     } catch (err) {
       throw err;
     } finally {
@@ -41,7 +37,8 @@ export default class User {
     let conn;
     try {
       conn = await dbPool.getConnection();
-      return (await conn.query("SELECT * FROM `User` WHERE `id` = ?", [id]))[0];
+      const query = "SELECT * FROM `User` WHERE `id` = ?";
+      return (await conn.query(query, [id]))[0];
     } catch (err) {
       throw err;
     } finally {

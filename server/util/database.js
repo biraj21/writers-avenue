@@ -18,6 +18,7 @@ try {
   conn.release();
 } catch (err) {
   console.error("Error connecting to database:", err.message);
+  await pool.end();
   process.exit(1);
 }
 

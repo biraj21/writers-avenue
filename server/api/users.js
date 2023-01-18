@@ -1,6 +1,8 @@
 import express from "express";
 import Post from "../models/post.js";
 import User from "../models/user.js";
+import { isInteger } from "../util/number.js";
+import { processUser } from "../util/process_data.js";
 
 // URL: /api/users/...
 
@@ -9,20 +11,22 @@ const router = express.Router();
 router.get("/:userId", async (req, res) => {
   try {
     let { userId } = req.params;
-    userId = Number(userId);
-    if (!Number.isInteger(userId)) {
-      res.status(404).json({ error: "Post not found!" });
+    if (!isInteger(userId)) {
+      res.status(404).json({ error: "User not found!" });
       return;
     }
 
+    userId = Number(userId);
     const user = await User.getById(userId);
     if (!user) {
       res.status(404).json({ error: "User not found!" });
       return;
     }
 
-    const posts = await Post.findByUserId(userId);
-    user.posts = Array.from(posts);
+    const posts = await Post.getByUserId(userId);
+    user.posts = posts;
+    processUser(user);
+
     res.json({ data: user });
   } catch (err) {
     next(err);
