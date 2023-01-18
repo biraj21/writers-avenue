@@ -15,7 +15,7 @@ export default function Profile() {
     content = (
       <div className="user">
         <div className="user__info">
-          <img src={serverBaseUrl + user.imageUrl} alt="Avatar" className="avatar user__avatar" />
+          <img src={user.avatarUrl} alt="Avatar" className="avatar user__avatar" />
           <h2 className="user__name">{user.name}</h2>
           <span>{user.posts.length} posts published</span>
         </div>
@@ -23,10 +23,9 @@ export default function Profile() {
         <div className="user__posts">
           <h3>{user.name.split(/\s+/)[0]}'s Posts</h3>
 
-          {user.posts.map((post) => {
-            const rpost = { ...post, imageUrl: serverBaseUrl + post.imageUrl };
-            return <PostPreview post={rpost} key={post.id} />;
-          })}
+          {user.posts.map((post) => (
+            <PostPreview post={post} key={post.id} />
+          ))}
         </div>
       </div>
     );

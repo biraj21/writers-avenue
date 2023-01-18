@@ -44,21 +44,23 @@ export default function Post() {
           <div className="post__category">{post.category.toUpperCase()}</div>
 
           <h1>{post.title}</h1>
-          <img src={serverBaseUrl + post.imageUrl} alt="Thumbnail" />
+          <img src={post.coverUrl} alt="Cover Image" />
 
           <div className="post__author">
-            <Link to={`/users/${post.authorId}`}>
-              <img src={serverBaseUrl + post.authorAvatarUrl} alt="Avatar" className="avatar" />
+            <Link to={`/users/${post.author.id}`}>
+              <img src={post.author.avatarUrl} alt="Avatar" className="avatar" />
             </Link>
             <div>
               <span>
-                Written by <Link to={`/users/${post.authorId}`}>{post.authorName}</Link>
+                Written by <Link to={`/users/${post.author.id}`}>{post.author.name}</Link>
               </span>
               <br />
-              <small>{moment(post.uploadDate).fromNow()}</small>
+              <small>
+                {moment(post.publishDate).fromNow()}, edited {moment(post.editDate).fromNow()}
+              </small>
             </div>
 
-            {currentUser?.id === post.authorId && (
+            {currentUser?.id === post.author.id && (
               <div className="post__actions">
                 <Link to={`/edit/${post.id}`} title="Edit Post">
                   <Edit color="var(--primary-color)" />
@@ -106,12 +108,7 @@ function OtherPosts({ category, mainPostId }) {
         {posts
           .filter((post) => post.id != mainPostId)
           .map((post) => {
-            const rpost = {
-              ...post,
-              imageUrl: serverBaseUrl + post.imageUrl,
-              authorAvatarUrl: serverBaseUrl + post.authorAvatarUrl,
-            };
-            return <PostPreview post={rpost} key={post.id} />;
+            return <PostPreview post={post} key={post.id} />;
           })}
       </>
     );

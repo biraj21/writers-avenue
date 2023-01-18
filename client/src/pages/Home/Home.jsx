@@ -7,9 +7,8 @@ import "./Home.scss";
 
 export default function Home() {
   const [searchParams] = useSearchParams();
-  const activeCategory = searchParams.get("cat");
-
-  const { data: posts, error } = useAxiosGet(`/posts${activeCategory ? `?cat=${activeCategory}` : ""}`);
+  const category = searchParams.get("cat");
+  const { data: posts, error } = useAxiosGet(`/posts${category ? `?cat=${category}` : ""}`);
 
   let content;
   if (error) {
@@ -19,12 +18,7 @@ export default function Home() {
       <div className="posts">
         {posts.length === 0 && "No posts found in this category."}
         {posts.map((post) => {
-          const rpost = {
-            ...post,
-            imageUrl: serverBaseUrl + post.imageUrl,
-            authorAvatarUrl: serverBaseUrl + post.authorAvatarUrl,
-          };
-          return <PostPreview post={rpost} key={post.id} />;
+          return <PostPreview post={post} key={post.id} />;
         })}
       </div>
     );
@@ -35,13 +29,13 @@ export default function Home() {
   return (
     <div className="page" id="home-page">
       <div className="categories">
-        <Link to="/" className={activeCategory === null ? "active" : ""}>
+        <Link to="/" className={`pill ${category === null ? "active" : ""}`}>
           ALL
         </Link>
 
-        {categories.map((category, i) => (
-          <Link to={`/?cat=${category}`} className={activeCategory === category ? "active" : ""} key={i}>
-            {category.toUpperCase()}
+        {categories.map((cat, i) => (
+          <Link to={`/?cat=${cat}`} className={`pill ${category === cat ? "active" : ""}`} key={i}>
+            {cat.toUpperCase()}
           </Link>
         ))}
       </div>

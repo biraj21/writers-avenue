@@ -79,8 +79,13 @@
     }
 
     &__name {
-      margin: 12px 0;
+      margin: 12px 0 0;
       text-decoration: none;
+    }
+
+    &__email {
+      margin: 0 0 12px;
+      color: #9f9f9f;
     }
 
     &__avatar {

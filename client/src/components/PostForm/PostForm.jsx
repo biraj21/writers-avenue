@@ -10,7 +10,7 @@ import "./PostForm.scss";
 // to be used to create & edit posts
 export default function PostForm({ defaults }) {
   const [title, setTitle] = useState(defaults?.title, "");
-  const [thumbnail, setThumbnail] = useState(null);
+  const [cover, setCover] = useState(null);
   const [body, setBody] = useState(defaults?.body, "");
   const [category, setCategory] = useState(defaults?.category, "");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,9 +44,11 @@ export default function PostForm({ defaults }) {
       setIsSubmitting(true);
       const post = new FormData();
       post.set("title", title);
-      post.set("thumbnail", thumbnail ? thumbnail : defaults.imageUrl);
       post.set("body", body);
       post.set("category", category);
+      if (cover) {
+        post.set("cover", cover);
+      }
 
       if (defaults) {
         await axios.put(`/posts/${defaults.id}`, post);
@@ -84,23 +86,23 @@ export default function PostForm({ defaults }) {
         </div>
 
         <div className="form__field">
-          <label>Thumbnail:</label>
+          <label>Cover image:</label>
           <input
-            name="thumbnail"
+            name="cover"
             type="file"
             accept="image/png, image/gif, image/jpeg"
             required={!Boolean(defaults)}
-            onChange={(e) => setThumbnail(e.target.files[0])}
+            onChange={(e) => setCover(e.target.files[0])}
           />
         </div>
 
-        {(thumbnail || defaults) && (
+        {(cover || defaults) && (
           <div className="preview">
             <span>Preview:</span>
-            {thumbnail ? <img src={URL.createObjectURL(thumbnail)} /> : <img src={serverBaseUrl + defaults.imageUrl} />}
-            {/* user can only remove the new thumbnail not the old one */}
-            {thumbnail && (
-              <button type="button" title="Remove Thumbnail" onClick={() => setThumbnail(null)}>
+            {cover ? <img src={URL.createObjectURL(cover)} /> : <img src={defaults.coverUrl} />}
+            {/* user can only remove the new cover not the old one */}
+            {cover && (
+              <button type="button" title="Remove Image" onClick={() => setCover(null)}>
                 <Trash2 color="var(--red)" />
               </button>
             )}
