@@ -107,11 +107,16 @@ router.delete("/:postId", checkAuth, async (req, res, next) => {
     }
 
     postId = Number(postId);
-    const { affectedRows } = await Post.delete(postId, req.userId);
-    if (affectedRows === 0) {
+    let { coverPath, userId } = await Post.getOneXById(["coverPath", "userId"], postId);
+    if (req.userId !== userId) {
       throw new AuthError();
     }
 
+    if (coverPath) {
+      await fs.unlink(path.join(process.cwd(), coverPath));
+    }
+
+    await Post.delete(postId, req.userId);
     res.sendStatus(204);
   } catch (err) {
     next(err);
