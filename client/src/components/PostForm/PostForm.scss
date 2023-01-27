@@ -189,6 +189,10 @@
     }
   }
 
+  .ql-snow .ql-editor pre.ql-syntax {
+    background-color: var(--bg-color);
+  }
+
   .ql-container {
     border-radius: 0 0 5px 5px;
     background-color: #2f2f2f;

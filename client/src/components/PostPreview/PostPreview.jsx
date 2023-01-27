@@ -19,7 +19,7 @@ export default function PostPreview({ post }) {
         </div>
       )}
 
-      <img src={post.coverUrl} alt="Thumbnail" className="post-preview__image" />
+      {post.coverUrl && <img src={post.coverUrl} alt="Thumbnail" className="post-preview__image" />}
       <h2 className="post-preview__title">
         <Link to={`/posts/${post.id}`}>{post.title}</Link>
       </h2>

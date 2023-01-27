@@ -19,11 +19,11 @@ export default function Register() {
       setIsSubmitting(true);
 
       if (password.includes(" ") || confirmPassword.includes(" ")) {
-        throw new Error("Passwords cannot have spaces!");
+        throw new Error("passwords cannot have spaces");
       } else if (password.length < 8) {
-        throw new Error("Password should be at least 8 characters long!");
+        throw new Error("password should be at least 8 characters long");
       } else if (password !== confirmPassword) {
-        throw new Error("Passwords do not match!");
+        throw new Error("passwords do not match");
       }
 
       const user = new FormData(e.target);
@@ -89,7 +89,7 @@ export default function Register() {
         </div>
 
         <div className="form__field">
-          <label>Password:</label>
+          <label>Confirm password:</label>
           <input
             name="confirmPassword"
             type="password"
@@ -103,7 +103,7 @@ export default function Register() {
 
         {error && <div className="error-msg">{error}</div>}
 
-        <button type="submit" className="btn" disabled={isSubmitting}>
+        <button className="btn" disabled={isSubmitting}>
           {isSubmitting ? "Creating..." : "Create Account"}
         </button>
 

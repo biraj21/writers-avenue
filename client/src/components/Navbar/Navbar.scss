@@ -13,8 +13,28 @@
   }
 
   h1 a {
+    display: flex;
+    align-items: center;
     text-decoration: none;
     color: var(--primary-color);
+
+    svg {
+      margin-right: 8px;
+    }
+
+    span {
+      display: block;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    small {
+      display: block;
+      font-size: 12px;
+      line-height: 1;
+      letter-spacing: 0.5pt;
+      margin-left: 2px;
+    }
   }
 
   &__links {

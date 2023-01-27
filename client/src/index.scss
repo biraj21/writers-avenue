@@ -7,6 +7,7 @@
 :root {
   --bg-color: #111;
   --primary-color: #bb76ff;
+  --primary-color: #ffb400;
   --grey: #808080;
   // --red: #e44848;
   --red: #ff7272;
@@ -109,8 +110,8 @@ textarea {
   cursor: pointer;
 
   &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+    opacity: 0.7;
+    pointer-events: none;
   }
 
   &:hover {

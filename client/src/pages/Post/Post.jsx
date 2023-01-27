@@ -41,10 +41,13 @@ export default function Post() {
     content = (
       <>
         <div className="post">
-          <div className="post__category">{post.category.toUpperCase()}</div>
+          <div className="post__category">
+            {post.category ? post.category : "---"}
+            {post.status === "draft" && " (draft)"}
+          </div>
 
           <h1>{post.title}</h1>
-          <img src={post.coverUrl} alt="Cover Image" />
+          <div className="post__cover">{post.coverUrl ? <img src={post.coverUrl} alt="Cover Image" /> : "---"}</div>
 
           <div className="post__author">
             <Link to={`/users/${post.author.id}`}>
@@ -56,7 +59,7 @@ export default function Post() {
               </span>
               <br />
               <small>
-                {moment(post.publishDate).fromNow()}, edited {moment(post.editDate).fromNow()}
+                {post.publishDate && `${moment(post.publishDate).fromNow()}, `}edited {moment(post.editDate).fromNow()}
               </small>
             </div>
 
@@ -76,12 +79,12 @@ export default function Post() {
           <div
             className="post__body"
             dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(post.body),
+              __html: post.body ? DOMPurify.sanitize(post.body) : "---",
             }}
           ></div>
         </div>
 
-        <OtherPosts category={post.category} mainPostId={post.id} />
+        {post.status === "pub" && <OtherPosts category={post.category} mainPostId={post.id} />}
       </>
     );
   } else {
@@ -104,7 +107,7 @@ function OtherPosts({ category, mainPostId }) {
   } else if (posts) {
     content = (
       <>
-        {posts.length === 1 && "No other posts found in this category."}
+        {posts.length === 1 && "no other posts found in this category"}
         {posts
           .filter((post) => post.id != mainPostId)
           .map((post) => {

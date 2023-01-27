@@ -16,7 +16,7 @@ export default function Home() {
   } else if (posts) {
     content = (
       <div className="posts">
-        {posts.length === 0 && "No posts found in this category."}
+        {posts.length === 0 && <div style={{ textAlign: "center" }}>no posts found in this category</div>}
         {posts.map((post) => {
           return <PostPreview post={post} key={post.id} />;
         })}

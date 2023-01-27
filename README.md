@@ -8,3 +8,4 @@ As of now, the following things are implemented:
  - User can register with an avatar, and a default image will be there in case they don't.
  - User can create, read, update & delete posts.
  - View profile of other users.
+ - Can save drafts instead of directly publishing.

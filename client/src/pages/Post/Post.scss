@@ -5,12 +5,17 @@
   .post {
     padding-bottom: 20px;
     flex-grow: 1;
+    max-width: 600px;
+    margin: 0 auto;
 
-    > img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
+    &__cover {
       margin: 1rem 0;
+
+      img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+      }
     }
 
     &__author {
@@ -56,6 +61,7 @@
       letter-spacing: 0.5pt;
       text-align: center;
       font-weight: bold;
+      text-transform: uppercase;
     }
 
     &__body {
@@ -77,6 +83,21 @@
 
       a {
         color: var(--primary-color);
+      }
+
+      p,
+      .ql-syntax {
+        margin-bottom: 14px;
+      }
+
+      .ql-syntax {
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #1b1b1b;
+      }
+
+      img {
+        max-width: 100%;
       }
     }
   }

@@ -1,7 +1,9 @@
+import { AuthError } from "../util/error.js";
+
 export default function checkAuth(req, res, next) {
-  if (req.userId) {
+  if ("userId" in req) {
     next();
   } else {
-    res.status(403).json({ error: "You are not authorized to perform this action!" });
+    next(new AuthError());
   }
 }

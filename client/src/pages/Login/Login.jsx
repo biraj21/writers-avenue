@@ -17,9 +17,9 @@ export default function Login() {
       setIsSubmitting(true);
 
       if (password.includes(" ")) {
-        throw new Error("Passwords cannot have spaces!");
+        throw new Error("passwords cannot have spaces!");
       } else if (password.length < 8) {
-        throw new Error("Password should be at least 8 characters long!");
+        throw new Error("password should be at least 8 characters long!");
       }
 
       const user = { email: email.trim(), password };
@@ -69,7 +69,7 @@ export default function Login() {
 
         {error && <div className="error-msg">{error}</div>}
 
-        <button type="submit" className="btn" disabled={isSubmitting}>
+        <button className="btn" disabled={isSubmitting}>
           {isSubmitting ? "Logging in..." : "Login"}
         </button>
 

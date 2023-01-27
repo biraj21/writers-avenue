@@ -4,11 +4,11 @@ import User from "../models/user.js";
 import { isInteger } from "../util/number.js";
 import { processUser } from "../util/process_data.js";
 
-// URL: /api/users/...
+// URL: /users/...
 
 const router = express.Router();
 
-router.get("/:userId", async (req, res) => {
+router.get("/:userId", async (req, res, next) => {
   try {
     let { userId } = req.params;
     if (!isInteger(userId)) {
@@ -23,7 +23,7 @@ router.get("/:userId", async (req, res) => {
       return;
     }
 
-    const posts = await Post.getByUserId(userId);
+    const posts = await Post.getByUserId(userId, userId === req.userId ? "*" : "pub");
     user.posts = posts;
     processUser(user);
 

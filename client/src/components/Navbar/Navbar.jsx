@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { BookOpen } from "react-feather";
 import { Link, NavLink } from "react-router-dom";
 import { authContext } from "contexts/auth";
 import "./Navbar.scss";
@@ -34,7 +35,13 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="wrapper">
         <h1>
-          <Link to="/">Blogs</Link>
+          <Link to="/">
+            <BookOpen />
+            <div>
+              <span>Writer's</span>
+              <small>Avenue</small>
+            </div>
+          </Link>
         </h1>
         <div className="navbar__links">
           <NavLink to="/" end={true}>
