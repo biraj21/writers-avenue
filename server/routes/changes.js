@@ -1,5 +1,4 @@
 import express from "express";
-import checkAuth from "../middlewares/checkAuth.js";
 import { AuthError, ValidationError } from "../util/error.js";
 import { isInteger } from "../util/number.js";
 import upload from "../util/upload.js";
@@ -9,7 +8,7 @@ import Post from "../models/post.js";
 
 const router = express.Router();
 
-router.put("/:postId", checkAuth, upload.single("cover"), async (req, res, next) => {
+router.put("/:postId", upload.single("cover"), async (req, res, next) => {
   try {
     let { postId } = req.params;
     if (!isInteger(postId)) {

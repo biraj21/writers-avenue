@@ -1,9 +1,10 @@
 import axios from "axios";
 import DOMPurify from "dompurify";
 import moment from "moment";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Edit, Trash2 } from "react-feather";
+import Comment from "components/Comment/Comment";
 import Loader from "components/Loader/Loader";
 import PostPreview from "components/PostPreview/PostPreview";
 import { authContext } from "contexts/auth";
@@ -38,6 +39,48 @@ export default function Post() {
   if (error) {
     content = <div className="error-msg">{error}</div>;
   } else if (post) {
+    const comments = [
+      {
+        id: 1,
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero sed tempora dolorum vitae culpa adipisci aliquid doloremque quod minima sint ullam at officiis praesentium architecto, quas iure corporis eaque nesciunt!",
+        user: {
+          id: 9,
+          name: "Biraj",
+          avatarUrl: "http://localhost:3000/uploads/1674579922954-37879496.jpeg",
+        },
+      },
+      {
+        id: 2,
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero sed tempora dolorum vitae culpa adipisci aliquid doloremque quod minima sint ullam at officiis praesentium architecto, quas iure corporis eaque nesciunt!",
+        user: {
+          id: 9,
+          name: "Biraj",
+          avatarUrl: "http://localhost:3000/uploads/1674579922954-37879496.jpeg",
+        },
+      },
+      {
+        id: 3,
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero sed tempora dolorum vitae culpa adipisci aliquid doloremque quod minima sint ullam at officiis praesentium architecto, quas iure corporis eaque nesciunt!",
+        user: {
+          id: 9,
+          name: "Biraj",
+          avatarUrl: "http://localhost:3000/uploads/1674579922954-37879496.jpeg",
+        },
+      },
+      {
+        id: 4,
+        comment:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero sed tempora dolorum vitae culpa adipisci aliquid doloremque quod minima sint ullam at officiis praesentium architecto, quas iure corporis eaque nesciunt!",
+        user: {
+          id: 9,
+          name: "Biraj",
+          avatarUrl: "http://localhost:3000/uploads/1674579922954-37879496.jpeg",
+        },
+      },
+    ];
     content = (
       <>
         <div className="post">
@@ -82,6 +125,8 @@ export default function Post() {
               __html: post.body ? DOMPurify.sanitize(post.body) : "---",
             }}
           ></div>
+
+          <PostComments comments={comments} />
         </div>
 
         {post.status === "pub" && <OtherPosts category={post.category} mainPostId={post.id} />}
@@ -94,6 +139,61 @@ export default function Post() {
   return (
     <div className="page" id="post-page">
       {content}
+    </div>
+  );
+}
+
+function PostComments({ comments }) {
+  const [comment, setComment] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
+      setIsSubmitting(true);
+
+      if (comment.trim().length === 0) {
+        throw new Error("comment cannot be empty");
+      }
+
+      setError(null);
+
+      await axios.post("/comments", { comment: comment.trim() });
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        setError(err.response.data.error);
+      } else {
+        setError(err.message);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  return (
+    <div className="post__comments">
+      <h2>Comments ({comments.length})</h2>
+
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="form__field">
+          <textarea
+            name="comment"
+            rows={3}
+            defaultValue={comment}
+            onChange={(e) => setComment(e.target.value)}
+          ></textarea>
+        </div>
+        {error && <div className="error-msg">{error}</div>}
+        <button className="btn" disabled={isSubmitting}>
+          Submit
+        </button>
+      </form>
+
+      {comments.map((comment) => (
+        <Comment comment={comment} key={comment.id} />
+      ))}
     </div>
   );
 }

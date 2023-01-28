@@ -100,6 +100,31 @@
         max-width: 100%;
       }
     }
+
+    &__comments {
+      border-top: 1px solid var(--grey);
+      padding-top: 20px;
+
+      > h2 {
+        font-size: 19px;
+      }
+
+      > .form {
+        margin-top: 16px;
+
+        textarea {
+          margin-bottom: 6px;
+        }
+
+        .error-msg {
+          margin-bottom: 6px;
+        }
+      }
+
+      .comment {
+        margin-top: 16px;
+      }
+    }
   }
 
   .other-posts {
@@ -109,6 +134,7 @@
     margin-left: 16px;
 
     > h2 {
+      font-size: 19px;
       margin-bottom: 16px;
     }
 

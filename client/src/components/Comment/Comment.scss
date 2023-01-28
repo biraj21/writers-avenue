@@ -1,0 +1,25 @@
+.comment {
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
+
+  &__author {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    a {
+      text-decoration: none;
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    small {
+      color: #9f9f9f;
+    }
+  }
+}
