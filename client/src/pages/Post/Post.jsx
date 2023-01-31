@@ -131,9 +131,37 @@ function PostComments({ postId }) {
   if (error) {
     content = <div className="error-msg">{dataError}</div>;
   } else if (comments) {
-    content = comments.map((comment) => (
-      <Comment comment={comment} key={comment.id} handleDelete={comment.user.id === currentUser.id && handleDelete} />
-    ));
+    content = (
+      <>
+        {currentUser ? (
+          <form className="form" onSubmit={handleSubmit}>
+            <div className="form__field">
+              <textarea
+                name="comment"
+                rows={3}
+                defaultValue={comment}
+                onChange={(e) => setComment(e.target.value)}
+              ></textarea>
+            </div>
+            {error && <div className="error-msg">{error}</div>}
+            <button className="btn" disabled={isSubmitting}>
+              Submit
+            </button>
+          </form>
+        ) : (
+          <div style={{ textAlign: "center" }}>
+            <Link to="/login">Login</Link> to comment.
+          </div>
+        )}
+        {comments.map((comment) => (
+          <Comment
+            comment={comment}
+            key={comment.id}
+            handleDelete={comment.user.id === currentUser?.id && handleDelete}
+          />
+        ))}
+      </>
+    );
   } else {
     content = <Loader />;
   }
@@ -176,22 +204,6 @@ function PostComments({ postId }) {
   return (
     <div className="post__comments">
       <h2>Comments {comments && `(${comments.length})`}</h2>
-
-      <form className="form" onSubmit={handleSubmit}>
-        <div className="form__field">
-          <textarea
-            name="comment"
-            rows={3}
-            defaultValue={comment}
-            onChange={(e) => setComment(e.target.value)}
-          ></textarea>
-        </div>
-        {error && <div className="error-msg">{error}</div>}
-        <button className="btn" disabled={isSubmitting}>
-          Submit
-        </button>
-      </form>
-
       {content}
     </div>
   );
