@@ -6,13 +6,13 @@ export default function PostPreview({ post }) {
   const doc = new DOMParser().parseFromString(post.body, "text/html");
   return (
     <div className="post-preview">
-      {post.author && (
+      {post.user && (
         <div className="post-preview__author">
-          <Link to={`/users/${post.author.id}`}>
-            <img src={post.author.avatarUrl} alt="Avatar" className="avatar" />
+          <Link to={`/users/${post.user.id}`}>
+            <img src={post.user.avatarUrl} alt="Avatar" className="avatar" />
           </Link>
           <div>
-            <Link to={`/users/${post.author.id}`}>{post.author.name}</Link>
+            <Link to={`/users/${post.user.id}`}>{post.user.name}</Link>
             <br />
             <small>Posted {moment(post.publishDate).fromNow()}</small>
           </div>

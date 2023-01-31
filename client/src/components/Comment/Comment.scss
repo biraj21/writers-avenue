@@ -2,6 +2,20 @@
   padding: 10px;
   border: 1px solid #333;
   border-radius: 5px;
+  position: relative;
+
+  &__delete-btn {
+    all: unset;
+    cursor: pointer;
+    position: absolute;
+    top: 8px;
+    right: 5px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
 
   &__author {
     display: flex;

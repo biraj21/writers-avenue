@@ -39,48 +39,6 @@ export default function Post() {
   if (error) {
     content = <div className="error-msg">{error}</div>;
   } else if (post) {
-    const comments = [
-      {
-        id: 1,
-        comment:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero sed tempora dolorum vitae culpa adipisci aliquid doloremque quod minima sint ullam at officiis praesentium architecto, quas iure corporis eaque nesciunt!",
-        user: {
-          id: 9,
-          name: "Biraj",
-          avatarUrl: "http://localhost:3000/uploads/1674579922954-37879496.jpeg",
-        },
-      },
-      {
-        id: 2,
-        comment:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero sed tempora dolorum vitae culpa adipisci aliquid doloremque quod minima sint ullam at officiis praesentium architecto, quas iure corporis eaque nesciunt!",
-        user: {
-          id: 9,
-          name: "Biraj",
-          avatarUrl: "http://localhost:3000/uploads/1674579922954-37879496.jpeg",
-        },
-      },
-      {
-        id: 3,
-        comment:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero sed tempora dolorum vitae culpa adipisci aliquid doloremque quod minima sint ullam at officiis praesentium architecto, quas iure corporis eaque nesciunt!",
-        user: {
-          id: 9,
-          name: "Biraj",
-          avatarUrl: "http://localhost:3000/uploads/1674579922954-37879496.jpeg",
-        },
-      },
-      {
-        id: 4,
-        comment:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero sed tempora dolorum vitae culpa adipisci aliquid doloremque quod minima sint ullam at officiis praesentium architecto, quas iure corporis eaque nesciunt!",
-        user: {
-          id: 9,
-          name: "Biraj",
-          avatarUrl: "http://localhost:3000/uploads/1674579922954-37879496.jpeg",
-        },
-      },
-    ];
     content = (
       <>
         <div className="post">
@@ -93,20 +51,21 @@ export default function Post() {
           <div className="post__cover">{post.coverUrl ? <img src={post.coverUrl} alt="Cover Image" /> : "---"}</div>
 
           <div className="post__author">
-            <Link to={`/users/${post.author.id}`}>
-              <img src={post.author.avatarUrl} alt="Avatar" className="avatar" />
+            <Link to={`/users/${post.user.id}`}>
+              <img src={post.user.avatarUrl} alt="Avatar" className="avatar" />
             </Link>
             <div>
               <span>
-                Written by <Link to={`/users/${post.author.id}`}>{post.author.name}</Link>
+                Written by <Link to={`/users/${post.user.id}`}>{post.user.name}</Link>
               </span>
               <br />
               <small>
-                {post.publishDate && `${moment(post.publishDate).fromNow()}, `}edited {moment(post.editDate).fromNow()}
+                {post.publishDate && `${moment(post.publishDate).format("MMM Do YYYY")}, `}edited{" "}
+                {moment(post.editData).format("MMM Do YYYY")}
               </small>
             </div>
 
-            {currentUser?.id === post.author.id && (
+            {currentUser?.id === post.user.id && (
               <div className="post__actions">
                 <Link to={`/edit/${post.id}`} title="Edit Post">
                   <Edit color="var(--primary-color)" />
@@ -126,7 +85,7 @@ export default function Post() {
             }}
           ></div>
 
-          <PostComments comments={comments} />
+          <PostComments postId={post.id} />
         </div>
 
         {post.status === "pub" && <OtherPosts category={post.category} mainPostId={post.id} />}
@@ -143,10 +102,41 @@ export default function Post() {
   );
 }
 
-function PostComments({ comments }) {
+function PostComments({ postId }) {
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const { currentUser } = useContext(authContext);
+  const { data: comments, setData: setComments, error: dataError } = useAxiosGet(`/comments/${postId}`);
+
+  async function handleDelete(commentId) {
+    try {
+      if (!confirm("This comment will be permanently deleted. Are you sure?")) {
+        return;
+      }
+
+      await axios.delete(`/comments/${commentId}`);
+      setComments(comments.filter((comment) => comment.id !== commentId));
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        setError(err.response.data.error);
+      } else {
+        setError(err.message);
+      }
+    }
+  }
+
+  let content;
+  if (error) {
+    content = <div className="error-msg">{dataError}</div>;
+  } else if (comments) {
+    content = comments.map((comment) => (
+      <Comment comment={comment} key={comment.id} handleDelete={comment.user.id === currentUser.id && handleDelete} />
+    ));
+  } else {
+    content = <Loader />;
+  }
 
   async function handleSubmit(e) {
     try {
@@ -159,7 +149,18 @@ function PostComments({ comments }) {
 
       setError(null);
 
-      await axios.post("/comments", { comment: comment.trim() });
+      const res = await axios.post("/comments", { comment: comment.trim(), postId });
+      const newComment = {
+        id: res.data.data,
+        body: comment.trim(),
+        postId,
+        user: {
+          id: currentUser.id,
+          name: currentUser.name,
+          avatarUrl: currentUser.avatarUrl,
+        },
+      };
+      setComments([...comments, newComment]);
     } catch (err) {
       console.error(err);
       if (err.response) {
@@ -174,7 +175,7 @@ function PostComments({ comments }) {
 
   return (
     <div className="post__comments">
-      <h2>Comments ({comments.length})</h2>
+      <h2>Comments {comments && `(${comments.length})`}</h2>
 
       <form className="form" onSubmit={handleSubmit}>
         <div className="form__field">
@@ -191,9 +192,7 @@ function PostComments({ comments }) {
         </button>
       </form>
 
-      {comments.map((comment) => (
-        <Comment comment={comment} key={comment.id} />
-      ))}
+      {content}
     </div>
   );
 }

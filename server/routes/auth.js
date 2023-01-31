@@ -22,7 +22,7 @@ router.post("/login", async (req, res, next) => {
 
     const user = await User.getByEmail(email);
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      throw new ValidationError("incorrect email or passwordi");
+      throw new ValidationError("incorrect email or password");
     }
 
     const token = jwt.sign(user.id, process.env.JWT_SECRET);
