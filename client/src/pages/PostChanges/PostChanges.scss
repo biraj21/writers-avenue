@@ -1,28 +1,7 @@
-#post-page {
-  max-width: 956px; // 916px width + 40px padding
-  display: flex;
-
+#post-changes-page {
   .post {
     padding-bottom: 20px;
-    flex-grow: 1;
-    max-width: 600px;
     margin: 0 auto;
-
-    &__category {
-      margin-bottom: 1rem;
-      color: var(--primary-color);
-      font-size: 13px;
-      letter-spacing: 0.5pt;
-      text-align: center;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-
-    &__draft-link {
-      text-align: center;
-      display: block;
-      margin-bottom: 1rem;
-    }
 
     &__cover {
       margin: 1rem 0;
@@ -68,6 +47,16 @@
         width: 16px;
         height: 16px;
       }
+    }
+
+    &__category {
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      font-size: 13px;
+      letter-spacing: 0.5pt;
+      text-align: center;
+      font-weight: bold;
+      text-transform: uppercase;
     }
 
     &__body {
@@ -135,38 +124,6 @@
         display: block;
         margin: 0 auto;
       }
-    }
-  }
-
-  .other-posts {
-    max-width: 300px;
-    width: 100%;
-    flex-shrink: 0;
-    margin-left: 16px;
-
-    > h2 {
-      font-size: 19px;
-      margin-bottom: 16px;
-    }
-
-    .post-preview__title {
-      font-size: 20px;
-    }
-
-    .post-preview__image {
-      height: 150px;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    max-width: 600px;
-    display: block;
-
-    .other-posts {
-      max-width: none;
-      margin-left: 0;
-      padding-top: 20px;
-      border-top: 1px solid var(--grey);
     }
   }
 }

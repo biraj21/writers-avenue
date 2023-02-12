@@ -2,7 +2,7 @@ import express from "express";
 import Post from "../models/post.js";
 import User from "../models/user.js";
 import { isInteger } from "../util/number.js";
-import { processUser } from "../util/process_data.js";
+import { processUser } from "../util/process-data.js";
 
 // URL: /users/...
 

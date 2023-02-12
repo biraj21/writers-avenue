@@ -24,6 +24,18 @@ export function processPost(post) {
   delete post.userAvatarPath;
 }
 
+export function processPostChanges(postChanges) {
+  postChanges.id = postChanges.postId;
+  postChanges.coverUrl = postChanges.coverPath ? process.env.SERVER_URL + postChanges.coverPath : null;
+  postChanges.user = {
+    id: postChanges.userId,
+  };
+
+  delete postChanges.postId;
+  delete postChanges.coverPath;
+  delete postChanges.userId;
+}
+
 export function processUser(user) {
   user.avatarUrl = process.env.SERVER_URL + user.avatarPath;
 

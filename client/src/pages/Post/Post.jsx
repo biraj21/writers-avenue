@@ -47,6 +47,12 @@ export default function Post() {
             {post.status === "draft" && " (draft)"}
           </div>
 
+          {post.hasChanges && (
+            <Link to={`/posts/changes/${id}`} className="post__draft-link">
+              Go to draft version
+            </Link>
+          )}
+
           <h1>{post.title}</h1>
           <div className="post__cover">{post.coverUrl ? <img src={post.coverUrl} alt="Cover Image" /> : "---"}</div>
 

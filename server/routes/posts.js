@@ -3,9 +3,10 @@ import path from "node:path";
 import express from "express";
 import checkAuth from "../middlewares/checkAuth.js";
 import Post from "../models/post.js";
+import PostChanges from "../models/post-changes.js";
 import { AuthError, ValidationError } from "../util/error.js";
 import { isInteger } from "../util/number.js";
-import { processPost } from "../util/process_data.js";
+import { processPost } from "../util/process-data.js";
 import upload from "../util/upload.js";
 
 // URL: /posts/...
@@ -36,6 +37,11 @@ router.get("/:postId", async (req, res, next) => {
     if (!post || (post.status !== "pub" && req.userId !== post.userId)) {
       res.status(404).json({ error: "post not found" });
       return;
+    }
+
+    const postChangesData = await PostChanges.getOneXByPostId(["postId"], postId);
+    if (postChangesData && req.userId === post.userId) {
+      post.hasChanges = true;
     }
 
     processPost(post);
@@ -70,7 +76,24 @@ router.put("/:postId", checkAuth, upload.single("cover"), async (req, res, next)
 
     postId = Number(postId);
     const { title, body, category } = req.body;
-    let { coverPath, status: postStatus } = await Post.getOneXById(["coverPath", "status"], postId);
+    const postData = await Post.getOneXById(["coverPath", "status", "userId"], postId);
+    if (!postData) {
+      if (req.file) {
+        await fs.unlink(path.join(process.cwd(), req.file.path));
+      }
+
+      res.status(404).json({ error: "post not found" });
+      return;
+    }
+
+    let { coverPath, status: postStatus, userId } = postData;
+    if (req.userId !== userId) {
+      if (req.file) {
+        await fs.unlink(path.join(process.cwd(), req.file.path));
+      }
+
+      throw new AuthError();
+    }
 
     if (req.file) {
       if (coverPath) {
@@ -87,11 +110,12 @@ router.put("/:postId", checkAuth, upload.single("cover"), async (req, res, next)
       post.publishDate = new Date();
     }
 
-    const { affectedRows } = await Post.update(post, postId, req.userId);
-    if (affectedRows === 0) {
-      throw new AuthError();
+    const postChangesData = PostChanges.getOneXByPostId(["postId"], postId);
+    if (postChangesData) {
+      await PostChanges.delete(postId, req.userId);
     }
 
+    await Post.update(post, postId, req.userId);
     res.sendStatus(204);
   } catch (err) {
     next(err);

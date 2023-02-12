@@ -8,6 +8,7 @@ import PageNotFound from "pages/PageNotFound/PageNotFound";
 import Profile from "pages/Profile/Profile";
 import Post from "pages/Post/Post";
 import PostEdit from "pages/PostEdit/PostEdit";
+import PostChanges from "pages/PostChanges/PostChanges";
 import PostWrite from "pages/PostWrite/PostWrite";
 import Register from "pages/Register/Register";
 import "./App.scss";
@@ -32,6 +33,7 @@ export default function App() {
           {/* these routes should only be accessible when the user IS logged in */}
           <Route element={<AuthRoutes redirectTo="/login" />}>
             <Route path="/edit/:id" element={<PostEdit />} />
+            <Route path="/posts/changes/:id" element={<PostChanges />} />
             <Route path="/write" element={<PostWrite />} />
           </Route>
 

@@ -3,7 +3,7 @@ import checkAuth from "../middlewares/checkAuth.js";
 import Comment from "../models/comment.js";
 import { AuthError } from "../util/error.js";
 import { isInteger } from "../util/number.js";
-import { processComment } from "../util/process_data.js";
+import { processComment } from "../util/process-data.js";
 
 // URL: /comments/...
 

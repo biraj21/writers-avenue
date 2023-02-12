@@ -5,7 +5,9 @@ A blog website with frontend written in React & Sass, Node.js (Express) for back
 
 As of now, the following things are implemented:
  - A user can register or login.
- - User can register with an avatar, and a default image will be there in case they don't.
- - User can create, read, update & delete posts.
+ - When registering if a user doesn't upload an avatar, a default avatar will be set automatically.
+ - Users can create, read, update & delete posts.
  - View profile of other users.
- - Can save drafts instead of directly publishing.
+ - Users can post comments on posts.
+ - Can save drafts instead of directly posting posts publically.
+ - User can make changes to an already published post & can save them as drafts on server!

@@ -21,7 +21,7 @@ const modules = {
 };
 
 // to be used to create & edit posts
-export default function PostForm({ defaults }) {
+export default function PostForm({ defaults, changes }) {
   const [title, setTitle] = useState(defaults ? defaults.title : "");
   const [cover, setCover] = useState(null);
   const [body, setBody] = useState(defaults?.body || "");
@@ -48,7 +48,7 @@ export default function PostForm({ defaults }) {
       }
 
       if (defaults) {
-        await axios.put(`/changes/${defaults.id}`, post);
+        await axios.put(`/posts/changes/${defaults.id}`, post);
         navigate(`/posts/${defaults.id}`);
       } else {
         const res = await axios.post("/posts/drafts", post);
@@ -174,7 +174,7 @@ export default function PostForm({ defaults }) {
 
         <div className="status-card">
           <h2>Publish</h2>
-          <b>Status:</b> {defaults ? defaults.status : "new"}
+          <b>Status:</b> {defaults ? `${defaults.status}${changes ? " (draft version)" : ""}` : "new"}
           <br />
           <b>Visibility:</b> Public
           <div className="actions">
