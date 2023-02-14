@@ -4,10 +4,11 @@ if (("$#" < 1)); then
 fi
 
 for arg in "$@"; do
-    touch "src/$arg.jsx" "src/$arg.scss"
+    mkdir -p "./src/$arg"
+    touch "./src/$arg/$arg.jsx" "./src/$arg/$arg.scss"
 
     template=$(cat << EOF
-import "./$arg.scss"
+import "./src/$arg.scss"
 
 export default function $arg() {
   return <></>;
@@ -15,5 +16,5 @@ export default function $arg() {
 EOF
 )
 
-    echo "$template" > "src/$arg.jsx"
+    echo "$template" > "src/$arg/$arg.jsx"
 done
