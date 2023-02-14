@@ -1,0 +1,16 @@
+{
+  "name": "writers-avenue",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "setup": "node ./scripts/setup.js"
+  },
+  "repository": "https://github.com/biraj21/writers-avenue.git",
+  "author": "Biraj <biraj.pub@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "mariadb": "^3.0.2"
+  }
+}

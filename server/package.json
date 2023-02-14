@@ -1,11 +1,12 @@
 {
   "name": "writers-avenue-server",
-  "version": "1.0.0",
+  "private": true,
+  "version": "0.0.0",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "start-dev": "npx nodemon index.js"
+    "dev": "npx nodemon index.js"
   },
   "license": "MIT",
   "dependencies": {
