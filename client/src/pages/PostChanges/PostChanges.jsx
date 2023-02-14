@@ -39,6 +39,10 @@ export default function PostChanges() {
   } else if (postChanges) {
     content = (
       <div className="post">
+        <Link to={`/posts/${id}`} className="btn post__other-version">
+          Go to published version
+        </Link>
+
         <div className="post__category">{postChanges.category ? postChanges.category : "---"}</div>
 
         <h1>{postChanges.title}</h1>

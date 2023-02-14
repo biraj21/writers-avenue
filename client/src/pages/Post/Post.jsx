@@ -42,16 +42,16 @@ export default function Post() {
     content = (
       <>
         <div className="post">
+          {post.hasChanges && (
+            <Link to={`/posts/changes/${id}`} className="btn post__other-version">
+              Go to draft version
+            </Link>
+          )}
+
           <div className="post__category">
             {post.category ? post.category : "---"}
             {post.status === "draft" && " (draft)"}
           </div>
-
-          {post.hasChanges && (
-            <Link to={`/posts/changes/${id}`} className="post__draft-link">
-              Go to draft version
-            </Link>
-          )}
 
           <h1>{post.title}</h1>
           <div className="post__cover">{post.coverUrl ? <img src={post.coverUrl} alt="Cover Image" /> : "---"}</div>
