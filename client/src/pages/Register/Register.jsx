@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import OauthButtonGoogle from "components/OauthButtonGoogle/OauthButtonGoogle";
 import { authContext } from "contexts/auth";
 
 // styles for this page are in index.scss
@@ -45,6 +46,13 @@ export default function Register() {
       <h2>Create New Account</h2>
 
       <form action="POST" className="form" onSubmit={handleSubmit}>
+        <OauthButtonGoogle />
+
+        <div className="or">
+          <hr />
+          <span className="text">Or</span>
+        </div>
+
         <div className="form__field">
           <label>Name:</label>
           <input

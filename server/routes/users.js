@@ -12,16 +12,18 @@ router.get("/:userId", async (req, res, next) => {
   try {
     let { userId } = req.params;
     if (!isInteger(userId)) {
-      res.status(404).json({ error: "User not found!" });
+      res.status(404).json({ error: "user not found" });
       return;
     }
 
     userId = Number(userId);
     const user = await User.getById(userId);
     if (!user) {
-      res.status(404).json({ error: "User not found!" });
+      res.status(404).json({ error: "user not found" });
       return;
     }
+
+    console.log(user);
 
     const posts = await Post.getByUserId(userId, userId === req.userId ? "*" : "pub");
     user.posts = posts;

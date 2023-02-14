@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import OauthButtonGoogle from "components/OauthButtonGoogle/OauthButtonGoogle";
 import { authContext } from "contexts/auth";
 
 // styles for this page are in index.scss
@@ -41,6 +42,13 @@ export default function Login() {
       <h2>Login</h2>
 
       <form action="POST" className="form" onSubmit={handleSubmit}>
+        <OauthButtonGoogle />
+
+        <div className="or">
+          <hr />
+          <span className="text">Or</span>
+        </div>
+
         <div className="form__field">
           <label>Email:</label>
           <input
@@ -53,7 +61,6 @@ export default function Login() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-
         <div className="form__field">
           <label>Password:</label>
           <input
@@ -66,13 +73,10 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-
         {error && <div className="error-msg">{error}</div>}
-
         <button className="btn" disabled={isSubmitting}>
           {isSubmitting ? "Logging in..." : "Login"}
         </button>
-
         <span>
           Don't have an account?
           <br />
@@ -82,3 +86,34 @@ export default function Login() {
     </div>
   );
 }
+
+// window.onload = function () {
+//   google.accounts.id.initialize({
+//     client_id: "YOUR_GOOGLE_CLIENT_ID",
+//     callback: handleCredentialResponse,
+//   });
+//   google.accounts.id.renderButton(
+//     document.getElementById("buttonDiv"),
+//     { theme: "outline", size: "large" } // customization attributes
+//   );
+// };
+
+// function loadGsiClientScript(callback) {
+//   if (document.getElementById("gsi-script")) {
+//     console.log(Object.keys(document.getElementById("gsi-script")));
+//     return;
+//   }
+
+//   const script = document.createElement("script");
+//   script.src = "https://accounts.google.com/gsi/client";
+//   script.id = "gsi-script";
+//   document.body.appendChild(script);
+//   window.addEventListener("load", () => callback());
+// }
+
+// function removeGsiClient() {
+//   const script = document.getElementById("gsi-script");
+//   if (script) {
+//     script.remove();
+//   }
+// }

@@ -60,7 +60,7 @@ router.post("/register", upload.single("avatar"), async (req, res, next) => {
     });
     const userId = Number(insertId);
     const token = jwt.sign(userId, process.env.JWT_SECRET);
-    res.json({ token, data: { id: userId, name, email, avatarUrl: process.env.SERVER_URL + avatarPath } });
+    res.status(201).json({ token, data: { id: userId, name, email, avatarUrl: process.env.SERVER_URL + avatarPath } });
   } catch (err) {
     next(err);
   }

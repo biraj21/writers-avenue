@@ -47,7 +47,8 @@ export default class Post {
       const query = `SELECT
         p.*,
         u.name userName,
-        u.avatarPath userAvatarPath
+        u.avatarPath userAvatarPath,
+        u.authMethod userAuthMethod
       FROM Post p JOIN User u
       ON p.userId = u.id
       WHERE p.status = ?`;
@@ -68,7 +69,8 @@ export default class Post {
       const query = `SELECT
         p.*,
         u.name userName,
-        u.avatarPath userAvatarPath
+        u.avatarPath userAvatarPath,
+        u.authMethod userAuthMethod
       FROM Post p JOIN User u
       ON p.userId = u.id
       WHERE p.category = ? AND p.status = ?`;
@@ -112,7 +114,8 @@ export default class Post {
       SELECT
         p.*,
         u.name userName,
-        u.avatarPath userAvatarPath
+        u.avatarPath userAvatarPath,
+        u.authMethod userAuthMethod
       FROM Post p JOIN User u
       ON p.userId = u.id
       WHERE p.id = ?`;

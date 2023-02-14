@@ -4,6 +4,7 @@ import Navbar from "components/Navbar/Navbar";
 import { authContext } from "contexts/auth";
 import Home from "pages/Home/Home";
 import Login from "pages/Login/Login";
+import OauthGoogle from "pages/OauthGoogle/OauthGoogle";
 import PageNotFound from "pages/PageNotFound/PageNotFound";
 import Profile from "pages/Profile/Profile";
 import Post from "pages/Post/Post";
@@ -27,12 +28,14 @@ export default function App() {
           {/* these routes should only be accessible when the user IS NOT logged in */}
           <Route element={<OnlyUnauthRoutes redirectTo="/" />}>
             <Route path="/login" element={<Login />} />
+            <Route path="/oauth/google" element={<OauthGoogle />} />
             <Route path="/register" element={<Register />} />
           </Route>
 
           {/* these routes should only be accessible when the user IS logged in */}
           <Route element={<AuthRoutes redirectTo="/login" />}>
             <Route path="/edit/:id" element={<PostEdit />} />
+            <Route path="/oauth/google" element={<OauthGoogle />} />
             <Route path="/posts/changes/:id" element={<PostChanges />} />
             <Route path="/write" element={<PostWrite />} />
           </Route>

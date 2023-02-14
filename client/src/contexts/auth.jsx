@@ -32,5 +32,9 @@ export function AuthProvider({ children }) {
     navigate("/");
   }
 
-  return <authContext.Provider value={{ currentUser, login, logout, register }}>{children}</authContext.Provider>;
+  return (
+    <authContext.Provider value={{ currentUser, setCurrentUser, login, logout, register }}>
+      {children}
+    </authContext.Provider>
+  );
 }

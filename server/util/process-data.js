@@ -1,27 +1,43 @@
 export function processComment(comment) {
-  comment.user = {
+  const user = {
     id: comment.userId,
     name: comment.userName,
-    avatarUrl: process.env.SERVER_URL + comment.userAvatarPath,
   };
+
+  if (comment.userAuthMethod === "email") {
+    user.avatarUrl = process.env.SERVER_URL + comment.userAvatarPath;
+  } else if (comment.userAuthMethod === "google") {
+    user.avatarUrl = comment.userAvatarPath;
+  }
+
+  comment.user = user;
 
   delete comment.userId;
   delete comment.userName;
   delete comment.userAvatarPath;
+  delete comment.userAuthMethod;
 }
 
 export function processPost(post) {
   post.coverUrl = post.coverPath ? process.env.SERVER_URL + post.coverPath : null;
-  post.user = {
+  const user = {
     id: post.userId,
     name: post.userName,
-    avatarUrl: process.env.SERVER_URL + post.userAvatarPath,
   };
+
+  if (post.userAuthMethod === "email") {
+    user.avatarUrl = process.env.SERVER_URL + post.userAvatarPath;
+  } else if (post.userAuthMethod === "google") {
+    user.avatarUrl = post.userAvatarPath;
+  }
+
+  post.user = user;
 
   delete post.coverPath;
   delete post.userId;
   delete post.userName;
   delete post.userAvatarPath;
+  delete post.authMethod;
 }
 
 export function processPostChanges(postChanges) {
@@ -37,7 +53,11 @@ export function processPostChanges(postChanges) {
 }
 
 export function processUser(user) {
-  user.avatarUrl = process.env.SERVER_URL + user.avatarPath;
+  if (user.authMethod === "email") {
+    user.avatarUrl = process.env.SERVER_URL + user.avatarPath;
+  } else if (user.authMethod === "google") {
+    user.avatarUrl = user.avatarPath;
+  }
 
   user.posts.forEach((post) => {
     post.coverUrl = post.coverPath ? process.env.SERVER_URL + post.coverPath : null;
@@ -45,4 +65,5 @@ export function processUser(user) {
   });
 
   delete user.avatarPath;
+  delete user.password;
 }

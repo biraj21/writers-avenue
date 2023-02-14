@@ -3,10 +3,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import { AuthProvider } from "./contexts/auth";
+import { AuthProvider } from "contexts/auth";
 import "./index.scss";
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL;
 axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");

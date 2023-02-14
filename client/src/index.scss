@@ -6,6 +6,7 @@
 
 :root {
   --bg-color: #111;
+  --border-color: #333;
   --primary-color: #bb76ff;
   --primary-color: #ffb400;
   --grey: #808080;
@@ -92,7 +93,7 @@ textarea {
 // CSS components
 .avatar {
   border-radius: 50%;
-  border: 1px solid #333;
+  border: 1px solid var(--border-color);
 }
 
 .btn {
@@ -177,6 +178,30 @@ textarea {
   .btn {
     display: block;
     margin: 0 auto;
+  }
+
+  .oauth-btn-google {
+    width: 100%;
+  }
+
+  .or {
+    margin: 16px 0;
+    position: relative;
+
+    hr {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid var(--border-color);
+      position: absolute;
+      top: calc(50% - 0.5px);
+      z-index: -1;
+    }
+
+    .text {
+      width: 40px;
+      background-color: var(--bg-color);
+      margin: 0 auto;
+    }
   }
 
   span {

@@ -66,7 +66,7 @@ export default function Post() {
               </span>
               <br />
               <small>
-                {post.publishDate && `${moment(post.publishDate).format("MMM Do YYYY")}, `}edited{" "}
+                {post.publishDate && `${moment(post.publishDate).format("MMM Do YYYY")}, `}edited on{" "}
                 {moment(post.editData).format("MMM Do YYYY")}
               </small>
             </div>

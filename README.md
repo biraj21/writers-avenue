@@ -6,7 +6,7 @@ Writer's Avenue is an open-source blog publishing website with its frontend writ
 
 As of now, the following things are implemented:
 
-- a user can register or login (no sh\*t 😑)
+- user can register/login with their email or Google account (OAuth 2.0)
 - if a user doesn't upload an avatar while registering, a default avatar will be set
 - users can create, read, update & delete posts
 - view profile of other users 👀
@@ -53,4 +53,4 @@ Note: these steps are tested on Linux (Pop OS) with Node v16.16.0 & MariaDB serv
    ```
    yarn dev
    ```
-10. run & play around with this project, say good things & give me some dopamine 😌
+10. play around with this project & say good things to reward me with some dopamine 😌

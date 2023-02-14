@@ -27,7 +27,8 @@ export default class Comment {
         c.date,
         u.id userId,
         u.name userName,
-        u.avatarPath userAvatarPath
+        u.avatarPath userAvatarPath,
+        u.authMethod userAuthMethod
       FROM Comment c
       JOIN User u
       ON c.userId = u.id
