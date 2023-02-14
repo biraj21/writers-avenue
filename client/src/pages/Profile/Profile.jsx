@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "components/Loader/Loader";
 import PostPreview from "components/PostPreview/PostPreview";
@@ -34,6 +33,7 @@ export default function Profile() {
         name: "Published",
         content: (
           <div className="user__posts">
+            {published.length === 0 && <div style={{ textAlign: "center" }}>nothing here</div>}
             {published.map((post) => (
               <PostPreview post={post} key={post.id} />
             ))}
