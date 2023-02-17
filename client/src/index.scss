@@ -25,7 +25,7 @@ body {
   overflow: hidden;
   min-width: 360px;
   background-color: var(--bg-color);
-  color: #fff;
+  color: #ddd;
 }
 
 ::-webkit-scrollbar {
@@ -128,6 +128,7 @@ textarea {
 
   &--stroked {
     border: 1px solid var(--primary-color);
+    padding: 3px 7px;
     background: none;
     color: #fff;
   }

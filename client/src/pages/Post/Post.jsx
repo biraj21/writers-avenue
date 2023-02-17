@@ -3,7 +3,7 @@ import DOMPurify from "dompurify";
 import moment from "moment";
 import { useContext, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Edit, Trash2 } from "react-feather";
+import { Edit, Heart, Trash2 } from "react-feather";
 import Comment from "components/Comment/Comment";
 import Loader from "components/Loader/Loader";
 import PostPreview from "components/PostPreview/PostPreview";
@@ -91,6 +91,8 @@ export default function Post() {
             }}
           ></div>
 
+          <PostLike postId={post.id} liked={post.likedByMe} likeCount={post.likeCount} />
+
           <PostComments postId={post.id} />
         </div>
 
@@ -108,6 +110,40 @@ export default function Post() {
   );
 }
 
+function PostLike({ postId, liked: likedByMe, likeCount }) {
+  const { currentUser } = useContext(authContext);
+  const [liked, setLiked] = useState(likedByMe);
+  if (likedByMe && !liked) {
+    likeCount -= 1;
+  } else if (!likedByMe && liked) {
+    likeCount += 1;
+  }
+
+  async function handeClick() {
+    try {
+      if (!currentUser) {
+        alert("you need to be logged in!");
+        return;
+      }
+
+      setLiked(!liked);
+      await axios.put(`/likes/${postId}`);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  return (
+    <div className="post__likes">
+      <button className={`btn ${liked ? "" : "btn--stroked"}`} onClick={handeClick}>
+        <Heart width={18} />
+        {liked ? "Liked" : "Like"}
+      </button>
+      {likeCount} likes
+    </div>
+  );
+}
+
 function PostComments({ postId }) {
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -117,11 +153,12 @@ function PostComments({ postId }) {
 
   async function handleDelete(commentId) {
     try {
-      if (!confirm("This comment will be permanently deleted. Are you sure?")) {
+      if (!confirm("This comment will be deleted. Are you sure?")) {
         return;
       }
 
       await axios.delete(`/comments/${commentId}`);
+      setComment("");
       setComments(comments.filter((comment) => comment.id !== commentId));
     } catch (err) {
       console.error(err);

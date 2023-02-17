@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import express from "express";
 import checkAuth from "../middlewares/checkAuth.js";
+import Like from "../models/like.js";
 import Post from "../models/post.js";
 import PostChanges from "../models/post-changes.js";
 import { AuthError, ValidationError } from "../util/error.js";
@@ -42,6 +43,18 @@ router.get("/:postId", async (req, res, next) => {
     const postChangesData = await PostChanges.getOneXByPostId(["postId"], postId);
     if (postChangesData && req.userId === post.userId) {
       post.hasChanges = true;
+    }
+
+    const likeCount = await Like.getCountByPostId(postId);
+    post.likeCount = Number(likeCount);
+
+    if (req.userId) {
+      const likeData = await Like.getOne(postId, req.userId);
+      if (!likeData) {
+        post.likedByMe = false;
+      } else {
+        post.likedByMe = Boolean(likeData.liked);
+      }
     }
 
     processPost(post);

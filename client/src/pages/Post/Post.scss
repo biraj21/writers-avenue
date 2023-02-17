@@ -107,6 +107,24 @@
       }
     }
 
+    &__likes {
+      border-top: 1px solid var(--grey);
+      padding: 10px 0;
+
+      display: flex;
+      align-items: center;
+
+      .btn {
+        display: flex;
+        align-items: center;
+        margin-right: 8px;
+
+        svg {
+          margin-right: 4px;
+        }
+      }
+    }
+
     &__comments {
       border-top: 1px solid var(--grey);
       padding-top: 20px;

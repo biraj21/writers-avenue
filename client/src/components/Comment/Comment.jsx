@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import "./Comment.scss";
 
 export default function Comment({ comment, handleDelete }) {
-  console.log(comment);
   return (
     <div className="comment">
       {handleDelete && (

@@ -23,8 +23,6 @@ router.get("/:userId", async (req, res, next) => {
       return;
     }
 
-    console.log(user);
-
     const posts = await Post.getByUserId(userId, userId === req.userId ? "*" : "pub");
     user.posts = posts;
     processUser(user);

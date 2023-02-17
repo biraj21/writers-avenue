@@ -13,7 +13,6 @@ export default function Profile() {
   if (error) {
     content = <div className="error-msg">{error}</div>;
   } else if (user) {
-    console.log(user);
     // api will send private posts only when the logged in user vists their profile
     const published = [];
     const unpublished = [];
