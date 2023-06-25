@@ -21,9 +21,9 @@ Note: these steps are tested on Linux (Pop OS) with Node v16.16.0 & MariaDB serv
 1. make sure Node, NPM, Yarn & MariaDB are installed.
 2. there are 3 dotenvs:
 
-   - _/dummy.env_
+   - _dummy.env_
    - _server/dummy.env_
-   - _/client/dummy.env_.
+   - _client/dummy.env_
 
    read them, populate them with proper values & rename those files from _dummy.env_ to just _.env_.
 
