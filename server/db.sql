@@ -11,8 +11,9 @@ CREATE TABLE `User` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(512) NOT NULL,
+  `password` varchar(512) DEFAULT NULL,
   `avatarPath` varchar(255) NOT NULL,
+  `authMethod` enum('email','google') NOT NULL DEFAULT 'email',
   PRIMARY KEY (`id`),
   UNIQUE KEY `User_UN` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -66,3 +67,16 @@ CREATE TABLE `Comment` (
   CONSTRAINT `Comment_Post_FK` FOREIGN KEY (`postId`) REFERENCES `Post` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Comment_User_FK` FOREIGN KEY (`userId`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- blogs.`Like` definition
+
+CREATE TABLE `Like` (
+  `liked` tinyint(1) NOT NULL DEFAULT 1,
+  `postId` int(10) unsigned NOT NULL,
+  `userId` int(10) unsigned NOT NULL,
+  KEY `Like_Post_FK` (`postId`),
+  KEY `Like_FK` (`userId`),
+  CONSTRAINT `Like_FK` FOREIGN KEY (`userId`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Like_Post_FK` FOREIGN KEY (`postId`) REFERENCES `Post` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
