@@ -6,7 +6,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const pool = mariadb.createPool({
-  hostname: process.env.DB_HOST,
+  host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
@@ -17,7 +17,7 @@ try {
   console.log("Connected to database.");
   conn.release();
 } catch (err) {
-  console.error("Error connecting to database:", err.message);
+  console.error("Error connecting to database:", err instanceof Error ? err.message : err);
   await pool.end();
   process.exit(1);
 }

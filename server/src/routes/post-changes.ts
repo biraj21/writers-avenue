@@ -14,14 +14,8 @@ const router = express.Router();
 
 router.get("/:postId", async (req, res, next) => {
   try {
-    let { postId } = req.params;
-    if (!isInteger(postId)) {
-      res.status(404).json({ error: "post not found" });
-      return;
-    }
-
-    postId = Number(postId);
-    const postChanges = await PostChanges.getOneByIds(postId, req.userId);
+    const postId = Number(req.params.postId);
+    const postChanges = await PostChanges.getOneByIds(postId, Number(req.userId));
     if (!postChanges) {
       next();
       return;
@@ -38,12 +32,6 @@ router.get("/:postId", async (req, res, next) => {
 
 router.put("/:postId", upload.single("cover"), async (req, res, next) => {
   try {
-    let { postId } = req.params;
-    if (!isInteger(postId)) {
-      res.status(404).json({ error: "post not found" });
-      return;
-    }
-
     let { title, body, category } = req.body;
     title = title.trim();
     body = body ? body.trim() : null;
@@ -53,7 +41,7 @@ router.put("/:postId", upload.single("cover"), async (req, res, next) => {
       throw new ValidationError("title is required");
     }
 
-    postId = Number(postId);
+    const postId = Number(req.params.postId);
     const postData = await Post.getOneXById(["coverPath", "status", "userId"], postId);
     if (!postData) {
       if (req.file) {
@@ -91,7 +79,7 @@ router.put("/:postId", upload.single("cover"), async (req, res, next) => {
           status: "draft",
         },
         postId,
-        req.userId
+        Number(req.userId)
       );
     } else {
       if (req.file) {
@@ -114,11 +102,7 @@ router.put("/:postId", upload.single("cover"), async (req, res, next) => {
 
 router.delete("/:postId", async (req, res, next) => {
   try {
-    let { postId } = req.params;
-    if (!isInteger(postId)) {
-      res.status(404).json({ error: "post not found" });
-      return;
-    }
+    const postId = Number(req.params.postId);
 
     const postChangesData = await PostChanges.getOneXByPostId(["userId"], postId);
     if (!processPostChanges) {
@@ -126,12 +110,12 @@ router.delete("/:postId", async (req, res, next) => {
       return;
     }
 
-    if (req.userId !== postChangesData.userId) {
+    const userId = Number(req.userId);
+    if (userId !== postChangesData.userId) {
       throw new ActionForbiddenError();
     }
 
-    postId = Number(postId);
-    await PostChanges.delete(postId, req.userId);
+    await PostChanges.delete(postId, userId);
     res.sendStatus(204);
   } catch (err) {
     next(err);

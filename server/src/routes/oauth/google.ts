@@ -15,7 +15,7 @@ const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_OAUTH_REDIRECT
 );
 
-async function getGoogleUser(code) {
+async function getGoogleUser(code: string) {
   try {
     const { tokens } = await oauth2Client.getToken(code);
 
@@ -37,7 +37,7 @@ async function getGoogleUser(code) {
 
 router.post("/", async (req, res, next) => {
   try {
-    if (!("code" in req.query)) {
+    if (typeof req.query.code !== "string") {
       throw new ValidationError("code is required");
     }
 
@@ -53,7 +53,7 @@ router.post("/", async (req, res, next) => {
       });
 
       const userId = Number(insertId);
-      const token = jwt.sign(userId, process.env.JWT_SECRET);
+      const token = jwt.sign(userId.toString(), process.env.JWT_SECRET);
       res
         .status(201)
         .json({ token, data: { id: userId, name, email: googleUser.email, avatarUrl: googleUser.picture } });
@@ -69,9 +69,8 @@ router.post("/", async (req, res, next) => {
     const token = jwt.sign(user.id, process.env.JWT_SECRET);
     res.json({ token, data: { id: user.id, name, email: user.email, avatarUrl: googleUser.picture } });
   } catch (err) {
-    console.error(Object.keys(err));
-    if (err.response) {
-      const { status, data } = err.response;
+    if (axios.isAxiosError(err)) {
+      const { status, data }: any = err.response;
       res.status(status).send({ error: data.error_description });
       return;
     }

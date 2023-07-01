@@ -1,5 +1,5 @@
-export function processComment(comment) {
-  const user = {
+export function processComment(comment: any) {
+  const user: any = {
     id: comment.userId,
     name: comment.userName,
   };
@@ -18,9 +18,9 @@ export function processComment(comment) {
   delete comment.userAuthMethod;
 }
 
-export function processPost(post) {
+export function processPost(post: any) {
   post.coverUrl = post.coverPath ? process.env.SERVER_URL + post.coverPath : null;
-  const user = {
+  const user: any = {
     id: post.userId,
     name: post.userName,
   };
@@ -40,7 +40,7 @@ export function processPost(post) {
   delete post.authMethod;
 }
 
-export function processPostChanges(postChanges) {
+export function processPostChanges(postChanges: any) {
   postChanges.id = postChanges.postId;
   postChanges.coverUrl = postChanges.coverPath ? process.env.SERVER_URL + postChanges.coverPath : null;
   postChanges.user = {
@@ -52,14 +52,14 @@ export function processPostChanges(postChanges) {
   delete postChanges.userId;
 }
 
-export function processUser(user) {
+export function processUser(user: any) {
   if (user.authMethod === "email") {
     user.avatarUrl = process.env.SERVER_URL + user.avatarPath;
   } else if (user.authMethod === "google") {
     user.avatarUrl = user.avatarPath;
   }
 
-  user.posts.forEach((post) => {
+  user.posts.forEach((post: any) => {
     post.coverUrl = post.coverPath ? process.env.SERVER_URL + post.coverPath : null;
     delete post.coverPath;
   });

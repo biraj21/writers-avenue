@@ -1,7 +1,11 @@
 import dbPool from "../util/database.js";
 
+import { IPostChanges } from "../types/post-changes/index.js";
+
 export default class PostChanges {
-  static async create({ title, body = null, coverPath = null, category = null, postId, userId }) {
+  static async create(changes: Partial<IPostChanges>) {
+    const { title, body = null, coverPath = null, category = null, postId, userId } = changes;
+
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -16,7 +20,7 @@ export default class PostChanges {
     }
   }
 
-  static async getOneByIds(postId, userId) {
+  static async getOneByIds(postId: number, userId: number) {
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -31,7 +35,7 @@ export default class PostChanges {
     }
   }
 
-  static async getOneXByPostId(columns, postId) {
+  static async getOneXByPostId(columns: string[], postId: number) {
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -46,7 +50,9 @@ export default class PostChanges {
     }
   }
 
-  static async update({ title, body = null, coverPath = null, category = null, postId, userId }) {
+  static async update(update: Partial<IPostChanges>) {
+    const { title, body = null, coverPath = null, category = null, postId, userId } = update;
+
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -67,7 +73,7 @@ export default class PostChanges {
     }
   }
 
-  static async delete(postId, userId) {
+  static async delete(postId: number, userId: number) {
     let conn;
     try {
       conn = await dbPool.getConnection();

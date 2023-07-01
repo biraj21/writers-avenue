@@ -1,4 +1,5 @@
 .env
 node_modules
 uploads
-test.js
+biraj.js
+dist

@@ -1,5 +1,8 @@
 export class CustomError extends Error {
-  constructor(message, statusCode = 500) {
+  isCustom: boolean;
+  statusCode: number;
+
+  constructor(message: string, statusCode = 500) {
     super(message);
     this.isCustom = true;
     this.statusCode = statusCode;
@@ -7,7 +10,7 @@ export class CustomError extends Error {
 }
 
 export class ValidationError extends CustomError {
-  constructor(message) {
+  constructor(message: string) {
     super(message, 400);
     this.name = this.constructor.name;
   }
@@ -21,7 +24,7 @@ export class ActionForbiddenError extends CustomError {
 }
 
 export class AuthError extends CustomError {
-  constructor(message) {
+  constructor(message: string) {
     super(message, 401);
     this.name = this.constructor.name;
   }

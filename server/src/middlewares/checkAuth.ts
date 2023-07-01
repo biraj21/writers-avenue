@@ -1,7 +1,9 @@
 import jwt from "jsonwebtoken";
 import { AuthError } from "../util/error.js";
 
-export default function checkAuth(req, res, next) {
+import { Request, Response, NextFunction } from "express";
+
+export default function checkAuth(req: Request, res: Response, next: NextFunction) {
   try {
     let authorization = req.headers["authorization"];
     if (!authorization) {
