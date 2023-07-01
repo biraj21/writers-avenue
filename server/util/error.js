@@ -20,3 +20,11 @@ export class ActionForbiddenError extends CustomError {
     this.status = 403;
   }
 }
+
+export class AuthError extends CustomError {
+  constructor(message) {
+    super(message);
+    this.name = this.constructor.name;
+    this.status = 401;
+  }
+}
