@@ -1,6 +1,5 @@
 import express from "express";
 import Like from "../models/like.js";
-import { AuthError } from "../util/error.js";
 import { isInteger } from "../util/number.js";
 
 // URL: /likes/...

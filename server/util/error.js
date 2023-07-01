@@ -13,7 +13,7 @@ export class ValidationError extends CustomError {
   }
 }
 
-export class AuthError extends CustomError {
+export class ActionForbiddenError extends CustomError {
   constructor() {
     super("you are not authorized to perform this action");
     this.name = this.constructor.name;

@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import express from "express";
-import { AuthError, ValidationError } from "../util/error.js";
+import { ActionForbiddenError, ValidationError } from "../util/error.js";
 import { isInteger } from "../util/number.js";
 import upload from "../util/upload.js";
 import Post from "../models/post.js";
@@ -70,7 +70,7 @@ router.put("/:postId", upload.single("cover"), async (req, res, next) => {
         await fs.unlink(path.join(process.cwd(), req.file.path));
       }
 
-      throw new AuthError();
+      throw new ActionForbiddenError();
     }
 
     if (postStatus === "draft") {
@@ -127,7 +127,7 @@ router.delete("/:postId", async (req, res, next) => {
     }
 
     if (req.userId !== postChangesData.userId) {
-      throw new AuthError();
+      throw new ActionForbiddenError();
     }
 
     postId = Number(postId);

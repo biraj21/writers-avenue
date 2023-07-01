@@ -1,7 +1,7 @@
 import express from "express";
 import checkAuth from "../middlewares/checkAuth.js";
 import Comment from "../models/comment.js";
-import { AuthError } from "../util/error.js";
+import { ActionForbiddenError } from "../util/error.js";
 import { isInteger } from "../util/number.js";
 import { processComment } from "../util/process-data.js";
 
@@ -52,7 +52,7 @@ router.delete("/:commentId", checkAuth, async (req, res, next) => {
 
     const { affectedRows } = await Comment.delete(commentId, req.userId);
     if (affectedRows === 0) {
-      throw new AuthError();
+      throw new ActionForbiddenError();
     }
 
     res.sendStatus(204);

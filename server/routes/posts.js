@@ -5,7 +5,7 @@ import checkAuth from "../middlewares/checkAuth.js";
 import Like from "../models/like.js";
 import Post from "../models/post.js";
 import PostChanges from "../models/post-changes.js";
-import { AuthError, ValidationError } from "../util/error.js";
+import { ActionForbiddenError, ValidationError } from "../util/error.js";
 import { isInteger } from "../util/number.js";
 import { processPost } from "../util/process-data.js";
 import upload from "../util/upload.js";
@@ -105,7 +105,7 @@ router.put("/:postId", checkAuth, upload.single("cover"), async (req, res, next)
         await fs.unlink(path.join(process.cwd(), req.file.path));
       }
 
-      throw new AuthError();
+      throw new ActionForbiddenError();
     }
 
     if (req.file) {
@@ -146,7 +146,7 @@ router.delete("/:postId", checkAuth, async (req, res, next) => {
     postId = Number(postId);
     let { coverPath, userId } = await Post.getOneXById(["coverPath", "userId"], postId);
     if (req.userId !== userId) {
-      throw new AuthError();
+      throw new ActionForbiddenError();
     }
 
     if (coverPath) {
