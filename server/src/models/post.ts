@@ -1,21 +1,33 @@
 import dbPool from "../util/database.js";
 
+import { IPost } from "../types/post/index.js";
+
 export default class Post {
-  static async create({
-    title,
-    body = null,
-    coverPath = null,
-    category = null,
-    publishDate = new Date(),
-    status = "pub",
-    userId,
-  }) {
+  static async create(post: Partial<IPost>) {
+    const {
+      title,
+      body = null,
+      coverPath = null,
+      category = null,
+      publishDate = new Date(),
+      status = "pub",
+      userId,
+    } = post;
+
     let conn;
     try {
       conn = await dbPool.getConnection();
       const query =
         "INSERT INTO Post (title, body, coverPath, category, publishDate, status, userId) VALUES (?, ?, ?, ?, ?, ?, ?)";
-      return await conn.query(query, [title, body, coverPath, category, publishDate, status, userId]);
+      return await conn.query(query, [
+        title,
+        body,
+        coverPath,
+        category,
+        publishDate ?? new Date(),
+        status ?? "pub",
+        userId,
+      ]);
     } catch (err) {
       throw err;
     } finally {
@@ -25,7 +37,7 @@ export default class Post {
     }
   }
 
-  static async delete(id, userId) {
+  static async delete(id: number, userId: number) {
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -62,7 +74,7 @@ export default class Post {
     }
   }
 
-  static async getByCategory(category, status = "pub") {
+  static async getByCategory(category: string, status = "pub") {
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -85,7 +97,7 @@ export default class Post {
   }
 
   /** will be used when a user's profile is visited so not joining the user table */
-  static async getByUserId(userId, status = "pub") {
+  static async getByUserId(userId: number, status = "pub") {
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -106,7 +118,7 @@ export default class Post {
     }
   }
 
-  static async getOneById(id) {
+  static async getOneById(id: number) {
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -129,7 +141,7 @@ export default class Post {
     }
   }
 
-  static async getOneXById(columns, id) {
+  static async getOneXById(columns: string[], id: number) {
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -145,7 +157,9 @@ export default class Post {
   }
 
   /** update will be done based on both post id & logged in user's id */
-  static async update({ title, body, coverPath, category, publishDate, status = "pub" }, id, userId) {
+  static async update(update: Partial<IPost>, id: number, userId: number) {
+    const { title, body, coverPath, category, publishDate = null, status = "pub" } = update;
+
     let conn;
     try {
       conn = await dbPool.getConnection();

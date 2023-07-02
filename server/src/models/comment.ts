@@ -1,7 +1,11 @@
 import dbPool from "../util/database.js";
 
+import { IComment } from "../types/comment/index.js";
+
 export default class Comment {
-  static async create({ body, postId, userId }) {
+  static async create(comment: Partial<IComment>) {
+    const { body, postId, userId } = comment;
+
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -16,7 +20,7 @@ export default class Comment {
     }
   }
 
-  static async getAllByPostId(postId) {
+  static async getAllByPostId(postId: number) {
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -43,7 +47,7 @@ export default class Comment {
     }
   }
 
-  static async delete(id, userId) {
+  static async delete(id: number, userId: number) {
     let conn;
     try {
       conn = await dbPool.getConnection();

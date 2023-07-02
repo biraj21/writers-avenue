@@ -6,9 +6,10 @@ import Like from "../models/like.js";
 import Post from "../models/post.js";
 import PostChanges from "../models/post-changes.js";
 import { ActionForbiddenError, ValidationError } from "../util/error.js";
-import { isInteger } from "../util/number.js";
 import { processPost } from "../util/process-data.js";
 import upload from "../util/upload.js";
+
+import { IPost } from "../types/post/index.js";
 
 // URL: /posts/...
 
@@ -16,8 +17,7 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const { cat } = req.query;
-    const posts = await (cat ? Post.getByCategory(cat) : Post.getAll());
+    const posts = await (typeof req.query.cat === "string" ? Post.getByCategory(req.query.cat) : Post.getAll());
     posts.forEach(processPost);
     res.json({ data: posts });
   } catch (err) {
@@ -27,13 +27,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:postId", async (req, res, next) => {
   try {
-    let { postId } = req.params;
-    if (!isInteger(postId)) {
-      res.status(404).json({ error: "post not found" });
-      return;
-    }
-
-    postId = Number(postId);
+    const postId = Number(req.params.postId);
     const post = await Post.getOneById(postId);
     if (!post || (post.status !== "pub" && req.userId !== post.userId)) {
       res.status(404).json({ error: "post not found" });
@@ -81,13 +75,8 @@ router.post("/", checkAuth, upload.single("cover"), async (req, res, next) => {
 
 router.put("/:postId", checkAuth, upload.single("cover"), async (req, res, next) => {
   try {
-    let { postId } = req.params;
-    if (!isInteger(postId)) {
-      res.status(404).json({ error: "post not found" });
-      return;
-    }
+    const postId = Number(req.params.postId);
 
-    postId = Number(postId);
     const { title, body, category } = req.body;
     const postData = await Post.getOneXById(["coverPath", "status", "userId"], postId);
     if (!postData) {
@@ -99,8 +88,9 @@ router.put("/:postId", checkAuth, upload.single("cover"), async (req, res, next)
       return;
     }
 
-    let { coverPath, status: postStatus, userId } = postData;
-    if (req.userId !== userId) {
+    const userId = Number(req.userId);
+    let { coverPath, status: postStatus, userId: postUserId } = postData;
+    if (userId !== postUserId) {
       if (req.file) {
         await fs.unlink(path.join(process.cwd(), req.file.path));
       }
@@ -118,17 +108,17 @@ router.put("/:postId", checkAuth, upload.single("cover"), async (req, res, next)
       throw new ValidationError("cover image is required");
     }
 
-    const post = { title, body, coverPath, category };
+    const post: Partial<IPost> = { title, body, coverPath, category };
     if (postStatus === "draft") {
       post.publishDate = new Date();
     }
 
-    const postChangesData = PostChanges.getOneXByPostId(["postId"], postId);
+    const postChangesData = await PostChanges.getOneXByPostId(["postId"], postId);
     if (postChangesData) {
-      await PostChanges.delete(postId, req.userId);
+      await PostChanges.delete(postId, userId);
     }
 
-    await Post.update(post, postId, req.userId);
+    await Post.update(post, postId, userId);
     res.sendStatus(204);
   } catch (err) {
     next(err);
@@ -137,13 +127,8 @@ router.put("/:postId", checkAuth, upload.single("cover"), async (req, res, next)
 
 router.delete("/:postId", checkAuth, async (req, res, next) => {
   try {
-    let { postId } = req.params;
-    if (!isInteger(postId)) {
-      res.status(404).json({ error: "post not found" });
-      return;
-    }
+    const postId = Number(req.params.postId);
 
-    postId = Number(postId);
     let { coverPath, userId } = await Post.getOneXById(["coverPath", "userId"], postId);
     if (req.userId !== userId) {
       throw new ActionForbiddenError();
@@ -153,7 +138,7 @@ router.delete("/:postId", checkAuth, async (req, res, next) => {
       await fs.unlink(path.join(process.cwd(), coverPath));
     }
 
-    await Post.delete(postId, req.userId);
+    await Post.delete(postId, Number(req.userId));
     res.sendStatus(204);
   } catch (err) {
     next(err);
@@ -165,7 +150,6 @@ router.post("/drafts", checkAuth, upload.single("cover"), async (req, res, next)
     let { title, body, category } = req.body;
     title = title.trim();
     body = body.trim();
-    const coverPath = req.file ? `/${req.file.path}` : null;
 
     if (title.trim().length === 0) {
       throw new ValidationError("title is required");
@@ -174,11 +158,10 @@ router.post("/drafts", checkAuth, upload.single("cover"), async (req, res, next)
     const { insertId } = await Post.create({
       title,
       body: body || null,
-      coverPath,
+      ...(req.file && { coverPath: `/${req.file.path}` }),
       category: category || null,
-      publishDate: null,
       status: "draft",
-      userId: req.userId,
+      userId: Number(req.userId),
     });
     res.status(201).json({ data: Number(insertId) });
   } catch (err) {

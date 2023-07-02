@@ -4,6 +4,8 @@ import router from "./routes/index.js";
 import "./util/database.js";
 import { CustomError } from "./util/error.js";
 
+import { Request, Response, NextFunction } from "express";
+
 const app = express();
 
 app.use("/uploads", express.static("./uploads"));
@@ -13,11 +15,11 @@ app.use(cors()); // reminder: make sure to set origin to something in production
 
 app.use(router);
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(404).json({ error: "not found" });
 });
 
-app.use((err, req, res, next) => {
+app.use((err: CustomError | unknown, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof CustomError) {
     res.status(err.statusCode).json({ error: err.message });
   } else {

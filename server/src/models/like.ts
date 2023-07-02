@@ -1,7 +1,11 @@
 import dbPool from "../util/database.js";
 
+import { ILike } from "../types/like/index.js";
+
 export default class Like {
-  static async create({ postId, userId }) {
+  static async create(like: Partial<ILike>) {
+    const { postId, userId } = like;
+
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -15,7 +19,7 @@ export default class Like {
     }
   }
 
-  static async getCountByPostId(postId) {
+  static async getCountByPostId(postId: number) {
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -31,7 +35,7 @@ export default class Like {
     }
   }
 
-  static async getOne(postId, userId) {
+  static async getOne(postId: number, userId: number) {
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -45,7 +49,7 @@ export default class Like {
     }
   }
 
-  static async update({ liked, postId, userId }) {
+  static async update(liked: boolean, postId: number, userId: number) {
     let conn;
     try {
       conn = await dbPool.getConnection();

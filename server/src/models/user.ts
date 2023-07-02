@@ -1,8 +1,12 @@
 import bcrypt from "bcrypt";
 import dbPool from "../util/database.js";
 
+import { IUser } from "../types/user/index.js";
+
 export default class User {
-  static async create({ name, email, password = null, avatarPath, authMethod = "email" }) {
+  static async create(user: Partial<IUser>) {
+    const { name, email, password, avatarPath, authMethod } = user;
+
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -22,7 +26,7 @@ export default class User {
     }
   }
 
-  static async getByEmail(email) {
+  static async getByEmail(email: string) {
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -37,7 +41,7 @@ export default class User {
     }
   }
 
-  static async getById(id) {
+  static async getById(id: number) {
     let conn;
     try {
       conn = await dbPool.getConnection();
@@ -52,7 +56,9 @@ export default class User {
     }
   }
 
-  static async updateById({ name, avatarPath }, id) {
+  static async updateById(update: Partial<IUser>, id: number) {
+    const { name, avatarPath } = update;
+
     let conn;
     try {
       conn = await dbPool.getConnection();
