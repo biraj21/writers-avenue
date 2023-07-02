@@ -1,6 +1,6 @@
 import dbPool from "../util/database.js";
 
-import { IPost } from "../types/post/index.js";
+import { IPost, PostCategory, PostStatus } from "../types/post/index.js";
 
 export default class Post {
   static async create(post: Partial<IPost>) {
@@ -52,11 +52,14 @@ export default class Post {
     }
   }
 
-  static async getAll(status = "pub") {
+  static async getAll(options: { status?: PostStatus; category?: PostCategory; search?: string }) {
+    const { status, category, search } = options;
+
     let conn;
     try {
       conn = await dbPool.getConnection();
-      const query = `SELECT
+
+      let query = `SELECT
         p.*,
         u.name userName,
         u.avatarPath userAvatarPath,
@@ -64,29 +67,19 @@ export default class Post {
       FROM Post p JOIN User u
       ON p.userId = u.id
       WHERE p.status = ?`;
-      return await conn.query(query, [status]);
-    } catch (err) {
-      throw err;
-    } finally {
-      if (conn) {
-        conn.release();
-      }
-    }
-  }
+      const values: string[] = [status ?? "pub"];
 
-  static async getByCategory(category: string, status = "pub") {
-    let conn;
-    try {
-      conn = await dbPool.getConnection();
-      const query = `SELECT
-        p.*,
-        u.name userName,
-        u.avatarPath userAvatarPath,
-        u.authMethod userAuthMethod
-      FROM Post p JOIN User u
-      ON p.userId = u.id
-      WHERE p.category = ? AND p.status = ?`;
-      return await conn.query(query, [category, status]);
+      if (category) {
+        query += "\nAND p.category = ?";
+        values.push(category);
+      }
+
+      if (search) {
+        query += "\nAND p.title LIKE ?";
+        values.push(`%${search.replace(/(_|%)/g, "\\$1")}%`);
+      }
+
+      return await conn.query(query, values);
     } catch (err) {
       throw err;
     } finally {

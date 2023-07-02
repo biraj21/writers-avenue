@@ -9,7 +9,7 @@ import { ActionForbiddenError, ValidationError } from "../util/error.js";
 import { processPost } from "../util/process-data.js";
 import upload from "../util/upload.js";
 
-import { IPost } from "../types/post/index.js";
+import { IPost, PostCategory } from "../types/post/index.js";
 
 // URL: /posts/...
 
@@ -17,7 +17,8 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const posts = await (typeof req.query.cat === "string" ? Post.getByCategory(req.query.cat) : Post.getAll());
+    const { category, search } = req.query;
+    const posts = await Post.getAll({ category: category?.toString() as PostCategory, search: search?.toString() });
     posts.forEach(processPost);
     res.json({ data: posts });
   } catch (err) {

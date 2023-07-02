@@ -253,7 +253,7 @@ function PostComments({ postId }) {
 }
 
 function OtherPosts({ category, mainPostId }) {
-  const { data: posts, error } = useAxiosGet(`/posts?cat=${category}`);
+  const { data: posts, error } = useAxiosGet(`/posts?category=${category}`);
 
   let content;
   if (error) {
