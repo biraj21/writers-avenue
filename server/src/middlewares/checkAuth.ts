@@ -21,6 +21,8 @@ export default function checkAuth(req: Request, res: Response, next: NextFunctio
     } catch (err) {
       throw new AuthError("invalid token");
     }
+
+    next();
   } catch (err) {
     next(err);
   }
