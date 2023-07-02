@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "setup": "node ./scripts/setup.js"
+    "setup": "node scripts/setup.js",
+    "dev": "(cd server && yarn dev) & (cd client && yarn dev)"
   },
   "repository": "https://github.com/biraj21/writers-avenue.git",
   "author": "Biraj <biraj.pub@gmail.com>",
