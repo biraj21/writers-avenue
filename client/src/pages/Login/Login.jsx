@@ -86,34 +86,3 @@ export default function Login() {
     </div>
   );
 }
-
-// window.onload = function () {
-//   google.accounts.id.initialize({
-//     client_id: "YOUR_GOOGLE_CLIENT_ID",
-//     callback: handleCredentialResponse,
-//   });
-//   google.accounts.id.renderButton(
-//     document.getElementById("buttonDiv"),
-//     { theme: "outline", size: "large" } // customization attributes
-//   );
-// };
-
-// function loadGsiClientScript(callback) {
-//   if (document.getElementById("gsi-script")) {
-//     console.log(Object.keys(document.getElementById("gsi-script")));
-//     return;
-//   }
-
-//   const script = document.createElement("script");
-//   script.src = "https://accounts.google.com/gsi/client";
-//   script.id = "gsi-script";
-//   document.body.appendChild(script);
-//   window.addEventListener("load", () => callback());
-// }
-
-// function removeGsiClient() {
-//   const script = document.getElementById("gsi-script");
-//   if (script) {
-//     script.remove();
-//   }
-// }
