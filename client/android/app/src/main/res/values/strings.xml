@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Writer\'s Avenue</string>
+    <string name="title_activity_main">Writer\'s Avenue</string>
+    <string name="package_name">com.biraj21.writersavenue</string>
+    <string name="custom_url_scheme">com.biraj21.writersavenue</string>
+</resources>

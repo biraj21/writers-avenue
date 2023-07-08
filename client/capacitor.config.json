@@ -1,0 +1,8 @@
+{
+  "appId": "com.biraj21.writersavenue",
+  "appName": "Writer's Avenue",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "http"
+  }
+}
