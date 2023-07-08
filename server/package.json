@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
+    "start": "yarn build && dist/index.js",
     "dev": "tsc --watch & nodemon dist/index.js",
     "build": "tsc"
   },
