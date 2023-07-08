@@ -19,7 +19,7 @@ router.get("/:postId", async (req, res, next) => {
   }
 });
 
-router.post("/", checkAuth, async (req, res, next) => {
+router.post("/", checkAuth(), async (req, res, next) => {
   try {
     let { comment, postId } = req.body;
     postId = Number(postId);
@@ -30,7 +30,7 @@ router.post("/", checkAuth, async (req, res, next) => {
   }
 });
 
-router.delete("/:commentId", checkAuth, async (req, res, next) => {
+router.delete("/:commentId", checkAuth(), async (req, res, next) => {
   try {
     const commentId = Number(req.params.commentId);
     const { affectedRows } = await Comment.delete(commentId, Number(req.userId));

@@ -1,4 +1,5 @@
 import express from "express";
+import checkAuth from "../middlewares/checkAuth.js";
 import Like from "../models/like.js";
 import { isInteger } from "../util/number.js";
 
@@ -6,26 +7,26 @@ import { isInteger } from "../util/number.js";
 
 const router = express.Router();
 
-router.get("/:postId", async (req, res, next) => {
+router.get("/:postId", checkAuth(true), async (req, res, next) => {
   try {
     if (!isInteger(req.params.postId)) {
       res.status(404).json({ error: "post not found" });
       return;
     }
 
-    const postId = Number(req.params.postId);
-    const likeData = await Like.getOne(postId, Number(req.userId));
-    if (!likeData) {
+    if (!req.userId) {
       res.send({ data: false });
+      return;
     }
 
-    res.send({ data: Boolean(likeData.liked) });
+    const { liked } = await Like.getOne(Number(req.params.postId), req.userId);
+    res.send({ data: Boolean(liked) });
   } catch (err) {
     next(err);
   }
 });
 
-router.put("/:postId", async (req, res, next) => {
+router.put("/:postId", checkAuth(), async (req, res, next) => {
   try {
     if (!isInteger(req.params.postId)) {
       res.status(404).json({ error: "post not found" });
@@ -33,8 +34,8 @@ router.put("/:postId", async (req, res, next) => {
     }
 
     const userId = Number(req.userId);
-
     const postId = Number(req.params.postId);
+
     const likeData = await Like.getOne(postId, userId);
     if (!likeData) {
       await Like.create({ postId, userId });

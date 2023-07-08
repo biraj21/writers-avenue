@@ -1,4 +1,6 @@
 import express from "express";
+
+import checkAuth from "../middlewares/checkAuth.js";
 import Post from "../models/post.js";
 import User from "../models/user.js";
 import { processUser } from "../util/process-data.js";
@@ -7,7 +9,7 @@ import { processUser } from "../util/process-data.js";
 
 const router = express.Router();
 
-router.get("/:userId", async (req, res, next) => {
+router.get("/:userId", checkAuth(true), async (req, res, next) => {
   try {
     const userId = Number(req.params.userId);
     const user = await User.getById(userId);

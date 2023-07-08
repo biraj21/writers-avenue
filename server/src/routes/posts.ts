@@ -26,7 +26,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:postId", async (req, res, next) => {
+router.get("/:postId", checkAuth(true), async (req, res, next) => {
   try {
     const postId = Number(req.params.postId);
     const post = await Post.getOneById(postId);
@@ -59,7 +59,7 @@ router.get("/:postId", async (req, res, next) => {
   }
 });
 
-router.post("/", checkAuth, upload.single("cover"), async (req, res, next) => {
+router.post("/", checkAuth(), upload.single("cover"), async (req, res, next) => {
   try {
     if (!req.file) {
       throw new ValidationError("cover image is required");
@@ -74,7 +74,7 @@ router.post("/", checkAuth, upload.single("cover"), async (req, res, next) => {
   }
 });
 
-router.put("/:postId", checkAuth, upload.single("cover"), async (req, res, next) => {
+router.put("/:postId", checkAuth(), upload.single("cover"), async (req, res, next) => {
   try {
     const postId = Number(req.params.postId);
 
@@ -126,7 +126,7 @@ router.put("/:postId", checkAuth, upload.single("cover"), async (req, res, next)
   }
 });
 
-router.delete("/:postId", checkAuth, async (req, res, next) => {
+router.delete("/:postId", checkAuth(), async (req, res, next) => {
   try {
     const postId = Number(req.params.postId);
 
@@ -146,7 +146,7 @@ router.delete("/:postId", checkAuth, async (req, res, next) => {
   }
 });
 
-router.post("/drafts", checkAuth, upload.single("cover"), async (req, res, next) => {
+router.post("/drafts", checkAuth(), upload.single("cover"), async (req, res, next) => {
   try {
     let { title, body, category } = req.body;
     title = title.trim();

@@ -12,9 +12,9 @@ const router = express.Router();
 
 router.use("/auth", authRouter);
 router.use("/comments", commentsRouter);
-router.use("/likes", checkAuth, likesRouter);
+router.use("/likes", likesRouter);
 router.use("/oauth", oauthRouter);
-router.use("/posts/changes", checkAuth, postChangesRouter);
+router.use("/posts/changes", checkAuth(), postChangesRouter);
 router.use("/posts", postsRouter);
 router.use("/users", usersRouter);
 
