@@ -149,7 +149,7 @@ function PostComments({ postId }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const { currentUser } = useContext(authContext);
-  const { data: comments, setData: setComments, error: dataError } = useAxiosGet(`/comments/${postId}`);
+  const { data: comments, setData: setComments, error: getCommentsError } = useAxiosGet(`/comments/${postId}`);
 
   async function handleDelete(commentId) {
     try {
@@ -158,7 +158,6 @@ function PostComments({ postId }) {
       }
 
       await axios.delete(`/comments/${commentId}`);
-      setComment("");
       setComments(comments.filter((comment) => comment.id !== commentId));
     } catch (err) {
       console.error(err);
@@ -185,20 +184,15 @@ function PostComments({ postId }) {
   }
 
   let content;
-  if (error) {
-    content = <div className="error-msg">{dataError}</div>;
+  if (getCommentsError) {
+    content = <div className="error-msg">{getCommentsError}</div>;
   } else if (comments) {
     content = (
       <>
         {currentUser ? (
           <form className="form" onSubmit={handleSubmit}>
             <div className="form__field">
-              <textarea
-                name="comment"
-                rows={3}
-                defaultValue={comment}
-                onChange={(e) => setComment(e.target.value)}
-              ></textarea>
+              <textarea name="comment" rows={3} value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
             </div>
             {error && <div className="error-msg">{error}</div>}
             <button className="btn" disabled={isSubmitting}>
@@ -246,6 +240,8 @@ function PostComments({ postId }) {
           avatarUrl: currentUser.avatarUrl,
         },
       };
+
+      setComment("");
       setComments([...comments, newComment]);
     } catch (err) {
       console.error(err);
