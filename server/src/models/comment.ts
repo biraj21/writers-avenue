@@ -20,6 +20,21 @@ export default class Comment {
     }
   }
 
+  static async getById(id: number) {
+    let conn;
+    try {
+      conn = await dbPool.getConnection();
+      const query = `SELECT * FROM Comment WHERE id = ?`;
+      return (await conn.query(query, [id]))[0];
+    } catch (err) {
+      throw err;
+    } finally {
+      if (conn) {
+        conn.release();
+      }
+    }
+  }
+
   static async getAllByPostId(postId: number) {
     let conn;
     try {

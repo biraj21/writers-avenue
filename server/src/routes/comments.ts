@@ -3,6 +3,7 @@ import checkAuth from "../middlewares/checkAuth.js";
 import Comment from "../models/comment.js";
 import { ActionForbiddenError } from "../util/error.js";
 import { processComment } from "../util/process-data.js";
+import translate from "../util/translate.js";
 
 // URL: /comments/...
 
@@ -14,6 +15,21 @@ router.get("/:postId", async (req, res, next) => {
     const comments = await Comment.getAllByPostId(postId);
     comments.forEach((comment: any) => processComment(comment));
     res.send({ data: comments });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/translation/:commentId", async (req, res, next) => {
+  try {
+    const comment = await Comment.getById(parseInt(req.params.commentId));
+    if (!comment) {
+      res.status(404).json({ error: "post not found" });
+      return;
+    }
+
+    const translation = await translate(comment.body);
+    res.json({ data: translation });
   } catch (err) {
     next(err);
   }

@@ -170,6 +170,20 @@ function PostComments({ postId }) {
     }
   }
 
+  async function handleTranslation(commentId) {
+    try {
+      const res = await axios.get(`/comments/translation/${commentId}`);
+      return res.data.data;
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        setError(err.response.data.error);
+      } else {
+        setError(err.message);
+      }
+    }
+  }
+
   let content;
   if (error) {
     content = <div className="error-msg">{dataError}</div>;
@@ -201,6 +215,7 @@ function PostComments({ postId }) {
             comment={comment}
             key={comment.id}
             handleDelete={comment.user.id === currentUser?.id && handleDelete}
+            handleTranslation={handleTranslation}
           />
         ))}
       </>

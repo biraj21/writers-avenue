@@ -36,4 +36,17 @@
       color: #9f9f9f;
     }
   }
+
+  &__footer {
+    text-align: right;
+
+    &__translation-toggle {
+      color: var(--primary-color);
+      user-select: none;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 }
