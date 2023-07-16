@@ -21,7 +21,7 @@ Example 2:-
   - Output: {{ "language":  "Kannada", "translation": "had food?" }}
 Example 3:-
   - Input: asdnjsagjff
-  - Output: {{ "language": "Unknown", translation: "" }}
+  - Output: {{ "language": "Unknown", "translation": "" }}
 
 \`\`\`
 {text}
